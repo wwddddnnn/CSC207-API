@@ -15,3 +15,7 @@ made with those ingredients
 - being able to tag and comment on your own recipes
 - being able to like and review your friends' recipes
 
+  
+Api doucumentation link we will be using during our project:
+https://spoonacular.com/food-api/docs
+
