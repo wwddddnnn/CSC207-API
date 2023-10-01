@@ -27,6 +27,8 @@ https://spoonacular.com/food-api/docs
 
 ## Screenshot of testing out API in hopscotch.io
 
+![1](https://github.com/wwddddnnn/CSC207-API/assets/144649138/c6106526-7a12-4035-ae79-dae293d36742)
+
 ![Screenshot 2023-09-30 at 16.56.14.png](..%2F..%2F..%2FDesktop%2FScreenshot%202023-09-30%20at%2016.56.14.png)
 
 ## Screenshot of example call to API in Java
