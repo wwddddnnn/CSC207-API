@@ -4,7 +4,7 @@
 
 ## Problem Domain
 
-A personalized and soci![img.png](img.png)ally-connected digital cookbook.
+A personalized and socially-connected digital cookbook.
 
 Description:
 
