@@ -29,11 +29,11 @@ https://spoonacular.com/food-api/docs
 
 ## Screenshot of testing out API in hopscotch.io
 
-<img width="1479" alt="1" src="https://github.com/wwddddnnn/CSC207-API/assets/144649138/f751716e-3660-482b-a895-5f308a2cdf51">
+<img width="1479" alt="Screenshot 2023-09-30 at 16 56 14" src="https://github.com/wwddddnnn/CSC207-API/assets/144649138/34bc4bfa-176d-4474-a637-1a0d0cbc0528">
 
 ## Screenshot of example call to API in Java
 
-<img width="1477" alt="2" src="https://github.com/wwddddnnn/CSC207-API/assets/144649138/309c5803-c99a-4d6f-8b3e-48303b4bad6a">
+<img width="1477" alt="Screenshot 2023-09-30 at 18 01 46 1" src="https://github.com/wwddddnnn/CSC207-API/assets/144649138/517f384d-3018-47f5-b9c3-0fffa7b8cb76">
 
 The example code is:
 
