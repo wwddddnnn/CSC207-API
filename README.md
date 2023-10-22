@@ -11,7 +11,7 @@ Description:
 Our application will be a platform where users can search and save recipes, and make
 customized meal plans as well as shopping lists. Features include:
 
-- a fridge template for users to write the ingredients they have at home
+- being able to write the ingredients users have at home with a fridge template 
 
 - being able to search for recipes from the database, with filters such as 
   - Type of cuisine
