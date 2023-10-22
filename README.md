@@ -4,8 +4,6 @@
 
 ## Problem Domain
 
-A personalized and socially-connected digital cookbook.
-
 Description:
 
 Our application will be a platform where users can search and save recipes, and make
@@ -20,7 +18,7 @@ customized meal plans as well as shopping lists. Features include:
   - Calorie count
   - Dietary restrictions (ingredient exclusions)
 
-- being able to output a filtered recipe which has the least number of missing ingredients
+- being able to output a filtered recipe that has the least number of missing ingredients
 
 - being able to generate a shopping list based on the list of missing recipes
 
