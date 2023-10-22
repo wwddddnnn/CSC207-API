@@ -1,6 +1,4 @@
-# CSC207-Project
-
-# Hungry Students' Recipe Organizer
+# CSC207-Project: Hungry Students' Recipe Organizer
 
 ## Problem Domain
 
