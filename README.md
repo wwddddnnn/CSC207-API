@@ -57,7 +57,7 @@ https://spoonacular.com/food-api/docs
 - Fridge
   - String[] ingredientsList
 
-- Kitchen (plan)
+- Kitchen
   - HashMap<String, int> MealPlanDay
   - MealPlanDay[] MealPlanWeek
 
