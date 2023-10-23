@@ -15,8 +15,9 @@ customized meal plans as well as shopping lists. Features include:
   - Time taken to make the recipe
   - Calorie count
   - Dietary restrictions (ingredient exclusions)
+  - Number of missing ingredients
 
-- being able to output a filtered recipe that has the least number of missing ingredients
+- being able to save a filtered recipe
 
 - being able to generate a shopping list based on the list of missing ingredients
 
