@@ -49,8 +49,12 @@ https://spoonacular.com/food-api/docs
   - String diet
   - String intolerances
   - Int calories
-  - String[] ingredientsList
+  - HashMap<Ingredient, int> IngredientList
   - String[] nutrition List
+
+- Ingredients
+  - String name
+  - Int price
 
 - Fridge
   - String[] fridgeList
