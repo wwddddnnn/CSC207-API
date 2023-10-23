@@ -41,6 +41,7 @@ https://spoonacular.com/food-api/docs
   - int serialNumber
   - String title
   - RecipeTag tags
+  - String instructions
 
 - RecipeTag
   - String taste
@@ -52,9 +53,9 @@ https://spoonacular.com/food-api/docs
   - String[] nutrition List
 
 - Fridge
-  - String[] ingredientsList
+  - String[] fridgeList
 
-- Kitchen
+- MealPlan
   - HashMap<String, int> MealPlanDay
   - MealPlanDay[] MealPlanWeek
 
