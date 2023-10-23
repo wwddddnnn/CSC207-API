@@ -18,7 +18,7 @@ customized meal plans as well as shopping lists. Features include:
 
 - being able to output a filtered recipe that has the least number of missing ingredients
 
-- being able to generate a shopping list based on the list of missing recipes
+- being able to generate a shopping list based on the list of missing ingredients
 
 - being able to save a recipe and put it into an organized "meal plan" list 
 which includes what 'day' and 'meal time' they plan on making this meal
