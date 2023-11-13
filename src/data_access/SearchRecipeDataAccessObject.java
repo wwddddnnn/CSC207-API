@@ -2,6 +2,7 @@ package data_access;
 
 import entity.Recipe;
 import entity.RecipeTag;
+import use_case.search_recipe.SearchRecipeDataAccessInterface;
 import okhttp3.OkHttpClient;
 
 import org.json.JSONException;
@@ -14,8 +15,9 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class SearchRecipeDataAccessObject {
+public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInterface{
 
     public ArrayList<Recipe> getByCuisine(String cuisine) {
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -97,6 +99,11 @@ public class SearchRecipeDataAccessObject {
             throw new RuntimeException(e);
 
         }
+    }
+
+    @Override
+    public List<Recipe> findRecipesByQuery(String query) {
+        return null;
     }
 
     // absorbRecipeInfo creates and adds the RecipeTag, instructions (String) and ingredients (HashMap)
