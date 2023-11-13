@@ -17,11 +17,11 @@ import java.util.HashMap;
 
 public class SearchRecipeDataAccessObject {
 
-    public void getByCuisine(String cuisine) {
+    public ArrayList<Recipe> getByCuisine(String cuisine) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("https://api.spoonacular.com/recipes/complexSearch?apiKey=c8eb3493121949b592c890859e2a5240&cuisine=" + cuisine + "&maxFat=25&number=5"))
+                .url(String.format("https://api.spoonacular.com/recipes/complexSearch?apiKey=c8eb3493121949b592c890859e2a5240&cuisine=" + cuisine + "&number=5"))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
@@ -29,10 +29,11 @@ public class SearchRecipeDataAccessObject {
             JSONObject responseBody = new JSONObject(response.body().string());
             JSONArray fullResultsArray = new JSONArray(responseBody.getJSONArray("results"));
 
-            if (responseBody.getInt("status_code") == 200) {
+            if (!fullResultsArray.isEmpty()) {
 
                 //get recipe 1
-                JSONObject recipe1Info = new JSONObject(fullResultsArray.getJSONObject(0));
+                JSONObject recipe1Info = fullResultsArray.getJSONObject(0);
+
                 Recipe recipe1 = Recipe.builder()
                         .id(recipe1Info.getInt("id"))
                         .name(recipe1Info.getString("title"))
@@ -41,7 +42,7 @@ public class SearchRecipeDataAccessObject {
                 absorbRecipeInfo(recipe1);
 
                 //get recipe 2
-                JSONObject recipe2Info = new JSONObject(fullResultsArray.getJSONObject(1));
+                JSONObject recipe2Info = fullResultsArray.getJSONObject(1);
                 Recipe recipe2 = Recipe.builder()
                         .id(recipe2Info.getInt("id"))
                         .name(recipe2Info.getString("title"))
@@ -50,7 +51,7 @@ public class SearchRecipeDataAccessObject {
                 absorbRecipeInfo(recipe2);
 
                 //get recipe 3
-                JSONObject recipe3Info = new JSONObject(fullResultsArray.getJSONObject(2));
+                JSONObject recipe3Info = fullResultsArray.getJSONObject(2);
                 Recipe recipe3 = Recipe.builder()
                         .id(recipe3Info.getInt("id"))
                         .name(recipe3Info.getString("title"))
@@ -59,7 +60,7 @@ public class SearchRecipeDataAccessObject {
                 absorbRecipeInfo(recipe3);
 
                 //get recipe 4
-                JSONObject recipe4Info = new JSONObject(fullResultsArray.getJSONObject(3));
+                JSONObject recipe4Info = fullResultsArray.getJSONObject(3);
                 Recipe recipe4 = Recipe.builder()
                         .id(recipe4Info.getInt("id"))
                         .name(recipe4Info.getString("title"))
@@ -68,7 +69,7 @@ public class SearchRecipeDataAccessObject {
                 absorbRecipeInfo(recipe4);
 
                 //get recipe 5
-                JSONObject recipe5Info = new JSONObject(fullResultsArray.getJSONObject(4));
+                JSONObject recipe5Info = fullResultsArray.getJSONObject(4);
                 Recipe recipe5 = Recipe.builder()
                         .id(recipe5Info.getInt("id"))
                         .name(recipe5Info.getString("title"))
@@ -76,8 +77,18 @@ public class SearchRecipeDataAccessObject {
                 recipe5.addImage(recipe5Info.getString("image"), recipe5Info.getString("imageType"));
                 absorbRecipeInfo(recipe5);
 
+                ArrayList<Recipe> finalRecipeList = new ArrayList<>(5);
+                finalRecipeList.add(recipe1);
+                finalRecipeList.add(recipe2);
+                finalRecipeList.add(recipe3);
+                finalRecipeList.add(recipe4);
+                finalRecipeList.add(recipe5);
+
+                return finalRecipeList;
+
             } else {
-                throw new RuntimeException("fail");
+                ArrayList<Recipe> emptyRecipeList = new ArrayList<>(0);
+                return emptyRecipeList;
             }
 
             /*String foodName = responseBody.getString("title");
@@ -102,7 +113,7 @@ public class SearchRecipeDataAccessObject {
             Response response = client.newCall(request).execute();
             JSONObject responseBody = new JSONObject(response.body().string());
 
-            if (responseBody.getInt("status_code") == 200) {
+            if (responseBody.length() != 3) {
 
                 //create and add tags to RecipeTag, and add RecipeTag to Recipe object
                 //tags: recipeMinutes, servings, cuisinesList, vegetarian, vegan, intolerances
