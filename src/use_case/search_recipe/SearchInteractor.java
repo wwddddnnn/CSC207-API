@@ -1,14 +1,14 @@
 package use_case.search_recipe;
+
 import entity.Recipe;
-import data_access.SearchRecipeDataAccessObject;
 
 import java.util.List;
 
 public class SearchInteractor implements SearchInputBoundary{
-    private final SearchRecipeDataAccessObject searchRecipeDAO;
-    final  SearchOutputBoundary  searchDatapresenter;
+    private final SearchRecipeDataAccessInterface searchRecipeDAO;
+    final SearchOutputBoundary searchDatapresenter;
 
-    public SearchInteractor(SearchRecipeDataAccessObject searchRecipeDAO,SearchOutputBoundary  searchDatapresenter) {
+    public SearchInteractor(SearchRecipeDataAccessInterface searchRecipeDAO,SearchOutputBoundary  searchDatapresenter) {
         this.searchRecipeDAO = searchRecipeDAO;
         this.searchDatapresenter = searchDatapresenter;
     }
