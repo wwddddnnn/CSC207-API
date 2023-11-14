@@ -16,8 +16,9 @@ public class SearchInteractor implements SearchInputBoundary{
     @Override
     public void execute(SearchInputData searchData) {
         String query = searchData.getQuery();
+        String cuisine = searchData.getCuisine();
         List<Recipe> recipes = searchRecipeDAO.findRecipesByQuery(query);
-        SearchOutputData searchOutputData = new SearchOutputData(recipes);
+        SearchOutputData searchOutputData = new SearchOutputData(recipes, cuisine, query);
         searchDatapresenter.displayRecipes(searchOutputData);
     }
 
