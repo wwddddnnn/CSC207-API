@@ -6,11 +6,11 @@ import java.util.List;
 
 public class SearchInteractor implements SearchInputBoundary{
     private final SearchRecipeDataAccessInterface searchRecipeDAO;
-    final SearchOutputBoundary searchDatapresenter;
+    final SearchOutputBoundary searchDataPresenter;
 
-    public SearchInteractor(SearchRecipeDataAccessInterface searchRecipeDAO,SearchOutputBoundary  searchDatapresenter) {
+    public SearchInteractor(SearchRecipeDataAccessInterface searchRecipeDAO,SearchOutputBoundary searchDataPresenter) {
         this.searchRecipeDAO = searchRecipeDAO;
-        this.searchDatapresenter = searchDatapresenter;
+        this.searchDataPresenter = searchDataPresenter;
     }
 
     @Override
@@ -18,10 +18,13 @@ public class SearchInteractor implements SearchInputBoundary{
         String query = searchData.getQuery();
         String cuisine = searchData.getCuisine();
         List<Recipe> recipes = searchRecipeDAO.findRecipesByQuery(query);
-        SearchOutputData searchOutputData = new SearchOutputData(recipes, cuisine, query);
-        searchDatapresenter.displayRecipes(searchOutputData);
+
+        if (recipes.isEmpty()) {
+            searchDataPresenter.prepareFailView("No recipes found.");
+        } else {
+            SearchOutputData searchOutputData = new SearchOutputData(recipes, cuisine, query);
+            searchDataPresenter.prepareSuccessView(searchOutputData);
+        }
     }
-
-
 
 }
