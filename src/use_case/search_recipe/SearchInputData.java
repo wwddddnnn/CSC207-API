@@ -8,10 +8,12 @@ public class SearchInputData {
     private final String query;
 
     private final String cuisine;
+    private final String maxTime;
 
-    public SearchInputData(String query, String cuisine) {
+    public SearchInputData(String query, String cuisine, String maxTime) {
         this.query = query;
         this.cuisine = cuisine;
+        this.maxTime = maxTime;
     }
 
     public String getQuery() {
@@ -20,5 +22,8 @@ public class SearchInputData {
 
     public String getCuisine(){
         return cuisine;
+    }
+    public String getMaxTime(){
+        return maxTime;
     }
 }

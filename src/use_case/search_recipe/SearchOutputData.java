@@ -10,11 +10,14 @@ public class SearchOutputData {
 
     private final String query;
 
-    public SearchOutputData(List<Recipe> recipes, String cuisine, String query) {
+    private final String maxTime;
+
+    public SearchOutputData(List<Recipe> recipes, String cuisine, String query, String maxTime) {
 
         this.recipes = recipes;
         this.cuisine = cuisine;
         this.query = query;
+        this.maxTime = maxTime;
     }
 
     public String getRecipes() {
@@ -27,5 +30,9 @@ public class SearchOutputData {
 
     public String getCuisine(){
         return cuisine;
+    }
+
+    public String getMaxTime(){
+        return maxTime;
     }
 }

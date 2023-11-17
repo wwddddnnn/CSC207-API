@@ -19,11 +19,30 @@ import java.util.List;
 
 public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInterface{
 
-    public ArrayList<Recipe> getByCuisine(String cuisine) {
+    public ArrayList<Recipe> getByFilters(HashMap filters) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
+
+        String requestURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=c8eb3493121949b592c890859e2a5240";
+
+        //build the request URL depending on inputs for query, cuisine and maxTime
+
+        if (filters.keySet().contains("query")) {
+            requestURL = requestURL + "&query=" + filters.get("query");
+        }
+
+        if (filters.keySet().contains("cuisine")) {
+            requestURL = requestURL + "&cuisine=" + filters.get("cuisine");
+        }
+
+        if (filters.keySet().contains("maxTime")) {
+            requestURL = requestURL + "&maxReadyTime=" + filters.get("maxTime");
+        }
+
+        requestURL = requestURL + "&number=5";
+
         Request request = new Request.Builder()
-                .url(String.format("https://api.spoonacular.com/recipes/complexSearch?apiKey=c8eb3493121949b592c890859e2a5240&cuisine=" + cuisine + "&number=5"))
+                .url(String.format(requestURL))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
@@ -99,11 +118,6 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
             throw new RuntimeException(e);
 
         }
-    }
-
-    @Override
-    public List<Recipe> findRecipesByQuery(String query) {
-        return null;
     }
 
     // absorbRecipeInfo creates and adds the RecipeTag, instructions (String) and ingredients (HashMap)
