@@ -1,10 +1,15 @@
 package entity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Recipe {
     private int id;
     private String name;
-
     private String[] image;
+    private RecipeTag recipeTag;
+    private String instructions;
+    private HashMap<String, ArrayList<Object>> ingredients;
 
     public Recipe(int id, String name) {
         this.id = id;
@@ -61,5 +66,16 @@ public class Recipe {
 
     public String[] getImage() { return image; }
 
+    public void addRecipeTag(RecipeTag recipeTag) {
+        this.recipeTag = recipeTag;
+    }
+
+    public void addInstructions(String instructions) {
+        this.instructions = instructions;
+    }
+
+    public void addIngredients(HashMap<String, ArrayList<Object>> ingredients) {
+        this.ingredients = ingredients;
+    }
 
 }

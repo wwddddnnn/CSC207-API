@@ -1,26 +1,51 @@
 package use_case.search_recipe;
-import entity.Recipe;
-import data_access.SearchRecipeDataAccessObject;
 
+import entity.Recipe;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SearchInteractor implements SearchInputBoundary{
-    private final SearchRecipeDataAccessObject searchRecipeDAO;
-    final  SearchOutputBoundary  searchDatapresenter;
+    private final SearchRecipeDataAccessInterface searchRecipeDAO;
+    final SearchOutputBoundary searchDataPresenter;
 
-    public SearchInteractor(SearchRecipeDataAccessObject searchRecipeDAO,SearchOutputBoundary  searchDatapresenter) {
+    public SearchInteractor(SearchRecipeDataAccessInterface searchRecipeDAO,SearchOutputBoundary searchDataPresenter) {
         this.searchRecipeDAO = searchRecipeDAO;
-        this.searchDatapresenter = searchDatapresenter;
+        this.searchDataPresenter = searchDataPresenter;
     }
 
     @Override
     public void execute(SearchInputData searchData) {
         String query = searchData.getQuery();
-        List<Recipe> recipes = searchRecipeDAO.findRecipesByQuery(query);
-        SearchOutputData searchOutputData = new SearchOutputData(recipes);
-        searchDatapresenter.displayRecipes(searchOutputData);
+        String cuisine = searchData.getCuisine();
+        String maxTime = searchData.getMaxTime();
+
+        HashMap filtersMap = new HashMap();
+        if (!query.isEmpty()) {
+            filtersMap.put("query", query);
+        }
+        if (!cuisine.isEmpty()) {
+            filtersMap.put("cuisine", cuisine);
+        }
+        if (!maxTime.isEmpty()) {
+            filtersMap.put("maxTime", maxTime);
+        }
+
+        //if no search keywords are entered, prepareFailView
+        if (query.isEmpty() && cuisine.isEmpty() && maxTime.isEmpty()) {
+            searchDataPresenter.prepareFailView("No search keywords entered.");
+        }
+
+        ArrayList<Recipe> recipes = searchRecipeDAO.getByFilters(filtersMap);
+
+        //if no recipes are found, prepareFailView; else, prepareSuccessView
+        if (recipes.isEmpty()) {
+            searchDataPresenter.prepareFailView("No recipes found.");
+        } else {
+            SearchOutputData searchOutputData = new SearchOutputData(recipes, cuisine, query, maxTime);
+            searchDataPresenter.prepareSuccessView(searchOutputData);
+        }
     }
-
-
 
 }
