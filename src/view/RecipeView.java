@@ -65,8 +65,6 @@ public class RecipeView {
                 String query = queryTextField.getText();
                 String cuisine = cuisineTextField.getText();
                 String weight = weightTextField.getText();
-                // You can replace this with the actual search logic
-                System.out.println("Search with Query: " + query + ", Cuisine: " + cuisine + ", Weight: " + weight);
             }
         });
 
