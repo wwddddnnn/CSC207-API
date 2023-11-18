@@ -2,6 +2,7 @@ package data_access;
 
 import entity.Recipe;
 import entity.RecipeTag;
+import entity.RecipeFactory;
 import use_case.search_recipe.SearchRecipeDataAccessInterface;
 import okhttp3.OkHttpClient;
 
@@ -15,9 +16,14 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInterface{
+
+    private RecipeFactory recipeFactory;
+
+    public SearchRecipeDataAccessObject(RecipeFactory recipeFactory){
+        this.recipeFactory = recipeFactory;
+    }
 
     public ArrayList<Recipe> getByFilters(HashMap filters) {
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -55,46 +61,36 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
                 //get recipe 1
                 JSONObject recipe1Info = fullResultsArray.getJSONObject(0);
 
-                Recipe recipe1 = Recipe.builder()
-                        .id(recipe1Info.getInt("id"))
-                        .name(recipe1Info.getString("title"))
-                        .build();
+                Recipe recipe1 = this.recipeFactory.create(recipe1Info.getInt("id"),
+                        recipe1Info.getString("title"));
                 recipe1.addImage(recipe1Info.getString("image"), recipe1Info.getString("imageType"));
                 absorbRecipeInfo(recipe1);
 
                 //get recipe 2
                 JSONObject recipe2Info = fullResultsArray.getJSONObject(1);
-                Recipe recipe2 = Recipe.builder()
-                        .id(recipe2Info.getInt("id"))
-                        .name(recipe2Info.getString("title"))
-                        .build();
+                Recipe recipe2 = this.recipeFactory.create(recipe2Info.getInt("id"),
+                        recipe2Info.getString("title"));
                 recipe2.addImage(recipe2Info.getString("image"), recipe2Info.getString("imageType"));
                 absorbRecipeInfo(recipe2);
 
                 //get recipe 3
                 JSONObject recipe3Info = fullResultsArray.getJSONObject(2);
-                Recipe recipe3 = Recipe.builder()
-                        .id(recipe3Info.getInt("id"))
-                        .name(recipe3Info.getString("title"))
-                        .build();
+                Recipe recipe3 = this.recipeFactory.create(recipe3Info.getInt("id"),
+                        recipe3Info.getString("title"));
                 recipe3.addImage(recipe3Info.getString("image"), recipe3Info.getString("imageType"));
                 absorbRecipeInfo(recipe3);
 
                 //get recipe 4
                 JSONObject recipe4Info = fullResultsArray.getJSONObject(3);
-                Recipe recipe4 = Recipe.builder()
-                        .id(recipe4Info.getInt("id"))
-                        .name(recipe4Info.getString("title"))
-                        .build();
+                Recipe recipe4 = this.recipeFactory.create(recipe4Info.getInt("id"),
+                        recipe4Info.getString("title"));
                 recipe4.addImage(recipe4Info.getString("image"), recipe4Info.getString("imageType"));
                 absorbRecipeInfo(recipe4);
 
                 //get recipe 5
                 JSONObject recipe5Info = fullResultsArray.getJSONObject(4);
-                Recipe recipe5 = Recipe.builder()
-                        .id(recipe5Info.getInt("id"))
-                        .name(recipe5Info.getString("title"))
-                        .build();
+                Recipe recipe5 = this.recipeFactory.create(recipe5Info.getInt("id"),
+                        recipe5Info.getString("title"));
                 recipe5.addImage(recipe5Info.getString("image"), recipe5Info.getString("imageType"));
                 absorbRecipeInfo(recipe5);
 
