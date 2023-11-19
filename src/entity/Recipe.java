@@ -8,14 +8,19 @@ public interface Recipe {
 
     String getName();
 
-    void addImage(String imageURL, String imageType);
+//    void addImage(String imageURL, String imageType);
 
     String[] getImage();
 
-    void addRecipeTag(RecipeTag recipeTag);
+//    void addRecipeTag(RecipeTag recipeTag);
 
-    void addInstructions(String instructions);
+//    void addInstructions(String instructions);
 
-    void addIngredients(HashMap<String, ArrayList<Object>> ingredients);
+//    void addIngredients(HashMap<String, ArrayList<Object>> ingredients);
 
+    String getInstructions();
+
+    RecipeTag getRecipeTag();
+
+    HashMap<String, ArrayList<Object>> getIngredients();
 }
