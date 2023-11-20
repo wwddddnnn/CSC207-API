@@ -19,6 +19,7 @@ import interface_adapter.search_recipe.SearchPresenter;
 
 
 public class SearchView extends JPanel implements PropertyChangeListener {
+    public final String viewName = "search";
     private final JTextField queryInputField = new JTextField(15);
     private final JComboBox<String> cuisineComboBox;
     private final JTextField weightInputField = new JTextField(15);
@@ -92,7 +93,7 @@ public class SearchView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        //JOptionPane.showMessageDialog(this, "works");
     }
 }
 

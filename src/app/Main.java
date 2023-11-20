@@ -1,6 +1,9 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
+import data_access.SearchRecipeDataAccessObject;
+import entity.CommonRecipeFactory;
+import entity.CommonRecipeTagFactory;
 import entity.CommonUserFactory;
 import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -48,11 +51,11 @@ public class Main {
 
         FileUserDataAccessObject userDataAccessObject;
         FileUserDataAccessObject clearDataAccessObject;
-        FileUserDataAccessObject recipeDataAccessObject;
+        SearchRecipeDataAccessObject searchRecipeDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
             clearDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
-            recipeDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
+            searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -66,10 +69,10 @@ public class Main {
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
-        RecipeView recipeView = new RecipeView(SearchViewModel);
+        SearchView searchView = SearchRecipeUseCaseFactory.create(viewManagerModel, searchViewModel, searchRecipeDataAccessObject);
+        views.add(searchView, searchView.viewName);
 
-
-        viewManagerModel.setActiveView(recipeView.viewName);
+        viewManagerModel.setActiveView(searchView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
