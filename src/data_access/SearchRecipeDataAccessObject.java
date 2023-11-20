@@ -2,9 +2,11 @@ package data_access;
 
 import entity.Recipe;
 import entity.RecipeTag;
+import entity.RecipeFactory;
+import entity.RecipeTagFactory;
 import use_case.search_recipe.SearchRecipeDataAccessInterface;
-import okhttp3.OkHttpClient;
 
+import okhttp3.OkHttpClient;
 import org.json.JSONException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,9 +17,16 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInterface{
+
+    private final RecipeFactory recipeFactory;
+    private final RecipeTagFactory recipeTagFactory;
+
+    public SearchRecipeDataAccessObject(RecipeFactory recipeFactory, RecipeTagFactory recipeTagFactory){
+        this.recipeFactory = recipeFactory;
+        this.recipeTagFactory = recipeTagFactory;
+    }
 
     public ArrayList<Recipe> getByFilters(HashMap filters) {
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -51,59 +60,22 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
             JSONArray fullResultsArray = new JSONArray(responseBody.getJSONArray("results"));
 
             if (!fullResultsArray.isEmpty()) {
-
-                //get recipe 1
-                JSONObject recipe1Info = fullResultsArray.getJSONObject(0);
-
-                Recipe recipe1 = Recipe.builder()
-                        .id(recipe1Info.getInt("id"))
-                        .name(recipe1Info.getString("title"))
-                        .build();
-                recipe1.addImage(recipe1Info.getString("image"), recipe1Info.getString("imageType"));
-                absorbRecipeInfo(recipe1);
-
-                //get recipe 2
-                JSONObject recipe2Info = fullResultsArray.getJSONObject(1);
-                Recipe recipe2 = Recipe.builder()
-                        .id(recipe2Info.getInt("id"))
-                        .name(recipe2Info.getString("title"))
-                        .build();
-                recipe2.addImage(recipe2Info.getString("image"), recipe2Info.getString("imageType"));
-                absorbRecipeInfo(recipe2);
-
-                //get recipe 3
-                JSONObject recipe3Info = fullResultsArray.getJSONObject(2);
-                Recipe recipe3 = Recipe.builder()
-                        .id(recipe3Info.getInt("id"))
-                        .name(recipe3Info.getString("title"))
-                        .build();
-                recipe3.addImage(recipe3Info.getString("image"), recipe3Info.getString("imageType"));
-                absorbRecipeInfo(recipe3);
-
-                //get recipe 4
-                JSONObject recipe4Info = fullResultsArray.getJSONObject(3);
-                Recipe recipe4 = Recipe.builder()
-                        .id(recipe4Info.getInt("id"))
-                        .name(recipe4Info.getString("title"))
-                        .build();
-                recipe4.addImage(recipe4Info.getString("image"), recipe4Info.getString("imageType"));
-                absorbRecipeInfo(recipe4);
-
-                //get recipe 5
-                JSONObject recipe5Info = fullResultsArray.getJSONObject(4);
-                Recipe recipe5 = Recipe.builder()
-                        .id(recipe5Info.getInt("id"))
-                        .name(recipe5Info.getString("title"))
-                        .build();
-                recipe5.addImage(recipe5Info.getString("image"), recipe5Info.getString("imageType"));
-                absorbRecipeInfo(recipe5);
-
                 ArrayList<Recipe> finalRecipeList = new ArrayList<>(5);
-                finalRecipeList.add(recipe1);
-                finalRecipeList.add(recipe2);
-                finalRecipeList.add(recipe3);
-                finalRecipeList.add(recipe4);
-                finalRecipeList.add(recipe5);
+
+                //get recipe from 1 to 5
+                for(int i = 0; i < 5; i++){
+                    JSONObject recipeInfo = fullResultsArray.getJSONObject(i);
+                    int id = recipeInfo.getInt("id");
+                    String name = recipeInfo.getString("title");
+                    String[] image = new String[2];
+                    image[0] = recipeInfo.getString("image");
+                    image[1] = recipeInfo.getString("imageType");
+                    Object[] fullInfo = absorbRecipeInfo(id);   //[recipeTag, instructions, ingredients]
+                    Recipe recipe = this.recipeFactory.create(id, name, image,
+                            (RecipeTag) fullInfo[0], (String) fullInfo[1],
+                            (HashMap<String, ArrayList<Object>>) fullInfo[2]);
+                    finalRecipeList.add(recipe);
+                }
 
                 return finalRecipeList;
 
@@ -122,8 +94,10 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
 
     // absorbRecipeInfo creates and adds the RecipeTag, instructions (String) and ingredients (HashMap)
     // to the Recipe object that is passed in.
-    private void absorbRecipeInfo(Recipe recipe) {
-        int recipeID = recipe.getId();
+    //
+    // New change: modify absorbRecipeInfo method from void to return Object[], which contains the
+    // RecipeTag, instructions, and ingredients.
+    private Object[] absorbRecipeInfo(int recipeID) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
@@ -150,22 +124,16 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
                 boolean vegetarian = responseBody.getBoolean("vegetarian");
                 boolean vegan = responseBody.getBoolean("vegan");
 
-                ArrayList<String> intolerances = new ArrayList<String>();
-                if (responseBody.getBoolean("glutenFree")) {
-                    intolerances.add("Gluten-Free");
-                }
-                if (responseBody.getBoolean("dairyFree")) {
-                    intolerances.add("Dairy-Free");
-                }
+                ArrayList<String> intolerances = new ArrayList<>();
 
-                RecipeTag recipeTag = new RecipeTag(recipeMinutes, servings, cuisinesList,
+                if (responseBody.getBoolean("glutenFree")) intolerances.add("Gluten-Free");
+                if (responseBody.getBoolean("dairyFree")) intolerances.add("Dairy-Free");
+
+                RecipeTag recipeTag = this.recipeTagFactory.create(recipeMinutes, servings, cuisinesList,
                         vegetarian, vegan, intolerances);
-
-                recipe.addRecipeTag(recipeTag);
 
                 //create and add instructions to Recipe object
                 String instructions = responseBody.getString("instructions");
-                recipe.addInstructions(instructions);
 
                 //create IngredientMap, and add to Recipe object
 
@@ -183,7 +151,8 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
                     ingredientMap.put(ingredientName, ingredientInfo);
 
                 }
-                recipe.addIngredients(ingredientMap);
+
+                return new Object[]{recipeTag, instructions, ingredientMap};
 
             } else {
                 throw new RuntimeException("fail");
