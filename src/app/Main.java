@@ -9,10 +9,7 @@ import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.login.LoginUserDataAccessInterface;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -69,7 +66,10 @@ public class Main {
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        RecipeView recipeView = new RecipeView(SearchViewModel);
+
+
+        viewManagerModel.setActiveView(recipeView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

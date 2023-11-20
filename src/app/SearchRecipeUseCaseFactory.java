@@ -24,7 +24,7 @@ import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupUserDataAccessInterface;
-import view.SearchView;
+import view.RecipeView;
 import view.SignupView;
 
 import javax.swing.*;
@@ -33,10 +33,10 @@ import java.io.IOException;
 public class SearchRecipeUseCaseFactory {
     private SearchRecipeUseCaseFactory() {}
 
-    public static SearchView create(
+    public static RecipeView create(
             ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchRecipeDataAccessInterface searchRecipeDataAccessObject) {
         SearchController searchController = createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchRecipeDataAccessObject);
-        return new SearchView(searchController, searchViewModel);
+        return new RecipeView(searchController, searchViewModel);
     }
 
     private static SearchController createSearchRecipeUseCase(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchRecipeDataAccessInterface searchRecipeDataAccessObject) {
