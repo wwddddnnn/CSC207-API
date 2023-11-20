@@ -92,7 +92,7 @@ public class SearchView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // Handle changes in the SearchViewModel's state, such as updating the view or displaying errors
+
     }
 }
 
