@@ -48,7 +48,9 @@ public class SearchRecipeUseCaseFactory {
         RecipeFactory recipeFactory = new CommonRecipeFactory();
 
         SearchInputBoundary searchInteractor = new SearchInteractor(
-                searchRecipeDataAccessObject, searchOutputBoundary, recipeFactory);
+                searchRecipeDataAccessObject, searchOutputBoundary);
+        //SearchInputBoundary searchInteractor = new SearchInteractor(
+        //                searchRecipeDataAccessObject, searchOutputBoundary, recipeFactory);
 
         return new SearchController(searchInteractor);
     }

@@ -7,14 +7,19 @@ public class CommonRecipe implements Recipe{
 
     private final int id;
     private final String name;
-    private String[] image;
-    private RecipeTag recipeTag;
-    private String instructions;
-    private HashMap<String, ArrayList<Object>> ingredients;
+    private final String[] image;
+    private final RecipeTag recipeTag;
+    private final String instructions;
+    private final HashMap<String, ArrayList<Object>> ingredients;
 
-    public CommonRecipe(int id, String name) {
+    public CommonRecipe(int id, String name, String[] image, RecipeTag recipeTag,
+                        String instructions, HashMap<String, ArrayList<Object>> ingredients) {
         this.id = id;
         this.name = name;
+        this.image = image;
+        this.recipeTag = recipeTag;
+        this.instructions = instructions;
+        this.ingredients = ingredients;
     }
 
     public int getId() {
@@ -25,23 +30,27 @@ public class CommonRecipe implements Recipe{
         return name;
     }
 
-    public void addImage(String imageURL, String imageType) {
-        this.image = new String[]{imageURL, imageType};
-    }
-
     public String[] getImage() { return image; }
 
-    public void addRecipeTag(RecipeTag recipeTag) {
-        this.recipeTag = recipeTag;
-    }
+    // image is final, it will not be changed once the recipe was created.
+//    public void addImage(String imageURL, String imageType) {
+//        this.image = new String[]{imageURL, imageType};
+//    }
 
-    public void addInstructions(String instructions) {
-        this.instructions = instructions;
-    }
+    // RecipeTag is final, it will not be changed once the recipe was created.
+//    public void addRecipeTag(RecipeTag recipeTag) {
+//        this.recipeTag = recipeTag;
+//    }
 
-    public void addIngredients(HashMap<String, ArrayList<Object>> ingredients) {
-        this.ingredients = ingredients;
-    }
+//    image is final, it will not be changed once the recipe was created.
+//    public void addInstructions(String instructions) {
+//        this.instructions = instructions;
+//    }
+
+    // ingredients is final, it will not be changed once the recipe was created.
+//    public void addIngredients(HashMap<String, ArrayList<Object>> ingredients) {
+//        this.ingredients = ingredients;
+//    }
 
     public String getInstructions(){
         return this.instructions;
