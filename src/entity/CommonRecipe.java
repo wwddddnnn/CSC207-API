@@ -63,4 +63,61 @@ public class CommonRecipe implements Recipe{
     public HashMap<String, ArrayList<Object>> getIngredients() {
         return this.ingredients;
     }
+    @Override
+    public String toString() {
+
+        RecipeTag tags = getRecipeTag();
+        Integer minutes = tags.getRecipeMinutes();
+        Integer servings = tags.getServings();
+        ArrayList<String> cuisines = tags.getCuisines();
+        boolean vegetarianBool = tags.getVegetarianBool();
+        boolean veganBool = tags.getVeganBool();
+        ArrayList<String> intolerances = tags.getIntolerances();
+
+        //name string
+        String nameString = "Name: " + getName();
+
+        //general info string
+        String cuisinesString = "";
+        for (String cuisine : cuisines) {
+            if (cuisinesString.isEmpty()) {
+                cuisinesString = cuisinesString + cuisine;
+            } else {
+                cuisinesString = cuisinesString + ", " + cuisine;
+            }
+        }
+        String genInfoString = "Minutes to make: " + minutes +
+                "\nServings: " + servings +
+                "\nCuisines:" + cuisinesString;
+
+        //vegetarian and vegan string
+        String vegetarianString;
+        String veganString;
+        if (vegetarianBool) {
+            vegetarianString = "Yes";
+        } else {
+            vegetarianString = "No";
+        }
+        if (veganBool) {
+            veganString = "Yes";
+        } else {
+            veganString = "No";
+        }
+        String vegString = "Vegetarian: " + vegetarianString +
+                "\nVegan: " + veganString;
+
+        //intolerances string
+        String intolerancesString = "";
+        for (String intolerance : intolerances) {
+            if (intolerancesString.isEmpty()) {
+                intolerancesString = intolerancesString + intolerance;
+            } else {
+                intolerancesString = intolerancesString + ", " + intolerance;
+            }
+        }
+        String intolString = "Intolerances: " + intolerancesString;
+
+        String finalString = nameString + "\n" + genInfoString + "\n" + vegString + "\n" + intolString;
+        return finalString;
+    }
 }
