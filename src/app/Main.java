@@ -1,18 +1,15 @@
 package app;
-// Hello
 
 import data_access.FileUserDataAccessObject;
 import entity.CommonUserFactory;
 import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.login.LoginUserDataAccessInterface;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +22,7 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Login Example");
+        JFrame application = new JFrame("Recipe Search Program");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -46,13 +43,16 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         ClearViewModel clearViewModel = new ClearViewModel();
+        SearchViewModel searchViewModel = new SearchViewModel();
 
 
         FileUserDataAccessObject userDataAccessObject;
         FileUserDataAccessObject clearDataAccessObject;
+        FileUserDataAccessObject recipeDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
             clearDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
+            recipeDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -66,7 +66,10 @@ public class Main {
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        RecipeView recipeView = new RecipeView(SearchViewModel);
+
+
+        viewManagerModel.setActiveView(recipeView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

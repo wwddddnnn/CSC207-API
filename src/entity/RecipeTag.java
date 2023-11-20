@@ -2,48 +2,17 @@ package entity;
 
 import java.util.ArrayList;
 
-public class RecipeTag {
-    private int recipeMinutes;
-    private int servings;
-    private ArrayList<String> cuisines;
-    private boolean vegetarianBool;
-    private boolean veganBool;
-    private ArrayList<String> intolerances;
+public interface RecipeTag {
+    int getRecipeMinutes();
 
-    public RecipeTag(int recipeMinutes, int servings, ArrayList<String> cuisines,
-                     boolean vegetarianBool, boolean veganBool, ArrayList<String> intolerances) {
-        this.recipeMinutes = recipeMinutes;
-        this.servings = servings;
-        this.cuisines = cuisines;
-        this.vegetarianBool = vegetarianBool;
-        this.veganBool = veganBool;
-        this.intolerances = intolerances;
-    }
+    int getServings();
 
-    public int getRecipeMinutes() {
-        return recipeMinutes;
-    }
+    ArrayList<String> getCuisines();
 
-    public int getServings() {
-        return servings;
-    }
+    boolean getVegetarianBool();
 
-    public ArrayList<String> getCuisines() {
-        return cuisines;
-    }
+    boolean getVeganBool();
 
-    public boolean getVegetarianBool() {
-        return vegetarianBool;
-    }
-
-    public boolean getVeganBool() {
-        return veganBool;
-    }
-
-    public ArrayList<String> getIntolerances() {
-        return intolerances;
-    }
-
-
+    ArrayList<String> getIntolerances();
 
 }
