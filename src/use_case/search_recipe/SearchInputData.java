@@ -19,7 +19,6 @@ public class SearchInputData {
     public String getQuery() {
         return query;
     }
-
     public String getCuisine(){
         return cuisine;
     }

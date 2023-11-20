@@ -23,4 +23,6 @@ public interface Recipe {
     RecipeTag getRecipeTag();
 
     HashMap<String, ArrayList<Object>> getIngredients();
+
+    String toString();
 }

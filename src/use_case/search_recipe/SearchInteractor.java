@@ -4,13 +4,12 @@ import entity.Recipe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class SearchInteractor implements SearchInputBoundary{
-    private final SearchRecipeDataAccessInterface searchRecipeDAO;
+    final SearchRecipeDataAccessInterface searchRecipeDAO;
     final SearchOutputBoundary searchDataPresenter;
 
-    public SearchInteractor(SearchRecipeDataAccessInterface searchRecipeDAO,SearchOutputBoundary searchDataPresenter) {
+    public SearchInteractor(SearchRecipeDataAccessInterface searchRecipeDAO, SearchOutputBoundary searchDataPresenter) {
         this.searchRecipeDAO = searchRecipeDAO;
         this.searchDataPresenter = searchDataPresenter;
     }
@@ -21,7 +20,7 @@ public class SearchInteractor implements SearchInputBoundary{
         String cuisine = searchData.getCuisine();
         String maxTime = searchData.getMaxTime();
 
-        HashMap filtersMap = new HashMap();
+        HashMap<String, String> filtersMap = new HashMap<>();
         if (!query.isEmpty()) {
             filtersMap.put("query", query);
         }

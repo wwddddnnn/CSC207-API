@@ -1,7 +1,7 @@
 package interface_adapter.search_recipe;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.signup.SignupState;
+import interface_adapter.search_recipe.SearchState;
 import use_case.search_recipe.SearchOutputBoundary;
 import use_case.search_recipe.SearchOutputData;
 
@@ -24,6 +24,9 @@ public class SearchPresenter implements SearchOutputBoundary {
         searchState.setRecipe(result.getRecipes());
         this.searchViewModel.setState(searchState);
         this.searchViewModel.firePropertyChanged();
+
+        this.viewManagerModel.setActiveView(this.searchViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
 
     @Override
