@@ -8,6 +8,7 @@ import entity.CommonUserFactory;
 import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.search_recipe.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
@@ -47,6 +48,7 @@ public class Main {
         SignupViewModel signupViewModel = new SignupViewModel();
         ClearViewModel clearViewModel = new ClearViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
+        SearchResultsViewModel searchResultsViewModel = new SearchResultsViewModel();
 
 
         FileUserDataAccessObject userDataAccessObject;
@@ -69,7 +71,7 @@ public class Main {
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
-        SearchView searchView = SearchRecipeUseCaseFactory.create(viewManagerModel, searchViewModel, searchRecipeDataAccessObject);
+        SearchView searchView = SearchRecipeUseCaseFactory.create(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
         views.add(searchView, searchView.viewName);
 
         viewManagerModel.setActiveView(searchView.viewName);

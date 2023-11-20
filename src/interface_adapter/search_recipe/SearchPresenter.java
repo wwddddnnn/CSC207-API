@@ -9,10 +9,12 @@ public class SearchPresenter implements SearchOutputBoundary {
 
     private final SearchViewModel searchViewModel;
     private ViewManagerModel viewManagerModel;
+    private SearchResultsViewModel searchResultsViewModel;
 
-    public SearchPresenter(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel) {
+    public SearchPresenter(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchResultsViewModel searchResultsViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.searchViewModel = searchViewModel;
+        this.searchResultsViewModel = searchResultsViewModel;
     }
 
     public void prepareSuccessView(SearchOutputData result){

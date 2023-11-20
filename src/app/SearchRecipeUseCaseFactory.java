@@ -8,6 +8,7 @@ import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchPresenter;
+import interface_adapter.search_recipe.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -34,15 +35,15 @@ public class SearchRecipeUseCaseFactory {
     private SearchRecipeUseCaseFactory() {}
 
     public static SearchView create(
-            ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchRecipeDataAccessInterface searchRecipeDataAccessObject) {
-        SearchController searchController = createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchRecipeDataAccessObject);
+            ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchResultsViewModel searchResultsViewModel, SearchRecipeDataAccessInterface searchRecipeDataAccessObject) {
+        SearchController searchController = createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
         return new SearchView(searchController, searchViewModel);
     }
 
-    private static SearchController createSearchRecipeUseCase(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchRecipeDataAccessInterface searchRecipeDataAccessObject) {
+    private static SearchController createSearchRecipeUseCase(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, SearchResultsViewModel searchResultsViewModel, SearchRecipeDataAccessInterface searchRecipeDataAccessObject) {
 
         // Notice how we pass this method's parameters to the Presenter.
-        SearchOutputBoundary searchOutputBoundary = new SearchPresenter(viewManagerModel, searchViewModel);
+        SearchOutputBoundary searchOutputBoundary = new SearchPresenter(viewManagerModel, searchViewModel, searchResultsViewModel);
         //SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
         RecipeFactory recipeFactory = new CommonRecipeFactory();
