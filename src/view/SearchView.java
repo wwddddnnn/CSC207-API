@@ -12,14 +12,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
-import interface_adapter.clear_users.ClearState;
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchState;
 import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.search_recipe.SearchPresenter;
 
 
-public class SearchView extends JPanel implements PropertyChangeListener {
+public class SearchView extends JPanel implements ActionListener, PropertyChangeListener{
     public final String viewName = "search";
     private final JTextField queryInputField = new JTextField(15);
     private final JComboBox<String> cuisineComboBox;
@@ -79,8 +78,10 @@ public class SearchView extends JPanel implements PropertyChangeListener {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SearchState currentState = searchViewModel.getState();
-                searchController.execute(currentState.getQuery(), (String) cuisineComboBox.getSelectedItem(), currentState.getMaxTime());
+                if(e.getSource().equals(searchButton)) {
+                    SearchState currentState = searchViewModel.getState();
+                    searchController.execute(currentState.getQuery(), (String) cuisineComboBox.getSelectedItem(), currentState.getMaxTime());
+                }
             }
         });
 
@@ -96,6 +97,11 @@ public class SearchView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         //SearchState state = (SearchState) evt.getNewValue();
         //JOptionPane.showMessageDialog(this, state.getRecipe());
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }
 
