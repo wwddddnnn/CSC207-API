@@ -8,6 +8,9 @@ import java.beans.PropertyChangeSupport;
 public class SearchResultsViewModel extends ViewModel {
 
     private SearchState state = new SearchState();
+
+    public static final String CONFIRM_BUTTON_LABEL = "Confirm";
+
     public SearchResultsViewModel(){super("Search results");}
     public void setState(SearchState state){this.state = state;}
 
