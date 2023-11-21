@@ -11,6 +11,7 @@ import java.util.List;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.login.LoginState;
 import interface_adapter.search_recipe.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchState;
 import interface_adapter.search_recipe.SearchViewModel;
@@ -18,14 +19,17 @@ import view.SearchView;
 
 public class SearchResultView extends JPanel implements ActionListener, PropertyChangeListener{
 
-    public final String viewName = "Search Results";
+    public final String viewName = "Search results";
     private final SearchResultsViewModel searchResultsViewModel;
-    
+
     private final SearchViewModel searchViewModel;
 
     private final ViewManagerModel viewManagerModel;
-    private JLabel[] recipeLabels = new JLabel[0]; // Array to hold labels for up to 5 recipes
-    // Change in 2023/11/20: the amount of recipe may less than 5.
+    private JLabel recipe1 = new JLabel("");
+    private JLabel recipe2 = new JLabel("");
+    private JLabel recipe3 = new JLabel("");
+    private JLabel recipe4 = new JLabel("");
+    private JLabel recipe5 = new JLabel("");
 
     final JButton confirm;
 
@@ -39,18 +43,16 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 
         this.setLayout(new GridLayout(6, 1)); // GridLayout to organize labels
 
-        updateResultView(); // Initial update
-
         this.add(new JLabel("These are the recipes you want: "));
-        for (int i = 0; i < recipeLabels.length; i++) {
-            recipeLabels[i] = new JLabel();
-            this.add(recipeLabels[i]);
-        }
+        this.add(recipe1);
+        this.add(recipe2);
+        this.add(recipe3);
+        this.add(recipe4);
+        this.add(recipe5);
+
 
         JPanel buttons = new JPanel();
         this.confirm = new JButton(searchResultsViewModel.CONFIRM_BUTTON_LABEL);
-        buttons.add(confirm);
-
         this.confirm.addActionListener(new ActionListener() {
 
             @Override
@@ -64,33 +66,39 @@ public class SearchResultView extends JPanel implements ActionListener, Property
                 }
             }
         });
-    }
+        buttons.add(confirm);
 
-    private void updateResultView() {
-        SearchState currentState = searchResultsViewModel.getState();
-        ArrayList<String> recipes = currentState.getRecipe();
-        this.recipeLabels = new JLabel[recipes.size()];
-//        clearRecipeLabels();
-        // recipeLabels is already empty.
-
-        for (int i = 0; i < recipeLabels.length; i++) {
-            recipeLabels[i].setText(recipes.get(i));
-        }
-    }
-
-    private void clearRecipeLabels() {
-        for (JLabel label : recipeLabels) {
-            label.setText("");
-        }
+        this.add(buttons);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        SearchState currentState = (SearchState) evt.getNewValue();
+        ArrayList<String> recipes = currentState.getRecipe();
+
+        if (recipes.size() != 0) {
+
+            for (int i = 0; i < recipes.size(); i++) {
+                if (i == 0) {
+                    recipe1.setText(recipes.get(0));
+                } else if (i == 1) {
+                    recipe2.setText(recipes.get(1));
+                } else if (i == 2) {
+                    recipe3.setText(recipes.get(2));
+                } else if (i == 3) {
+                    recipe4.setText(recipes.get(3));
+                } else if (i == 4) {
+                    recipe5.setText(recipes.get(4));
+                }
+            }
+        } else {
+            recipe1.setText("No recipes found!");
+        }
+
 
     }
 }
