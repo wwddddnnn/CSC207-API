@@ -17,6 +17,6 @@ class SearchRecipeDataAccessObjectTest {
     }
     @Test
     void getByFilters() {
-
+        return ;
     }
 }
