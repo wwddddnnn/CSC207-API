@@ -10,9 +10,9 @@ public class SearchState {
 
     private String maxTime = "";
 
-    private String searchByFilterError = null;
+    private String searchByFilterError = "";
 
-    private ArrayList<String> recipe = null;
+    private ArrayList<String> recipe = new ArrayList<>();
 
     public SearchState(SearchState copy){
         query = copy.query;
