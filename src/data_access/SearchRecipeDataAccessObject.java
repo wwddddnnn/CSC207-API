@@ -64,17 +64,21 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
 
                 //get recipe from 1 to 5
                 for(int i = 0; i < 5; i++){
-                    JSONObject recipeInfo = fullResultsArray.getJSONObject(i);
-                    int id = recipeInfo.getInt("id");
-                    String name = recipeInfo.getString("title");
-                    String[] image = new String[2];
-                    image[0] = recipeInfo.getString("image");
-                    image[1] = recipeInfo.getString("imageType");
-                    Object[] fullInfo = absorbRecipeInfo(id);   //[recipeTag, instructions, ingredients]
-                    Recipe recipe = this.recipeFactory.create(id, name, image,
-                            (RecipeTag) fullInfo[0], (String) fullInfo[1],
-                            (HashMap<String, ArrayList<Object>>) fullInfo[2]);
-                    finalRecipeList.add(recipe);
+                    try {
+                        JSONObject recipeInfo = fullResultsArray.getJSONObject(i);
+                        int id = recipeInfo.getInt("id");
+                        String name = recipeInfo.getString("title");
+                        String[] image = new String[2];
+                        image[0] = recipeInfo.getString("image");
+                        image[1] = recipeInfo.getString("imageType");
+                        Object[] fullInfo = absorbRecipeInfo(id);   //[recipeTag, instructions, ingredients]
+                        Recipe recipe = this.recipeFactory.create(id, name, image,
+                                (RecipeTag) fullInfo[0], (String) fullInfo[1],
+                                (HashMap<String, ArrayList<Object>>) fullInfo[2]);
+                        finalRecipeList.add(recipe);
+                    } catch (JSONException e){
+                        throw new JSONException(e);
+                    }
                 }
 
                 return finalRecipeList;
