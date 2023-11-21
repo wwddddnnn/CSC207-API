@@ -1,6 +1,7 @@
 package use_case.search_recipe;
 import entity.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchOutputData {
@@ -20,8 +21,13 @@ public class SearchOutputData {
         this.maxTime = maxTime;
     }
 
-    public String getRecipes() {
-        return recipes.toString();
+    public ArrayList<String> getRecipes() {
+        ArrayList<String> recipeStringList = new ArrayList<>(5);
+        for (Recipe recipe : recipes) {
+            String recipeString = recipe.toString();
+            recipeStringList.add(recipeString);
+        }
+        return recipeStringList;
     }
 
     public String getQuery(){

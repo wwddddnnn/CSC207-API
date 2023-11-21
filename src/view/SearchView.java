@@ -12,6 +12,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
+import interface_adapter.clear_users.ClearState;
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchState;
 import interface_adapter.search_recipe.SearchViewModel;
@@ -93,7 +94,8 @@ public class SearchView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //JOptionPane.showMessageDialog(this, "works");
+        //SearchState state = (SearchState) evt.getNewValue();
+        //JOptionPane.showMessageDialog(this, state.getRecipe());
     }
 }
 

@@ -1,5 +1,7 @@
 package interface_adapter.search_recipe;
 
+import java.util.ArrayList;
+
 public class SearchState {
 
     private String query = "";
@@ -10,7 +12,7 @@ public class SearchState {
 
     private String searchByFilterError = null;
 
-    private String recipe = "";
+    private ArrayList<String> recipe = null;
 
     public SearchState(SearchState copy){
         query = copy.query;
@@ -31,7 +33,7 @@ public class SearchState {
         return searchByFilterError;
     }
 
-    public String getRecipe(){return recipe;}
+    public ArrayList<String> getRecipe(){return recipe;}
 
     public void setQuery(String query){this.query = query;}
 
@@ -43,7 +45,7 @@ public class SearchState {
         this.searchByFilterError = searchByFilterError;
     }
 
-    public void setRecipe(String recipe){this.recipe = recipe;}
+    public void setRecipe(ArrayList<String> recipe){this.recipe = recipe;}
 
     public String toString(){
         return "SearchState{" +
