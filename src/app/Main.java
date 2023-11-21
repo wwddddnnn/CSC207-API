@@ -71,6 +71,9 @@ public class Main {
         LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
+        SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel,viewManagerModel);
+        views.add(searchResultView, searchResultView.viewName);
+
         SearchView searchView = SearchRecipeUseCaseFactory.create(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
         views.add(searchView, searchView.viewName);
 
