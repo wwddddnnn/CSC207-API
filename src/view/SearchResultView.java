@@ -11,6 +11,7 @@ import java.util.List;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.login.LoginState;
 import interface_adapter.search_recipe.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchState;
 import interface_adapter.search_recipe.SearchViewModel;
@@ -49,8 +50,6 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 
         JPanel buttons = new JPanel();
         this.confirm = new JButton(searchResultsViewModel.CONFIRM_BUTTON_LABEL);
-        buttons.add(confirm);
-
         this.confirm.addActionListener(new ActionListener() {
 
             @Override
@@ -64,6 +63,9 @@ public class SearchResultView extends JPanel implements ActionListener, Property
                 }
             }
         });
+        buttons.add(confirm);
+
+        this.add(buttons);
     }
 
     private void updateResultView() {
@@ -86,7 +88,6 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
 
     @Override

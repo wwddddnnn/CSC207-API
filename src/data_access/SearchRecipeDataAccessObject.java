@@ -60,7 +60,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
             JSONArray fullResultsArray = new JSONArray(responseBody.getJSONArray("results"));
 
             if (!fullResultsArray.isEmpty()) {
-                ArrayList<Recipe> finalRecipeList = new ArrayList<>(5);
+                ArrayList<Recipe> finalRecipeList = new ArrayList<>();
 
                 //get recipe from 1 to 5
                 for(int i = 0; i < 5; i++){
@@ -77,12 +77,11 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
                                 (HashMap<String, ArrayList<Object>>) fullInfo[2]);
                         finalRecipeList.add(recipe);
                     } catch (JSONException e){
-                        throw new JSONException(e);
+                        System.out.println("There are only " + finalRecipeList.size() + " recipes!");
+                        // only print in terminal. Do you want to show this sentence in SearchResultView?
                     }
                 }
-
                 return finalRecipeList;
-
             } else {
                 ArrayList<Recipe> emptyRecipeList = new ArrayList<>(0);
                 return emptyRecipeList;

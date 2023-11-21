@@ -43,10 +43,10 @@ public class Main {
         // This information will be changed by a presenter object that is reporting the
         // results from the use case. The ViewModels are observable, and will
         // be observed by the Views.
-        LoginViewModel loginViewModel = new LoginViewModel();
-        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
-        SignupViewModel signupViewModel = new SignupViewModel();
-        ClearViewModel clearViewModel = new ClearViewModel();
+//        LoginViewModel loginViewModel = new LoginViewModel();
+//        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
+//        SignupViewModel signupViewModel = new SignupViewModel();
+//        ClearViewModel clearViewModel = new ClearViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchResultsViewModel searchResultsViewModel = new SearchResultsViewModel();
 
@@ -62,14 +62,14 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, clearViewModel, clearDataAccessObject);
-        views.add(signupView, signupView.viewName);
-
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
-        views.add(loginView, loginView.viewName);
-
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
-        views.add(loggedInView, loggedInView.viewName);
+//        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, clearViewModel, clearDataAccessObject);
+//        views.add(signupView, signupView.viewName);
+//
+//        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+//        views.add(loginView, loginView.viewName);
+//
+//        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
+//        views.add(loggedInView, loggedInView.viewName);
 
         SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel,viewManagerModel);
         views.add(searchResultView, searchResultView.viewName);
