@@ -78,7 +78,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
                         finalRecipeList.add(recipe);
                     } catch (JSONException e){
                         System.out.println("There are only " + finalRecipeList.size() + " recipes!");
-                        // only print in terminal. Do you want to show this sentence in SearchResultView?
+                        // only print in console. Do you want to show this sentence in SearchResultView?
                     }
                 }
                 return finalRecipeList;
