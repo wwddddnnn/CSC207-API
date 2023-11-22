@@ -77,7 +77,8 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
                                 (HashMap<String, ArrayList<Object>>) fullInfo[2]);
                         finalRecipeList.add(recipe);
                     } catch (JSONException e){
-                        throw new JSONException(e);
+                        System.out.println("There are only " + finalRecipeList.size() + " recipes!");
+                        // only print in console. Do you want to show this sentence in SearchResultView?
                     }
                 }
 
