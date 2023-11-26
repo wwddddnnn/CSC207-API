@@ -20,7 +20,7 @@ public class SearchViewModel extends ViewModel {
 
     private SearchState state = new SearchState();
 
-    public SearchViewModel(){super("search recipes");};
+    public SearchViewModel(){super("Search recipes");};
 
     public void setState(SearchState state){this.state = state;}
 

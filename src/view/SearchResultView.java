@@ -59,8 +59,6 @@ public class SearchResultView extends JPanel implements ActionListener, Property
             public void actionPerformed(ActionEvent e) {
                 // return to the searchView after clicking confirm button.
                 if (e.getSource().equals(confirm)) {
-                    searchViewModel.firePropertyChanged();
-
                     viewManagerModel.setActiveView(searchViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }
