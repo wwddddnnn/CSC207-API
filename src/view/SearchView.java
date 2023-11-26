@@ -80,7 +80,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource().equals(searchButton)) {
                     SearchState currentState = searchViewModel.getState();
-                    searchController.execute(currentState.getQuery(), (String) cuisineComboBox.getSelectedItem(), currentState.getMaxTime());
+                    if (currentState.getMaxTime().equals("0")){
+                        popUpWindow("MaxTime cannot be 0!");
+                    } else {
+                        searchController.execute(currentState.getQuery(),
+                                (String) cuisineComboBox.getSelectedItem(),
+                                currentState.getMaxTime());
+                    }
                 }
             }
         });
@@ -95,13 +101,16 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //SearchState state = (SearchState) evt.getNewValue();
-        //JOptionPane.showMessageDialog(this, state.getRecipe());
+        SearchState state = (SearchState) evt.getNewValue();
+        JOptionPane.showMessageDialog(this, state.getRecipe());
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+    }
 
+    private void popUpWindow(String message){
+        JOptionPane.showMessageDialog(this, message);
     }
 }
 
