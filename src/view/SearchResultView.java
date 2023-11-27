@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
+import entity.Recipe;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
@@ -26,7 +27,7 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 
     private JLabel title = new JLabel();
 //    private JLabel[] recipes = new JLabel[5];
-    private HashMap<String, String> foundRecipes;
+    private HashMap<String, Recipe> foundRecipes;
     private JButton[] recipesTitle = new JButton[5];
 
     final JButton confirm;
@@ -77,13 +78,13 @@ public class SearchResultView extends JPanel implements ActionListener, Property
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SearchState currentState = (SearchState) evt.getNewValue();
-        HashMap<String, String> recipes = currentState.getRecipe();
+        HashMap<String, Recipe> recipes = currentState.getRecipe();
         this.foundRecipes = recipes;
         if (!foundRecipes.isEmpty()) {
             String[] rtList = foundRecipes.keySet().toArray(new String[0]);;
             for (int i = 0; i < rtList.length; i++) {
                 recipesTitle[i].setText(rtList[i]);
-                System.out.println(rtList[i]);
+//                System.out.println(rtList[i]);
                 int finalI = i;
                 recipesTitle[i].addActionListener(new ActionListener() {
                     @Override

@@ -1,14 +1,18 @@
 package view;
 
+import entity.Recipe;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class DisplayRecipeView extends JFrame implements ActionListener {
 
@@ -20,7 +24,7 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
     private JPanel middlePanel = new JPanel();
     private JButton finish;
 
-    public DisplayRecipeView(String text, DisplayRecipeViewModel displayRecipeViewModel,
+    public DisplayRecipeView(Recipe recipe, DisplayRecipeViewModel displayRecipeViewModel,
                              SearchResultsViewModel searchResultsViewModel,
                              ViewManagerModel viewManagerModel) {
         this.displayRecipeViewModel = displayRecipeViewModel;
@@ -41,11 +45,21 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
         // create the middle panel components
 
         JTextArea display = new JTextArea(16, 58);
-        display.setText(text);
+        display.setText(recipe.toString());
         display.setEditable(false); // set textArea non-editable
         display.setLineWrap(true);
         JScrollPane scroll = new JScrollPane(display);
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        Image image = null;
+        try {
+            image = ImageIO.read(new URL(recipe.getImage()[0]));
+
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+        JLabel label = new JLabel(new ImageIcon(image));
+        this.middlePanel.add(label, BorderLayout.CENTER);
 
         //Add Textarea in to middle panel
         middlePanel.add(scroll);
@@ -53,6 +67,7 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
         // My code
         JFrame frame = new JFrame();
         frame.add(middlePanel);
+//        frame.add(finish);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

@@ -25,12 +25,12 @@ public class SearchOutputData {
         this.totalRecipeAmount = totalRecipeAmount;
     }
 
-    public HashMap<String, String> getRecipes() {
+    public HashMap<String, Recipe> getRecipes() {
         // HashMap<Recipe.getName(), Recipe.toString()>
-        HashMap<String, String> recipeStringList = new HashMap<>(5);
+        HashMap<String, Recipe> recipeStringList = new HashMap<>(5);
         for (Recipe recipe : recipes) {
             String recipeString = recipe.toString();
-            recipeStringList.put(recipe.getName(), recipeString);
+            recipeStringList.put(recipe.getName(), recipe);
         }
         return recipeStringList;
     }
