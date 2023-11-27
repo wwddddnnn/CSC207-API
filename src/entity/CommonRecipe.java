@@ -117,7 +117,7 @@ public class CommonRecipe implements Recipe{
         }
         String intolString = "Intolerances: " + intolerancesString;
 
-        String finalString = nameString + "\n" + genInfoString + "\n" + vegString + "\n" + intolString;
+        String finalString = nameString + "\n" + genInfoString + "\n" + vegString + "\n" + intolString + "\n" + instructions;
         return finalString;
     }
 }

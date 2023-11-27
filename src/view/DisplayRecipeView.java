@@ -43,6 +43,7 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
         JTextArea display = new JTextArea(16, 58);
         display.setText(text);
         display.setEditable(false); // set textArea non-editable
+        display.setLineWrap(true);
         JScrollPane scroll = new JScrollPane(display);
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
