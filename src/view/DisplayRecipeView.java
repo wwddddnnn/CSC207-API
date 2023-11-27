@@ -1,0 +1,66 @@
+package view;
+
+import interface_adapter.ViewManagerModel;
+import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
+import interface_adapter.search_recipe_results.SearchResultsViewModel;
+
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class DisplayRecipeView extends JFrame implements ActionListener {
+
+    private final String viewName = "Display recipe";
+    private final DisplayRecipeViewModel displayRecipeViewModel;
+    private final SearchResultsViewModel searchResultsViewModel;
+    private final ViewManagerModel viewManagerModel;
+
+    private JPanel middlePanel = new JPanel();
+    private JButton finish;
+
+    public DisplayRecipeView(String text, DisplayRecipeViewModel displayRecipeViewModel,
+                             SearchResultsViewModel searchResultsViewModel,
+                             ViewManagerModel viewManagerModel) {
+        this.displayRecipeViewModel = displayRecipeViewModel;
+        this.searchResultsViewModel = searchResultsViewModel;
+        this.viewManagerModel = viewManagerModel;
+        this.finish = new JButton(this.displayRecipeViewModel.FINISH_BUTTON_LABEL);
+        // return to the searchResultView after clicking finish button.
+        this.finish.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DisplayRecipeView.this.viewManagerModel.setActiveView(DisplayRecipeView.this.searchResultsViewModel.getViewName());
+                DisplayRecipeView.this.viewManagerModel.firePropertyChanged();
+            }
+        });
+
+        middlePanel.setBorder(new TitledBorder(new EtchedBorder(), "Display Area"));
+
+        // create the middle panel components
+
+        JTextArea display = new JTextArea(16, 58);
+        display.setText(text);
+        display.setEditable(false); // set textArea non-editable
+        JScrollPane scroll = new JScrollPane(display);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        //Add Textarea in to middle panel
+        middlePanel.add(scroll);
+
+        // My code
+        JFrame frame = new JFrame();
+        frame.add(middlePanel);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+}
+
+

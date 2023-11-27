@@ -1,7 +1,7 @@
 package interface_adapter.search_recipe;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.search_recipe.SearchState;
+import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import use_case.search_recipe.SearchOutputBoundary;
 import use_case.search_recipe.SearchOutputData;
 
@@ -23,6 +23,8 @@ public class SearchPresenter implements SearchOutputBoundary {
         // on success, switch to the search result view.
         SearchState searchState = this.searchViewModel.getState();
         searchState.setRecipe(result.getRecipes());
+        searchState.setTotalRecipeAmount(result.getTotalRecipeAmount());
+        System.out.println(result.getTotalRecipeAmount() + " in Presenter");
         this.searchResultsViewModel.setState(searchState);
         this.searchResultsViewModel.firePropertyChanged();
 

@@ -10,4 +10,6 @@ public interface SearchRecipeDataAccessInterface {
 
     ArrayList<Recipe> getByFilters(HashMap filters);
 
+    int getAmountByFilter();
+
 }

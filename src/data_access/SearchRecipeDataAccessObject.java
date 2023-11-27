@@ -22,11 +22,14 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
 
     private final RecipeFactory recipeFactory;
     private final RecipeTagFactory recipeTagFactory;
+    private JSONArray fullResultsArray;
 
     public SearchRecipeDataAccessObject(RecipeFactory recipeFactory, RecipeTagFactory recipeTagFactory){
         this.recipeFactory = recipeFactory;
         this.recipeTagFactory = recipeTagFactory;
+        this.fullResultsArray = new JSONArray();
     }
+
 
     public ArrayList<Recipe> getByFilters(HashMap filters) {
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -57,7 +60,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
         try {
             Response response = client.newCall(request).execute();
             JSONObject responseBody = new JSONObject(response.body().string());
-            JSONArray fullResultsArray = new JSONArray(responseBody.getJSONArray("results"));
+            this.fullResultsArray = new JSONArray(responseBody.getJSONArray("results"));
 
             if (!fullResultsArray.isEmpty()) {
                 ArrayList<Recipe> finalRecipeList = new ArrayList<>(5);
@@ -166,5 +169,10 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
             throw new RuntimeException(e);
 
         }
+    }
+
+    public int getAmountByFilter(){
+        System.out.println(this.fullResultsArray.length() + " in DAO");
+        return this.fullResultsArray.length();
     }
 }

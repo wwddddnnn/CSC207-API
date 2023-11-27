@@ -1,6 +1,7 @@
 package interface_adapter.search_recipe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SearchState {
 
@@ -12,7 +13,9 @@ public class SearchState {
 
     private String searchByFilterError = "";
 
-    private ArrayList<String> recipe = new ArrayList<>();
+    private int totalRecipeAmount;
+
+    private HashMap<String, String> recipe = new HashMap<>();
 
     public SearchState(SearchState copy){
         query = copy.query;
@@ -20,6 +23,7 @@ public class SearchState {
         maxTime = copy.maxTime;
         searchByFilterError = copy.searchByFilterError;
         recipe = copy.recipe;
+        totalRecipeAmount = copy.totalRecipeAmount;
     }
     public SearchState(){}
 
@@ -33,7 +37,7 @@ public class SearchState {
         return searchByFilterError;
     }
 
-    public ArrayList<String> getRecipe(){return recipe;}
+    public HashMap<String, String> getRecipe(){return recipe;}
 
     public void setQuery(String query){this.query = query;}
 
@@ -45,7 +49,17 @@ public class SearchState {
         this.searchByFilterError = searchByFilterError;
     }
 
-    public void setRecipe(ArrayList<String> recipe){this.recipe = recipe;}
+    public void setRecipe(HashMap<String, String> recipe){
+        this.recipe = recipe;
+    }
+
+    public void setTotalRecipeAmount(int amount){
+        this.totalRecipeAmount = amount;
+    }
+
+    public int getTotalRecipeAmount(){
+        return this.totalRecipeAmount;
+    }
 
     public String toString(){
         return "SearchState{" +

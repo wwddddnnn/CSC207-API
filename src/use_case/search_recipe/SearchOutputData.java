@@ -2,6 +2,7 @@ package use_case.search_recipe;
 import entity.Recipe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SearchOutputData {
@@ -13,19 +14,23 @@ public class SearchOutputData {
 
     private final String maxTime;
 
-    public SearchOutputData(List<Recipe> recipes, String cuisine, String query, String maxTime) {
+    private final int totalRecipeAmount;
+
+    public SearchOutputData(List<Recipe> recipes, String cuisine, String query, String maxTime, int totalRecipeAmount) {
 
         this.recipes = recipes;
         this.cuisine = cuisine;
         this.query = query;
         this.maxTime = maxTime;
+        this.totalRecipeAmount = totalRecipeAmount;
     }
 
-    public ArrayList<String> getRecipes() {
-        ArrayList<String> recipeStringList = new ArrayList<>(5);
+    public HashMap<String, String> getRecipes() {
+        // HashMap<Recipe.getName(), Recipe.toString()>
+        HashMap<String, String> recipeStringList = new HashMap<>(5);
         for (Recipe recipe : recipes) {
             String recipeString = recipe.toString();
-            recipeStringList.add(recipeString);
+            recipeStringList.put(recipe.getName(), recipeString);
         }
         return recipeStringList;
     }
@@ -40,5 +45,9 @@ public class SearchOutputData {
 
     public String getMaxTime(){
         return maxTime;
+    }
+
+    public int getTotalRecipeAmount(){
+        return this.totalRecipeAmount;
     }
 }
