@@ -84,11 +84,12 @@ public class SearchResultView extends JPanel implements ActionListener, Property
             for (int i = 0; i < rtList.length; i++) {
                 recipesTitle[i].setText(rtList[i]);
                 System.out.println(rtList[i]);
+                int finalI = i;
                 recipesTitle[i].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         DisplayRecipeViewModel displayRecipeViewModel= new DisplayRecipeViewModel();
-                        DisplayRecipeView displayRecipeView = new DisplayRecipeView("maybe something in there.",
+                        DisplayRecipeView displayRecipeView = new DisplayRecipeView(foundRecipes.get(rtList[finalI]),
                                 displayRecipeViewModel, searchResultsViewModel, viewManagerModel);
                         viewManagerModel.setActiveView(displayRecipeViewModel.getViewName());
                         viewManagerModel.firePropertyChanged();
