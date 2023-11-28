@@ -26,4 +26,5 @@ public class SaveInteractor implements SaveInputBoundary {
             saveDataPresenter.prepareSuccessView();
         }
     }
+
 }

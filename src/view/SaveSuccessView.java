@@ -19,7 +19,6 @@ public class SaveSuccessView extends JFrame implements ActionListener {
     private JLabel title = new JLabel();
 
 
-
     public SaveSuccessView(DisplayRecipeViewModel displayRecipeViewModel,
                            ViewManagerModel viewManagerModel, SaveSuccessViewModel saveSuccessViewModel){
         this.displayRecipeViewModel = displayRecipeViewModel;

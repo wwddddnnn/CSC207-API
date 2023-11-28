@@ -23,6 +23,7 @@ public class SaveSuccessViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
+
     public SaveState getState() {
         return state;
     }

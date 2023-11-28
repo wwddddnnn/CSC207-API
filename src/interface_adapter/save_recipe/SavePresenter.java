@@ -15,6 +15,7 @@ public class SavePresenter implements SaveOutputBoundary {
         this.saveSuccessViewModel = saveSuccessViewModel;
     }
 
+
     @Override
     public void prepareSuccessView() {
         SaveState saveState = saveViewModel.getState();
