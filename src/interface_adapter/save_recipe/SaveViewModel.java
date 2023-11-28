@@ -1,7 +1,6 @@
 package interface_adapter.save_recipe;
 
 import interface_adapter.ViewModel;
-import interface_adapter.signup.SignupState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

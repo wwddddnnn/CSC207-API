@@ -7,6 +7,7 @@ import java.beans.PropertyChangeSupport;
 
 public class SaveSuccessViewModel extends ViewModel {
     private SaveState state = new SaveState();
+    public static final String FINISH_BUTTON_LABEL = "OK";
     public SaveSuccessViewModel() {
         super("save");
     }
