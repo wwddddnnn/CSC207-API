@@ -1,22 +1,19 @@
 package interface_adapter.save_recipe;
 
 import interface_adapter.ViewModel;
-import interface_adapter.signup.SignupState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class SaveViewModel extends ViewModel {
-
+public class SaveSuccessViewModel extends ViewModel {
     private SaveState state = new SaveState();
-    public SaveViewModel() {
+    public SaveSuccessViewModel() {
         super("save");
     }
     public void setState(SaveState state) {
         this.state = state;
     }
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-    @Override
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }

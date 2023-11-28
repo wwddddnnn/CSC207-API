@@ -5,10 +5,16 @@ import entity.Recipe;
 import java.util.List;
 
 public class SaveInputData {
-    private final List<Recipe> recipes;
+    private final Recipe savedRecipe;
 
-    public SaveInputData(List<Recipe> recipes){
-        this.recipes = recipes;
+    public SaveInputData(Recipe recipes){
+        this.savedRecipe = recipes;
+    }
+    String getRecipeName(){
+        return savedRecipe.getName();
+    }
+    Recipe getSavedRecipe(){
+        return this.savedRecipe;
     }
 
 }
