@@ -1,8 +1,10 @@
 package interface_adapter.get_meal_plan;
 
-public class getMealPlanController {
+import use_case.get_meal_plan.GetMealPlanInputBoundary;
+
+public class GetMealPlanController {
     private final GetMealPlanInputBoundary getMealPlanInteractor;
-    public getMealPlanController(GetMealPlanInputBoundary getMealPlanInteractor) {
+    public GetMealPlanController(GetMealPlanInputBoundary getMealPlanInteractor) {
         this.getMealPlanInteractor = getMealPlanInteractor;
     }
 
