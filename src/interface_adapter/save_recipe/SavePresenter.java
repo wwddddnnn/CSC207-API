@@ -13,7 +13,6 @@ public class SavePresenter implements SaveOutputBoundary {
         this.viewManagerModel = viewManagerModel;
     }
 
-
     @Override
     public void prepareSuccessView() {
         SaveState saveState = saveViewModel.getState();

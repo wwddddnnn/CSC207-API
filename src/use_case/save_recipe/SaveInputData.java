@@ -11,8 +11,8 @@ public class SaveInputData {
     public SaveInputData(Recipe recipes){
         this.savedRecipe = recipes;
     }
-    String getRecipeName(){
-        return savedRecipe.getName();
+    Integer getRecipeId(){
+        return savedRecipe.getId();
     }
     Recipe getSavedRecipe(){
         return this.savedRecipe;

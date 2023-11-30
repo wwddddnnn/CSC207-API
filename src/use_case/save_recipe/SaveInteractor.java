@@ -18,7 +18,7 @@ public class SaveInteractor implements SaveInputBoundary {
     }
     @Override
     public void execute(SaveInputData saveInputData) {
-        if (saveRecipeDAO.existsByName(saveInputData.getRecipeName())){
+        if (saveRecipeDAO.existsById(saveInputData.getRecipeId())){
             saveDataPresenter.prepareFailView("Recipe already exists!");
         }
         else{

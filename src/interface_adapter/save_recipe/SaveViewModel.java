@@ -24,7 +24,6 @@ public class SaveViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-
     public SaveState getState() {
         return state;
     }

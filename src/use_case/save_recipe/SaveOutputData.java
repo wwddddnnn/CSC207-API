@@ -6,7 +6,6 @@ public class SaveOutputData {
     private final List<String> savedRecipes;
     private String saveMessage;
 
-
     public SaveOutputData(List<String> savedRecipes, String saveMessage){
         this.savedRecipes = savedRecipes;
         this.saveMessage = saveMessage;

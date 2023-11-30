@@ -29,5 +29,6 @@ public class SaveUseCaseFactory {
         RecipeFactory recipeFactory = new CommonRecipeFactory();
         SaveInputBoundary saveInteractor = new SaveInteractor(saveRecipeDataAccessInterface, savePresenter, recipeFactory);
         return new SaveController(saveInteractor);
+
     }
 }
