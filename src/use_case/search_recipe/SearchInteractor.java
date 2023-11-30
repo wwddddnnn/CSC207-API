@@ -19,6 +19,7 @@ public class SearchInteractor implements SearchInputBoundary{
         String query = searchData.getQuery();
         String cuisine = searchData.getCuisine();
         String maxTime = searchData.getMaxTime();
+        String offsetString = searchData.getOffsetString();
 
         HashMap<String, String> filtersMap = new HashMap<>();
         if (!query.isEmpty()) {
@@ -30,6 +31,7 @@ public class SearchInteractor implements SearchInputBoundary{
         if (!maxTime.isEmpty()) {
             filtersMap.put("maxTime", maxTime);
         }
+        filtersMap.put("offset", offsetString);
 
         //if no search keywords are entered, prepareFailView
         if (query.isEmpty() && cuisine.isEmpty() && maxTime.isEmpty()) {

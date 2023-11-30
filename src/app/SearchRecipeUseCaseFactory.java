@@ -24,6 +24,8 @@ public class SearchRecipeUseCaseFactory {
         return new SearchView(searchController, searchViewModel);
     }
 
+
+
     private static SearchController createSearchRecipeUseCase(ViewManagerModel viewManagerModel,
                                                               SearchViewModel searchViewModel,
                                                               SearchResultsViewModel searchResultsViewModel,

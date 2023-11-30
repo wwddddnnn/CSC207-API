@@ -31,7 +31,7 @@ public class SearchResultView extends JPanel implements ActionListener, Property
     private JButton[] recipesTitle = new JButton[5];
 
     final JButton confirm;
-    final JButton nextPage;
+    final JButton refresh;
 
     public SearchResultView(SearchResultsViewModel searchResultsViewModel,
                             SearchViewModel searchViewModel,
@@ -56,15 +56,28 @@ public class SearchResultView extends JPanel implements ActionListener, Property
                     viewManagerModel.firePropertyChanged();
             }
         });
-        this.nextPage = new JButton(searchResultsViewModel.NEXT_PAGE_BUTTON_LABEL);
-        this.nextPage.addActionListener(new ActionListener() {
+        this.refresh = new JButton(searchResultsViewModel.REFRESH_BUTTON_LABEL);
+        this.refresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // search next 5 recipes after clicking nextPage button.
+                // search next 5 recipes after clicking refresh button.
+//                SearchState currentState = searchViewModel.getState();
+//                currentState.setOffset(currentState.getOffset() + 5);
+//
+//                viewManagerModel.setActiveView(searchViewModel.getViewName());
+//                viewManagerModel.firePropertyChanged();
+
+                SearchState currentState = searchViewModel.getState();
+                System.out.println("offset= " + currentState.getOffset());
+//                if (currentState.getOffset() > 0){
+//                    searchController.execute(currentState.getQuery(),
+//                            currentState.getCuisine(),
+//                            currentState.getMaxTime(),
+//                            currentState.getOffset());}
             }
         });
 
-        buttons.add(nextPage);
+        buttons.add(refresh);
         buttons.add(confirm);
 
         for (JButton rt: recipesTitle) this.add(rt);
