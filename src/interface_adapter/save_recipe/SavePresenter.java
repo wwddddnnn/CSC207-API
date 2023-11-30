@@ -8,11 +8,9 @@ public class SavePresenter implements SaveOutputBoundary {
     private final SaveViewModel saveViewModel;
     private ViewManagerModel viewManagerModel;
     private SaveSuccessViewModel saveSuccessViewModel;
-    public SavePresenter(ViewManagerModel viewManagerModel, SaveViewModel saveViewModel,
-                         SaveSuccessViewModel saveSuccessViewModel){
+    public SavePresenter(ViewManagerModel viewManagerModel, SaveViewModel saveViewModel){
         this.saveViewModel = saveViewModel;
         this.viewManagerModel = viewManagerModel;
-        this.saveSuccessViewModel = saveSuccessViewModel;
     }
 
 
