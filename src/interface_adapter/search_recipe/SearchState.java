@@ -17,6 +17,8 @@ public class SearchState {
 
     private int totalRecipeAmount;
 
+    private int offset = 0;
+
     private HashMap<String, Recipe> recipe = new HashMap<>();
 
     public SearchState(SearchState copy){
@@ -25,6 +27,7 @@ public class SearchState {
         maxTime = copy.maxTime;
         searchByFilterError = copy.searchByFilterError;
         recipe = copy.recipe;
+        offset = copy.offset;
         totalRecipeAmount = copy.totalRecipeAmount;
     }
     public SearchState(){}
@@ -40,6 +43,10 @@ public class SearchState {
     }
 
     public HashMap<String, Recipe> getRecipe(){return recipe;}
+
+    public int getOffset() {
+        return offset;
+    }
 
     public void setQuery(String query){this.query = query;}
 
@@ -57,6 +64,10 @@ public class SearchState {
 
     public void setTotalRecipeAmount(int amount){
         this.totalRecipeAmount = amount;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 
     public int getTotalRecipeAmount(){
