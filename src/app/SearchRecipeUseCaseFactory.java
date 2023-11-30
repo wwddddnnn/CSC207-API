@@ -38,7 +38,7 @@ public class SearchRecipeUseCaseFactory {
                                     GetMealPlanDataAccessInterface getMealPlanDataAccessObject) {
         SearchController searchController = createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
         GetMealPlanController getMealPlanController = createGetMealPlanUseCase(viewManagerModel, searchViewModel, mealPlanViewModel, getMealPlanDataAccessObject);
-        return new SearchView(searchController, searchViewModel);
+        return new SearchView(searchController, searchViewModel, getMealPlanController);
     }
 
     private static SearchController createSearchRecipeUseCase(ViewManagerModel viewManagerModel,
