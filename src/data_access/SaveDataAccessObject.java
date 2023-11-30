@@ -1,11 +1,9 @@
 package data_access;
 
-import entity.Recipe;
-import entity.RecipeFactory;
-import entity.RecipeTag;
-import entity.User;
+import entity.*;
 import okhttp3.*;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import use_case.save_recipe.SaveRecipeDataAccessInterface;
 
@@ -28,10 +26,12 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
 
     private final Map<Integer, Recipe> savedRecipes = new HashMap<>();
     private RecipeFactory recipeFactory;
+    private RecipeTagFactory recipeTagFactory;
     public SaveDataAccessObject(String csvpath, String csvpath0, String csvpath1,
-                                String csvpath2,String csvpath3,String csvpath4,String csvpath5,
-                                RecipeFactory recipeFactory) throws IOException {
+                                String csvpath2, String csvpath3, String csvpath4, String csvpath5,
+                                RecipeFactory recipeFactory, RecipeTagFactory recipeTagFactory) throws IOException {
         this.recipeFactory = recipeFactory;
+        this.recipeTagFactory = recipeTagFactory;
 
         csvFileId = new File(csvpath0);
         csvFileName = new File(csvpath1);
@@ -69,7 +69,7 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
                     String[] image = new String[2];
                     image[0] = responseBody.getString("image");
                     image[1] = responseBody.getString("imageType");
-                    Object[] fullInfo = SearchRecipeDataAccessObject.absorbRecipeInfo(id);
+                    Object[] fullInfo = this.absorbRecipeInfo(id);
                     Recipe recipe = this.recipeFactory.create(id1, name, image,
                             (RecipeTag) fullInfo[0], (String) fullInfo[1],
                             (HashMap<String, ArrayList<Object>>) fullInfo[2]);
@@ -79,6 +79,71 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
         }
     }
 
+    private Object[] absorbRecipeInfo(int recipeID) {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Request request = new Request.Builder()
+                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=b8f6333f2a07457b925cce0d5ddda576&includeNutrition=false"))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            JSONObject responseBody = new JSONObject(response.body().string());
+
+            if (responseBody.length() != 3) {
+
+                //create and add tags to RecipeTag, and add RecipeTag to Recipe object
+                //tags: recipeMinutes, servings, cuisinesList, vegetarian, vegan, intolerances
+                int recipeMinutes = responseBody.getInt("readyInMinutes");
+                int servings = responseBody.getInt("servings");
+
+                JSONArray cuisinesArray = responseBody.getJSONArray("cuisines");
+                ArrayList<String> cuisinesList = new ArrayList<>();
+                for (int i = 0; i < cuisinesArray.length(); i++) {
+                    cuisinesList.add(cuisinesArray.getString(i));
+                }
+
+                boolean vegetarian = responseBody.getBoolean("vegetarian");
+                boolean vegan = responseBody.getBoolean("vegan");
+
+                ArrayList<String> intolerances = new ArrayList<>();
+
+                if (responseBody.getBoolean("glutenFree")) intolerances.add("Gluten-Free");
+                if (responseBody.getBoolean("dairyFree")) intolerances.add("Dairy-Free");
+
+                RecipeTag recipeTag = this.recipeTagFactory.create(recipeMinutes, servings, cuisinesList,
+                        vegetarian, vegan, intolerances);
+
+                //create and add instructions to Recipe object
+                String instructions = responseBody.getString("instructions");
+
+                //create IngredientMap, and add to Recipe object
+
+                JSONArray ingredientsJSONArray = responseBody.getJSONArray("extendedIngredients");
+                HashMap<String, ArrayList<Object>> ingredientMap = new HashMap<>();
+                for (int i = 0; i < ingredientsJSONArray.length(); i++) {
+                    String ingredientName = ingredientsJSONArray.getJSONObject(i).getString("name");
+                    //make an ArrayList for ingredient amount and unit
+                    double ingredientAmount = ingredientsJSONArray.getJSONObject(i).getDouble("amount");
+                    String ingredientUnit = ingredientsJSONArray.getJSONObject(i).getString("unit");
+                    ArrayList<Object> ingredientInfo = new ArrayList<>();
+                    ingredientInfo.add(ingredientAmount);
+                    ingredientInfo.add(ingredientUnit);
+                    //add ArrayList into IngredientMap
+                    ingredientMap.put(ingredientName, ingredientInfo);
+
+                }
+
+                return new Object[]{recipeTag, instructions, ingredientMap};
+
+            } else {
+                throw new RuntimeException("fail");
+            }
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+
+        }
+    }
     @Override
     public void save(Recipe recipe) {
         savedRecipes.put(recipe.getId(), recipe);
