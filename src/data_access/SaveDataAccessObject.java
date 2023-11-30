@@ -8,37 +8,17 @@ import org.json.JSONObject;
 import use_case.save_recipe.SaveRecipeDataAccessInterface;
 
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
     private final File csvFile;
-    private final File csvFileId;
-    private final File csvFileName;
-    private final File csvFileImage;
-    private final File csvFileInstructions;
-    private final File csvFileTags;
-    private final File csvFileIngredients;
-    private JSONArray fullResultsArray;
-
     private final Map<Integer, Recipe> savedRecipes = new HashMap<>();
-    private RecipeFactory recipeFactory;
-    private RecipeTagFactory recipeTagFactory;
-    public SaveDataAccessObject(String csvpath, String csvpath0, String csvpath1,
-                                String csvpath2, String csvpath3, String csvpath4, String csvpath5,
+    private final RecipeTagFactory recipeTagFactory;
+    public SaveDataAccessObject(String csvpath,
                                 RecipeFactory recipeFactory, RecipeTagFactory recipeTagFactory) throws IOException {
-        this.recipeFactory = recipeFactory;
         this.recipeTagFactory = recipeTagFactory;
-
-        csvFileId = new File(csvpath0);
-        csvFileName = new File(csvpath1);
-        csvFileImage = new File(csvpath2);
-        csvFileInstructions = new File(csvpath3);
-        csvFileTags = new File(csvpath4);
-        csvFileIngredients = new File(csvpath5);
 
         csvFile = new File(csvpath);
 
@@ -70,7 +50,7 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
                     image[0] = responseBody.getString("image");
                     image[1] = responseBody.getString("imageType");
                     Object[] fullInfo = this.absorbRecipeInfo(id);
-                    Recipe recipe = this.recipeFactory.create(id1, name, image,
+                    Recipe recipe = recipeFactory.create(id1, name, image,
                             (RecipeTag) fullInfo[0], (String) fullInfo[1],
                             (HashMap<String, ArrayList<Object>>) fullInfo[2]);
                     savedRecipes.put(id, recipe);
@@ -159,7 +139,7 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
         BufferedWriter writer;
         try {
 
-            writer = new BufferedWriter(new FileWriter(csvFileId));
+            writer = new BufferedWriter(new FileWriter(csvFile));
             writer.write("id");
             writer.newLine();
 
@@ -170,75 +150,6 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
             }
 
             writer.close();
-
-
-
-            writer = new BufferedWriter(new FileWriter(csvFileName));
-            writer.write("name");
-            writer.newLine();
-
-            for (Recipe recipe : savedRecipes.values()) {
-                String line = String.format("%s", recipe.getName());
-                writer.write(line);
-                writer.newLine();
-            }
-
-            writer.close();
-
-
-
-            writer = new BufferedWriter(new FileWriter(csvFileImage));
-            writer.write("image");
-            writer.newLine();
-
-            for (Recipe recipe : savedRecipes.values()) {
-                String line = String.format("%s", recipe.getImage().toString());
-                writer.write(line);
-                writer.newLine();
-            }
-
-            writer.close();
-
-
-            writer = new BufferedWriter(new FileWriter(csvFileInstructions));
-            writer.write("instructions");
-            writer.newLine();
-
-            for (Recipe recipe : savedRecipes.values()) {
-                String line = String.format("%s", recipe.getInstructions());
-                writer.write(line);
-                writer.newLine();
-            }
-
-            writer.close();
-
-
-
-            writer = new BufferedWriter(new FileWriter(csvFileTags));
-            writer.write("tags");
-            writer.newLine();
-
-            for (Recipe recipe : savedRecipes.values()) {
-                String line = String.format("%s", recipe.getRecipeTag());
-                writer.write(line);
-                writer.newLine();
-            }
-
-            writer.close();
-
-
-            writer = new BufferedWriter(new FileWriter(csvFileIngredients));
-            writer.write("ingredients");
-            writer.newLine();
-
-            for (Recipe recipe : savedRecipes.values()) {
-                String line = String.format("%s", recipe.getIngredients());
-                writer.write(line);
-                writer.newLine();
-            }
-
-            writer.close();
-
 
 
         } catch (IOException e) {
