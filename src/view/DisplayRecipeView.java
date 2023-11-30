@@ -64,10 +64,9 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
         //Add Textarea in to middle panel
         middlePanel.add(scroll);
 
-        // My code
         JFrame frame = new JFrame();
         frame.add(middlePanel);
-//        frame.add(finish);
+        middlePanel.add(finish);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -78,5 +77,3 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
 
     }
 }
-
-
