@@ -3,6 +3,7 @@ package app;
 import data_access.SearchRecipeDataAccessObject;
 import entity.CommonRecipeFactory;
 import entity.CommonRecipeTagFactory;
+import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.ViewManagerModel;
@@ -40,11 +41,13 @@ public class Main {
 
         SearchRecipeDataAccessObject searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
 
-        SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel,viewManagerModel);
-        views.add(searchResultView, searchResultView.viewName);
+        SearchController searchController = SearchRecipeUseCaseFactory.createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
 
-        SearchView searchView = SearchRecipeUseCaseFactory.create(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
+        SearchView searchView = SearchRecipeUseCaseFactory.create(searchViewModel, searchController);
         views.add(searchView, searchView.viewName);
+
+        SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel, viewManagerModel, searchController);
+        views.add(searchResultView, searchResultView.viewName);
 
         viewManagerModel.setActiveView(searchView.viewName);
         viewManagerModel.firePropertyChanged();

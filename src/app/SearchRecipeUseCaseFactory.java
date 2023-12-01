@@ -16,17 +16,14 @@ import view.SearchView;
 public class SearchRecipeUseCaseFactory {
     private SearchRecipeUseCaseFactory() {}
 
-    public static SearchView create(ViewManagerModel viewManagerModel,
-                                    SearchViewModel searchViewModel,
-                                    SearchResultsViewModel searchResultsViewModel,
-                                    SearchRecipeDataAccessInterface searchRecipeDataAccessObject) {
-        SearchController searchController = createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
+    public static SearchView create(SearchViewModel searchViewModel,
+                                    SearchController searchController) {
         return new SearchView(searchController, searchViewModel);
     }
 
 
 
-    private static SearchController createSearchRecipeUseCase(ViewManagerModel viewManagerModel,
+    public static SearchController createSearchRecipeUseCase(ViewManagerModel viewManagerModel,
                                                               SearchViewModel searchViewModel,
                                                               SearchResultsViewModel searchResultsViewModel,
                                                               SearchRecipeDataAccessInterface searchRecipeDataAccessObject) {

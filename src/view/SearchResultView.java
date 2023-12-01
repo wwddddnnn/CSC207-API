@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import entity.Recipe;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchedRecipe;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
@@ -39,7 +40,8 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 
     public SearchResultView(SearchResultsViewModel searchResultsViewModel,
                             SearchViewModel searchViewModel,
-                            ViewManagerModel viewManagerModel) {
+                            ViewManagerModel viewManagerModel,
+                            SearchController searchController) {
         for (int i = 0; i < 5; i++) recipesTitle[i] = new JButton("");
         this.searchResultsViewModel = searchResultsViewModel;
         this.searchViewModel = searchViewModel;
@@ -72,13 +74,12 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 //                viewManagerModel.firePropertyChanged();
 
                 SearchState currentState = searchViewModel.getState();
+                currentState.setOffset(currentState.getOffset() + 5);
                 System.out.println("offset= " + currentState.getOffset());
-//                if (currentState.getOffset() > 0){
-//                    searchController.execute(currentState.getQuery(),
-//                            currentState.getCuisine(),
-//                            currentState.getMaxTime(),
-//                            currentState.getOffset());}
-            }
+                    searchController.execute(currentState.getQuery(),
+                            currentState.getCuisine(),
+                            currentState.getMaxTime(),
+                            currentState.getOffset());}
         });
 
         buttons.add(refresh);
