@@ -75,14 +75,14 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 
                 SearchState currentState = searchViewModel.getState();
                 currentState.setOffset(currentState.getOffset() + 5);
-                System.out.println("offset= " + currentState.getOffset());
+                System.out.println("offset = " + currentState.getOffset());
                     searchController.execute(currentState.getQuery(),
                             currentState.getCuisine(),
                             currentState.getMaxTime(),
                             currentState.getOffset());}
         });
 
-        buttons.add(refresh, BorderLayout.CENTER);
+        buttons.add(refresh);
 //        buttons.add(confirm);
 
         for (JButton rt: recipesTitle) this.add(rt);
@@ -102,7 +102,6 @@ public class SearchResultView extends JPanel implements ActionListener, Property
             String[] rtList = foundRecipes.keySet().toArray(new String[0]);;
             for (int i = 0; i < rtList.length; i++) {
                 recipesTitle[i].setText(rtList[i]);
-//                System.out.println(rtList[i]);
                 int finalI = i;
                 recipesTitle[i].addActionListener(new ActionListener() {
                     @Override
@@ -115,11 +114,10 @@ public class SearchResultView extends JPanel implements ActionListener, Property
                     }
                 });
             }
-            int totalRecipeAmount = this.searchResultsViewModel.getState().getTotalRecipeAmount();
-            System.out.println(totalRecipeAmount + " in ResultView");
-            this.title.setText("These are the " + rtList.length + "/" + totalRecipeAmount + " recipes you want: ");
+//            int totalRecipeAmount = this.searchResultsViewModel.getState().getTotalRecipeAmount();
+//            System.out.println(totalRecipeAmount + " in ResultView");
+            this.title.setText("These are the recipes you want: ");
         } else {
-//            recipes[0].setText("No recipes found!");
             this.title.setText("No recipes found!");
         }
     }

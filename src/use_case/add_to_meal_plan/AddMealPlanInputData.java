@@ -5,18 +5,16 @@ import java.util.Date;
 public class AddMealPlanInputData {
     private final String username;
     private final String hash;
-    private final Date data;
+    private final Date date;
     private final String slot;
-    private final String position;
     private final String recipeId;
 
-    public AddMealPlanInputData(String username, String hash, Date data,
-                                String slot, String position, String recipeId) {
+    public AddMealPlanInputData(String username, String hash, Date date,
+                                String slot, String recipeId) {
         this.username = username;
         this.hash = hash;
-        this.data = data;
+        this.date = date;
         this.slot = slot;
-        this.position = position;
         this.recipeId = recipeId;
     }
 
@@ -32,15 +30,11 @@ public class AddMealPlanInputData {
         return recipeId;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDate() {
+        return date;
     }
 
     public String getHash() {
         return hash;
-    }
-
-    public String getPosition() {
-        return position;
     }
 }

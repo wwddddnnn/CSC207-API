@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.add_to_meal_plan.AddMealPlanController;
 import interface_adapter.add_to_meal_plan.AddMealPlanViewModel;
+import interface_adapter.search_recipe.SearchState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -23,7 +25,8 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
     private final AddMealPlanViewModel addMealPlanViewModel;
 
     public AddMealPlanView(AddMealPlanController addMealPlanController,
-                           AddMealPlanViewModel addMealPlanViewModel) {
+                           AddMealPlanViewModel addMealPlanViewModel,
+                           String recipeId) {
         this.addMealPlanController = addMealPlanController;
         this.addMealPlanViewModel = addMealPlanViewModel;
         addMealPlanViewModel.addPropertyChangeListener(this);
@@ -37,7 +40,10 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
         date[0] = calendar.getTime().toString();
         for (int i = 1; i < 7; i++) {
             calendar.add(Calendar.DATE, 1);
-            date[i] = calendar.getTime().toString();
+            String sd = calendar.getTime().getYear() + "-" +
+                    calendar.getTime().getMonth() + "-" +
+                    calendar.getTime().getDate();
+            date[i] = sd;
         }
         dateComboBox = new JComboBox<>(date);
         JPanel datePanel = new JPanel();
@@ -50,14 +56,23 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
         slotPanel.add(new JLabel("Slot:"));
         slotPanel.add(slotComboBox);
 
-//        JPanel postionPanel = new JPanel();
-//        postionPanel.add(new JLabel("Order:"));
-//        postionPanel.add(positionInputField);
-
         addButton = new JButton("Add");
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addButton);
 
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource().equals(addButton)) {
+                    try {
+                        addMealPlanController.execute((String) dateComboBox.getSelectedItem(),
+                                (String) slotComboBox.getSelectedItem(), recipeId);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                }
+        });
 
     }
 
