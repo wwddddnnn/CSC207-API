@@ -16,6 +16,8 @@ import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchState;
 import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.search_recipe.SearchPresenter;
+import interface_adapter.ViewManagerModel;
+import view.ConnectView;
 
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener{
@@ -24,8 +26,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JComboBox<String> cuisineComboBox;
     private final JTextField weightInputField = new JTextField(15);
     private final JButton searchButton;
+    private final JButton connectButton;
     private final SearchController searchController;
     private final SearchViewModel searchViewModel;
+
+    private ViewManagerModel viewManagerModel;
 
     public SearchView(SearchController controller, SearchViewModel searchViewModel) {
         this.searchController = controller;
@@ -52,6 +57,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchButton = new JButton("Search");
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(searchButton);
+
+        connectButton = new JButton("Connect");
+        buttonPanel.add(connectButton);
+
 
         // KeyListeners for fields
         queryInputField.addKeyListener(new KeyAdapter() {
@@ -91,11 +100,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             }
         });
 
+
+
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(queryPanel);
         this.add(cuisinePanel);
         this.add(weightPanel);
+        this.add(buttonPanel);
         this.add(buttonPanel);
     }
 

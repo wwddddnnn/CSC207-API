@@ -2,14 +2,17 @@ package app;
 
 import data_access.FileUserDataAccessObject;
 import data_access.SearchRecipeDataAccessObject;
+import data_access.ConnectDataAccessObject;
 import entity.CommonRecipeFactory;
 import entity.CommonRecipeTagFactory;
 import entity.CommonUserFactory;
 import interface_adapter.clear_users.ClearViewModel;
+import interface_adapter.connect.ConnectViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
+import interface_adapter.connect.ConnectViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import view.*;
@@ -47,15 +50,18 @@ public class Main {
         ClearViewModel clearViewModel = new ClearViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchResultsViewModel searchResultsViewModel = new SearchResultsViewModel();
+        ConnectViewModel connectViewModel = new ConnectViewModel();
 
 
         FileUserDataAccessObject userDataAccessObject;
         FileUserDataAccessObject clearDataAccessObject;
         SearchRecipeDataAccessObject searchRecipeDataAccessObject;
+        ConnectDataAccessObject connectDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
             clearDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
             searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
+            connectDataAccessObject = new ConnectDataAccessObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -75,7 +81,10 @@ public class Main {
         SearchView searchView = SearchRecipeUseCaseFactory.create(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
         views.add(searchView, searchView.viewName);
 
-        viewManagerModel.setActiveView(searchView.viewName);
+        ConnectView connectView = ConnectUseCaseFactory.create(viewManagerModel, connectViewModel,connectDataAccessObject);
+        views.add(connectView, connectView.viewName);
+
+        viewManagerModel.setActiveView(connectView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
