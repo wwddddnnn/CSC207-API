@@ -27,6 +27,32 @@ public class ConnectInteractor implements ConnectInputBoundary {
     @Override
     public void execute(ConnectInputData connectData) {
         String title = connectData.getTitle();
+
+        boolean isUserExist = false;
+        try (BufferedReader reader = new BufferedReader(new FileReader("Info.txt"))) {
+            String line;
+            int lineCount = 0;
+            while ((line = reader.readLine()) != null) {
+                lineCount++;
+                if (lineCount % 4 == 0) { // Username is on every fourth line
+                    String username = line.substring(line.indexOf("username: ") + 10).trim();
+                    // Remove any numeric suffixes for comparison
+                    String baseUsername = username.replaceAll("\\d*$", "");
+                    if (baseUsername.equals(title)) {
+                        isUserExist = true; // Matching username found
+                        break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (isUserExist) {
+            // Username exists. Create output data with this username.
+            ConnectOutputData outputData = new ConnectOutputData(title);
+            connectDataPresenter.prepareView(outputData);
+            return;}
         // Get local time from connectData
         String localTime = connectData.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 

@@ -43,7 +43,7 @@ public class ConnectView extends JPanel {
         });
 
         // Add components to the panel
-        this.add(new JLabel("What do you want?"));
+        this.add(new JLabel("What is your name?"));
         this.add(userInputField);
         this.add(submitButton);
 
