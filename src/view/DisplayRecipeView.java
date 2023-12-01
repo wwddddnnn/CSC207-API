@@ -23,6 +23,7 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
 
     private JPanel middlePanel = new JPanel();
     private JButton finish;
+    private JButton save;
 
     public DisplayRecipeView(Recipe recipe, DisplayRecipeViewModel displayRecipeViewModel,
                              SearchResultsViewModel searchResultsViewModel,
@@ -31,6 +32,7 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
         this.searchResultsViewModel = searchResultsViewModel;
         this.viewManagerModel = viewManagerModel;
         this.finish = new JButton(this.displayRecipeViewModel.FINISH_BUTTON_LABEL);
+        this.save = new JButton("save this recipe");
         // return to the searchResultView after clicking finish button.
         this.finish.addActionListener(new ActionListener() {
             @Override
@@ -39,6 +41,13 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
                 DisplayRecipeView.this.viewManagerModel.firePropertyChanged();
             }
         });
+
+        this.save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+            });
 
         middlePanel.setBorder(new TitledBorder(new EtchedBorder(), "Display Area"));
 

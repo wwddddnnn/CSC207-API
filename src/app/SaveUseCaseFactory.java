@@ -18,9 +18,9 @@ public class SaveUseCaseFactory {
 
     }
     public static SaveView create(ViewManagerModel viewManagerModel, SaveRecipeDataAccessInterface saveRecipeDataAccessInterface,
-                                  SaveViewModel saveViewModel){
+                                  SaveViewModel saveViewModel, Recipe recipe){
         SaveController saveController = createSaveRecipeUseCase(viewManagerModel, saveRecipeDataAccessInterface, saveViewModel);
-        return new SaveView(saveController, saveViewModel);
+        return new SaveView(recipe, saveController, saveViewModel, viewManagerModel);
     }
 
     private static SaveController createSaveRecipeUseCase(ViewManagerModel viewManagerModel, SaveRecipeDataAccessInterface saveRecipeDataAccessInterface,

@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class SaveViewModel extends ViewModel {
-
+    public static final String NEXT_BUTTON_LABEL = "Next";
     private SaveState state = new SaveState();
     public SaveViewModel() {
         super("save");
