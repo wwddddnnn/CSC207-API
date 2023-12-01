@@ -17,7 +17,7 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
     public final String viewName = "Add to Meal Plan";
     private final JComboBox<String> dateComboBox;
     private final JComboBox<String> slotComboBox;
-    private final JTextField positionInputField = new JTextField(15);
+//    private final JTextField positionInputField = new JTextField(15);
     private final JButton addButton;
     private final AddMealPlanController addMealPlanController;
     private final AddMealPlanViewModel addMealPlanViewModel;
@@ -50,13 +50,15 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
         slotPanel.add(new JLabel("Slot:"));
         slotPanel.add(slotComboBox);
 
-        JPanel postionPanel = new JPanel();
-        postionPanel.add(new JLabel("Order:"));
-        postionPanel.add(positionInputField);
+//        JPanel postionPanel = new JPanel();
+//        postionPanel.add(new JLabel("Order:"));
+//        postionPanel.add(positionInputField);
 
         addButton = new JButton("Add");
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addButton);
+
+
     }
 
 

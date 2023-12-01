@@ -10,7 +10,6 @@ public class AddMealPlanController {
     public AddMealPlanController(AddMealPlanInputBoundary addMealPlanInteractor) {
         this.addMealPlanInteractor = addMealPlanInteractor;
     }
-
     public void execute() throws IOException {
 //        AddMealPlanInputData addMealPlanInputData = new AddMealPlanInputData();
 //        this.addMealPlanInteractor.execute(addMealPlanInputData);
