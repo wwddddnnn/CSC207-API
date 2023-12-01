@@ -4,5 +4,5 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public interface ConnectDataAccessInterface {
-    HashMap getResult();
+    HashMap getResult(String postbody);
 }

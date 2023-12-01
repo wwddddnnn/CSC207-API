@@ -17,15 +17,20 @@ import java.util.HashMap;
 import use_case.connect.ConnectDataAccessInterface;
 
 public class ConnectDataAccessObject implements ConnectDataAccessInterface {
-    public HashMap<String, Object> getResult() {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        MediaType mediaType = MediaType.parse("text/plain");
-        RequestBody body = RequestBody.create(mediaType, "");
+    public HashMap<String, Object> getResult(String username) {
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+
+        // Creating JSON String from the username
+        String jsonBody = "{\r\n \"username\": \"" + username + "\"\r\n}";
+
+        // Setting MediaType to JSON
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, jsonBody);
 
         Request request = new Request.Builder()
                 .url("https://api.spoonacular.com/users/connect?apiKey=41d15208fa06404c963c39772afe6584")
                 .method("POST", body)
+                .addHeader("Content-Type", "application/json")
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
@@ -34,13 +39,12 @@ public class ConnectDataAccessObject implements ConnectDataAccessInterface {
             String responseBody = response.body().string();
             JSONObject jsonObject = new JSONObject(responseBody);
             return convertJsonToHashMap(jsonObject);
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
-            // Return an empty HashMap in case of IO issues
+            // Return an empty HashMap in case of IO issues or JSON parsing errors
             return new HashMap<>();
         }
     }
-
     private HashMap<String, Object> convertJsonToHashMap(JSONObject jsonObject) {
         HashMap<String, Object> resultMap = new HashMap<>();
 

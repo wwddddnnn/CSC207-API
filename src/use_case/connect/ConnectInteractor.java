@@ -2,11 +2,10 @@ package use_case.connect;
 
 import entity.Recipe;
 
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.IOException;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -32,15 +31,15 @@ public class ConnectInteractor implements ConnectInputBoundary {
         String localTime = connectData.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
         // Handling the action based on the title
-        HashMap<String, Object> result = connectRecipeDAO.getResult();
+        HashMap<String, String> result = connectRecipeDAO.getResult(title);
 
-        // Write the result and local time to a file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Info.txt"))) {
+        // Write the result and local time to a file in append mode
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Info.txt", true))) { // Enable append mode
             // Write the local time as the first line
             writer.write("Local Time: " + localTime);
             writer.newLine();
 
-            for (Map.Entry<String, Object> entry : result.entrySet()) {
+            for (Map.Entry<String, String> entry : result.entrySet()) {
                 writer.write(entry.getKey() + ": " + entry.getValue());
                 writer.newLine();
             }
@@ -48,7 +47,7 @@ public class ConnectInteractor implements ConnectInputBoundary {
             e.printStackTrace();
         }
 
-        // Preparing output data based on the result
-        connectDataPresenter.prepareView();
+        ConnectOutputData outputData = new ConnectOutputData(result.get("username"));
+        connectDataPresenter.prepareView(outputData);
     }
 }

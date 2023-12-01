@@ -1,5 +1,5 @@
 package use_case.connect;
 
 public interface ConnectOutputBoundary {
-    void prepareView();
+    void prepareView(ConnectOutputData outputData);
 }

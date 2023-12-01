@@ -2,6 +2,8 @@ package interface_adapter.connect;
 
 import interface_adapter.ViewManagerModel;
 import use_case.connect.ConnectOutputBoundary;
+import use_case.connect.ConnectOutputData;
+
 import javax.swing.*;
 
 public class ConnectPresenter implements ConnectOutputBoundary {
@@ -13,7 +15,7 @@ public class ConnectPresenter implements ConnectOutputBoundary {
     }
 
     @Override
-    public void prepareView() {
+    public void prepareView(ConnectOutputData outputData) {
         // Create a JOptionPane to show the "Connected!" message
         final JOptionPane optionPane = new JOptionPane("Connected!", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
 
