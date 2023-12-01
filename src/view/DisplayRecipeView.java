@@ -83,6 +83,7 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
         JFrame frame = new JFrame();
         frame.add(middlePanel);
         middlePanel.add(finish);
+        middlePanel.add(save);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
