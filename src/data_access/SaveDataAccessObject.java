@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.*;
+import interface_adapter.search_recipe.SearchedRecipe;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
     private final File csvFile;
-    private final Map<Integer, Recipe> savedRecipes = new HashMap<>();
+    private final Map<Integer, SearchedRecipe> savedRecipes = new HashMap<>();
     private final RecipeTagFactory recipeTagFactory;
     public SaveDataAccessObject(String csvpath,
                                 RecipeFactory recipeFactory, RecipeTagFactory recipeTagFactory) throws IOException {
@@ -53,7 +54,8 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
                     Recipe recipe = recipeFactory.create(id1, name, image,
                             (RecipeTag) fullInfo[0], (String) fullInfo[1],
                             (HashMap<String, ArrayList<Object>>) fullInfo[2]);
-                    savedRecipes.put(id, recipe);
+                    SearchedRecipe recipes = new SearchedRecipe(recipe);
+                    savedRecipes.put(id, recipes);
                 }
             }
         }
@@ -125,7 +127,7 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
         }
     }
     @Override
-    public void save(Recipe recipe) {
+    public void save(SearchedRecipe recipe) {
         savedRecipes.put(recipe.getId(), recipe);
         this.save();
 
@@ -143,7 +145,7 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
             writer.write("id");
             writer.newLine();
 
-            for (Recipe recipe : savedRecipes.values()) {
+            for (SearchedRecipe recipe : savedRecipes.values()) {
                 String line = String.format("%s", recipe.getId());
                 writer.write(line);
                 writer.newLine();
@@ -155,6 +157,9 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public SearchedRecipe get(){
+        return savedRecipes;
     }
 
 }

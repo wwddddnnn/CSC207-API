@@ -4,6 +4,7 @@ import interface_adapter.save_recipe.SaveController;
 import interface_adapter.save_recipe.SaveViewModel;
 import entity.Recipe;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.search_recipe.SearchedRecipe;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 
@@ -25,12 +26,14 @@ public class SaveView extends JFrame implements ActionListener, PropertyChangeLi
     private final SaveViewModel saveViewModel;
     private JPanel middlePanel = new JPanel();
     private JButton next;
-    public SaveView(Recipe recipe, SaveController saveController, SaveViewModel saveViewModel, ViewManagerModel viewManagerModel) {
+    public SaveView(SaveController saveController, SaveViewModel saveViewModel, ViewManagerModel viewManagerModel) {
         this.saveController = saveController;
         this.saveViewModel = saveViewModel;
         this.viewManagerModel = viewManagerModel;
         this.next = new JButton(SaveViewModel.NEXT_BUTTON_LABEL);
         middlePanel.setBorder(new TitledBorder(new EtchedBorder(), "Display Area"));
+
+        SearchedRecipe recipe = new SearchedRecipe();
 
 
         // create the middle panel components
@@ -44,7 +47,7 @@ public class SaveView extends JFrame implements ActionListener, PropertyChangeLi
 
         Image image = null;
         try {
-            image = ImageIO.read(new URL(recipe.getImage()[0]));
+            image = ImageIO.read(new URL(recipe.getImageURL()));
 
         } catch (Exception exp) {
             exp.printStackTrace();
