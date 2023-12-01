@@ -1,6 +1,10 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.save_recipe.SaveController;
+import interface_adapter.save_recipe.SaveState;
+import interface_adapter.save_recipe.SaveSuccessViewModel;
+import interface_adapter.search_recipe.SearchState;
 import interface_adapter.search_recipe.SearchedRecipe;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
@@ -45,6 +49,9 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
         this.save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(e.getSource().equals(save)) {
+                    popUpWindow("Saved recipe successful.");
+                }
 
             }
             });
@@ -84,5 +91,8 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+    private void popUpWindow(String message){
+        JOptionPane.showMessageDialog(this, message);
     }
 }
