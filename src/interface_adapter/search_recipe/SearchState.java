@@ -47,10 +47,6 @@ public class SearchState {
         return offset;
     }
 
-    public int getOffset() {
-        return offset;
-    }
-
     public void setQuery(String query){this.query = query;}
 
     public void setCuisine(String cuisine){this.cuisine = cuisine;}
