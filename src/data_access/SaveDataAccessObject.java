@@ -37,7 +37,7 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
                     MediaType mediaType = MediaType.parse("text/plain");
                     RequestBody body = RequestBody.create(mediaType, "");
                     Request request = new Request.Builder()
-                            .url("https://api.spoonacular.com/recipes/"+id+"/information?apiKey=b8f6333f2a07457b925cce0d5ddda576")
+                            .url("https://api.spoonacular.com/recipes/"+id+"/information?apiKey=1c4b31882ec648ec99592dcfb66e7af9")
                             .method("GET", body)
                             .addHeader("Accept", "application/json")
                             .build();
@@ -63,7 +63,7 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=b8f6333f2a07457b925cce0d5ddda576&includeNutrition=false"))
+                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=1c4b31882ec648ec99592dcfb66e7af9&includeNutrition=false"))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
