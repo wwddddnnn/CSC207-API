@@ -1,16 +1,10 @@
 package app;
 
-import data_access.FileUserDataAccessObject;
 import data_access.SearchRecipeDataAccessObject;
 import entity.CommonRecipeFactory;
 import entity.CommonRecipeTagFactory;
-import entity.CommonUserFactory;
-import interface_adapter.clear_users.ClearViewModel;
-import interface_adapter.login.LoginViewModel;
-import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
-import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import view.*;
 
@@ -41,33 +35,10 @@ public class Main {
         // This information will be changed by a presenter object that is reporting the
         // results from the use case. The ViewModels are observable, and will
         // be observed by the Views.
-        LoginViewModel loginViewModel = new LoginViewModel();
-        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
-        SignupViewModel signupViewModel = new SignupViewModel();
-        ClearViewModel clearViewModel = new ClearViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchResultsViewModel searchResultsViewModel = new SearchResultsViewModel();
 
-
-        FileUserDataAccessObject userDataAccessObject;
-        FileUserDataAccessObject clearDataAccessObject;
-        SearchRecipeDataAccessObject searchRecipeDataAccessObject;
-        try {
-            userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
-            clearDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
-            searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, clearViewModel, clearDataAccessObject);
-        views.add(signupView, signupView.viewName);
-
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
-        views.add(loginView, loginView.viewName);
-
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
-        views.add(loggedInView, loggedInView.viewName);
+        SearchRecipeDataAccessObject searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
 
         SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel,viewManagerModel);
         views.add(searchResultView, searchResultView.viewName);

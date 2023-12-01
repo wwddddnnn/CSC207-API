@@ -10,8 +10,8 @@ public class SearchController {
         this.recipesSearchUseCaseInteractor = recipesSearchUseCaseInteractor;
     }
 
-    public void execute(String query, String cuisine, String maxTime) {
-        SearchInputData searchData = new SearchInputData(query, cuisine, maxTime);
+    public void execute(String query, String cuisine, String maxTime, int offset) {
+        SearchInputData searchData = new SearchInputData(query, cuisine, maxTime, offset);
         recipesSearchUseCaseInteractor.execute(searchData);
     }
 }

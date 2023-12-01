@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import entity.Recipe;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.search_recipe.SearchedRecipe;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchState;
@@ -18,16 +19,19 @@ import interface_adapter.search_recipe.SearchViewModel;
 public class SearchResultView extends JPanel implements ActionListener, PropertyChangeListener{
 
     public final String viewName = "Search results";
+  
     private final SearchResultsViewModel searchResultsViewModel;
 
     private final SearchViewModel searchViewModel;
 
     private final ViewManagerModel viewManagerModel;
 
-
     private JLabel title = new JLabel();
-    //    private JLabel[] recipes = new JLabel[5];
-    private HashMap<String, Recipe> foundRecipes;
+  
+//    private JLabel[] recipes = new JLabel[5];
+  
+    private HashMap<String, SearchedRecipe> foundRecipes;
+  
     private JButton[] recipesTitle = new JButton[5];
 
     final JButton confirm;
@@ -91,7 +95,7 @@ public class SearchResultView extends JPanel implements ActionListener, Property
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SearchState currentState = (SearchState) evt.getNewValue();
-        HashMap<String, Recipe> recipes = currentState.getRecipe();
+        HashMap<String, SearchedRecipe> recipes = currentState.getRecipe();
         this.foundRecipes = recipes;
         if (!foundRecipes.isEmpty()) {
             String[] rtList = foundRecipes.keySet().toArray(new String[0]);;
@@ -117,7 +121,5 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 //            recipes[0].setText("No recipes found!");
             this.title.setText("No recipes found!");
         }
-
-
     }
 }

@@ -1,7 +1,7 @@
 package view;
 
-import entity.Recipe;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.search_recipe.SearchedRecipe;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 
@@ -25,7 +25,7 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
     private JButton finish;
     private JButton save;
 
-    public DisplayRecipeView(Recipe recipe, DisplayRecipeViewModel displayRecipeViewModel,
+    public DisplayRecipeView(SearchedRecipe recipe, DisplayRecipeViewModel displayRecipeViewModel,
                              SearchResultsViewModel searchResultsViewModel,
                              ViewManagerModel viewManagerModel) {
         this.displayRecipeViewModel = displayRecipeViewModel;
@@ -62,7 +62,7 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
 
         Image image = null;
         try {
-            image = ImageIO.read(new URL(recipe.getImage()[0]));
+            image = ImageIO.read(new URL(recipe.getImageURL()));
 
         } catch (Exception exp) {
             exp.printStackTrace();

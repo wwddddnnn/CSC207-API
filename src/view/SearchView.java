@@ -74,7 +74,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             }
         });
 
-
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -85,7 +84,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     } else {
                         searchController.execute(currentState.getQuery(),
                                 (String) cuisineComboBox.getSelectedItem(),
-                                currentState.getMaxTime());
+                                currentState.getMaxTime(),
+                                currentState.getOffset());
                     }
                 }
             }
