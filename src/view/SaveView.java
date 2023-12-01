@@ -1,7 +1,9 @@
 package view;
 
+import interface_adapter.save_recipe.SaveController;
+import interface_adapter.save_recipe.SaveViewModel;
+import entity.Recipe;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.search_recipe.SearchedRecipe;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 
@@ -12,44 +14,24 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.URL;
 
-public class DisplayRecipeView extends JFrame implements ActionListener {
-
-    private final String viewName = "Display recipe";
-    private final DisplayRecipeViewModel displayRecipeViewModel;
-    private final SearchResultsViewModel searchResultsViewModel;
+public class SaveView extends JFrame implements ActionListener, PropertyChangeListener {
+    private final String viewName = "Saved Recipes";
+    private final SaveController saveController;
     private final ViewManagerModel viewManagerModel;
-
+    private final SaveViewModel saveViewModel;
     private JPanel middlePanel = new JPanel();
-    private JButton finish;
-    private JButton save;
-
-    public DisplayRecipeView(SearchedRecipe recipe, DisplayRecipeViewModel displayRecipeViewModel,
-                             SearchResultsViewModel searchResultsViewModel,
-                             ViewManagerModel viewManagerModel) {
-        this.displayRecipeViewModel = displayRecipeViewModel;
-        this.searchResultsViewModel = searchResultsViewModel;
+    private JButton next;
+    public SaveView(Recipe recipe, SaveController saveController, SaveViewModel saveViewModel, ViewManagerModel viewManagerModel) {
+        this.saveController = saveController;
+        this.saveViewModel = saveViewModel;
         this.viewManagerModel = viewManagerModel;
-        this.finish = new JButton(this.displayRecipeViewModel.FINISH_BUTTON_LABEL);
-        this.save = new JButton("save this recipe");
-        // return to the searchResultView after clicking finish button.
-        this.finish.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DisplayRecipeView.this.viewManagerModel.setActiveView(DisplayRecipeView.this.searchResultsViewModel.getViewName());
-                DisplayRecipeView.this.viewManagerModel.firePropertyChanged();
-            }
-        });
-
-        this.save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-            });
-
+        this.next = new JButton(SaveViewModel.NEXT_BUTTON_LABEL);
         middlePanel.setBorder(new TitledBorder(new EtchedBorder(), "Display Area"));
+
 
         // create the middle panel components
 
@@ -62,7 +44,7 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
 
         Image image = null;
         try {
-            image = ImageIO.read(new URL(recipe.getImageURL()));
+            image = ImageIO.read(new URL(recipe.getImage()[0]));
 
         } catch (Exception exp) {
             exp.printStackTrace();
@@ -75,14 +57,20 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
 
         JFrame frame = new JFrame();
         frame.add(middlePanel);
-        middlePanel.add(finish);
+        middlePanel.add(next);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
 
     }
 }

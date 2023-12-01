@@ -17,7 +17,7 @@ public class SearchState {
     private int totalRecipeAmount;
 
     private int offset = 0;
-
+  
     private HashMap<String, SearchedRecipe> recipe = new HashMap<>();
 
     public SearchState(SearchState copy){
@@ -42,6 +42,10 @@ public class SearchState {
     }
 
     public HashMap<String, SearchedRecipe> getRecipe(){return recipe;}
+
+    public int getOffset() {
+        return offset;
+    }
 
     public int getOffset() {
         return offset;

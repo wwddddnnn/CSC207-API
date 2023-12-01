@@ -19,16 +19,19 @@ import interface_adapter.search_recipe.SearchViewModel;
 public class SearchResultView extends JPanel implements ActionListener, PropertyChangeListener{
 
     public final String viewName = "Search results";
+  
     private final SearchResultsViewModel searchResultsViewModel;
 
     private final SearchViewModel searchViewModel;
 
     private final ViewManagerModel viewManagerModel;
 
-
     private JLabel title = new JLabel();
+  
 //    private JLabel[] recipes = new JLabel[5];
+  
     private HashMap<String, SearchedRecipe> foundRecipes;
+  
     private JButton[] recipesTitle = new JButton[5];
 
     final JButton confirm;
@@ -53,8 +56,8 @@ public class SearchResultView extends JPanel implements ActionListener, Property
         this.confirm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    viewManagerModel.setActiveView(searchViewModel.getViewName());
-                    viewManagerModel.firePropertyChanged();
+                viewManagerModel.setActiveView(searchViewModel.getViewName());
+                viewManagerModel.firePropertyChanged();
             }
         });
         this.refresh = new JButton(searchResultsViewModel.REFRESH_BUTTON_LABEL);
@@ -118,7 +121,5 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 //            recipes[0].setText("No recipes found!");
             this.title.setText("No recipes found!");
         }
-
-
     }
 }
