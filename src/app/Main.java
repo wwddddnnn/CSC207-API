@@ -59,7 +59,7 @@ public class Main {
 
         SaveController saveController = SaveUseCaseFactory.createSaveRecipeUseCase(viewManagerModel, saveDataAccessObject, saveViewModel);
 
-        SaveView saveView = SaveUseCaseFactory.create(viewManagerModel, saveDataAccessObject, saveViewModel);
+        //SaveView saveView = SaveUseCaseFactory.create(viewManagerModel, saveDataAccessObject, saveViewModel);
 
         SearchView searchView = SearchRecipeUseCaseFactory.create(searchViewModel, searchController);
         views.add(searchView, searchView.viewName);

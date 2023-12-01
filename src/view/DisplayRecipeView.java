@@ -3,9 +3,7 @@ package view;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.save_recipe.SaveController;
 import interface_adapter.save_recipe.SaveState;
-import interface_adapter.save_recipe.SaveSuccessViewModel;
 import interface_adapter.save_recipe.SaveViewModel;
-import interface_adapter.search_recipe.SearchState;
 import interface_adapter.search_recipe.SearchedRecipe;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
@@ -107,6 +105,15 @@ public class DisplayRecipeView extends JFrame implements ActionListener, Propert
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getNewValue() instanceof SaveState) {
+            SaveState state = (SaveState) evt.getNewValue();
+            if (state.getRecipeError() != null) {
+                JOptionPane.showMessageDialog(this, state.getRecipeError());
+            }
+        } else {
+            SaveState state = (SaveState) evt.getNewValue();
+            JOptionPane.showMessageDialog(this, "Save success!");
+        }
+    }
 
     }
-}

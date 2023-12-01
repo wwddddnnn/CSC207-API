@@ -29,8 +29,10 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
 
                 String row;
+                row = reader.readLine();
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
+                    System.out.println(col[0]);
                     int id = Integer.parseInt(col[0]);
 
                     OkHttpClient client = new OkHttpClient().newBuilder()
@@ -38,7 +40,7 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
                     MediaType mediaType = MediaType.parse("text/plain");
                     RequestBody body = RequestBody.create(mediaType, "");
                     Request request = new Request.Builder()
-                            .url("https://api.spoonacular.com/recipes/"+id+"/information?apiKey=1c4b31882ec648ec99592dcfb66e7af9")
+                            .url("https://api.spoonacular.com/recipes/"+ id +"/information?apiKey=1c4b31882ec648ec99592dcfb66e7af9")
                             .method("GET", body)
                             .addHeader("Accept", "application/json")
                             .build();
@@ -158,7 +160,7 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
             throw new RuntimeException(e);
         }
     }
-    public SearchedRecipe get(){
+    public Map<Integer, SearchedRecipe> get(){
         return savedRecipes;
     }
 
