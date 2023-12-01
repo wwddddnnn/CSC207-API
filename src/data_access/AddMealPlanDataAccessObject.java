@@ -10,7 +10,7 @@ import java.io.IOException;
 public class AddMealPlanDataAccessObject implements AddMealPlanDataAccessInterface {
     @Override
     public String addMealPlan(String[] userInfo, String[] addInfo, String recipeId) throws IOException {
-        // userInfo = {username, hash}, addInfo = {date, slot, position}
+        // userInfo = {username, hash}, addInfo = {date, slot}
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -18,7 +18,7 @@ public class AddMealPlanDataAccessObject implements AddMealPlanDataAccessInterfa
         RequestBody body = RequestBody.create(mediaType, "{\n" +
                 "    \"date\": " + addInfo[0] + ",\n" +
                 "    \"slot\": " + addInfo[1] + ",\n" +
-                "    \"position\": " + addInfo[2] + ",\n" +
+                "    \"position\": 0,\n" +
                 "    \"type\": \"RECIPE\",\n" +
                 "    \"value\": {\n" +
                 "        \"id\": " + recipeId + "\n" +

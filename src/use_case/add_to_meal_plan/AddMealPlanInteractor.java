@@ -16,7 +16,7 @@ public class AddMealPlanInteractor implements AddMealPlanInputBoundary {
 
     @Override
     public void execute(AddMealPlanInputData addMealPlanInputData) {
-        Date addDate = addMealPlanInputData.getData();
+        Date addDate = addMealPlanInputData.getDate();
         Date now = new Date();
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(now);
@@ -30,7 +30,7 @@ public class AddMealPlanInteractor implements AddMealPlanInputBoundary {
         // userInfo = {username, hash}, addInfo = {date, slot, position}
         String[] userInfo = {addMealPlanInputData.getUsername(), addMealPlanInputData.getHash()};
         String epochTimeString = addDate.getTime() / 1000 + "";
-        String[] addInfo = {epochTimeString, addMealPlanInputData.getSlot(), addMealPlanInputData.getPosition()};
+        String[] addInfo = {epochTimeString, addMealPlanInputData.getSlot()};
         String message = "";
         try {
             message = addMealPlanDAO.addMealPlan(userInfo, addInfo, addMealPlanInputData.getRecipeId());

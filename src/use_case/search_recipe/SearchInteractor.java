@@ -44,7 +44,7 @@ public class SearchInteractor implements SearchInputBoundary{
         for (Recipe i: recipesEntity) recipes.add(new SearchedRecipe(i));
 
         int totalAmount = searchRecipeDAO.getAmountByFilter();
-        System.out.println(totalAmount + " in Interactor");
+//        System.out.println(totalAmount + " in Interactor");
 
         //if no recipes are found, prepareFailView; else, prepareSuccessView
         if (recipesEntity.isEmpty()) {

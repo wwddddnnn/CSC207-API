@@ -23,9 +23,6 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
     private final RecipeFactory recipeFactory;
     private final RecipeTagFactory recipeTagFactory;
     private int totalRecipeAmount;
-
-
-
     public SearchRecipeDataAccessObject(RecipeFactory recipeFactory, RecipeTagFactory recipeTagFactory){
         this.recipeFactory = recipeFactory;
         this.recipeTagFactory = recipeTagFactory;
@@ -77,7 +74,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
                     try {
                         JSONObject recipeInfo = fullResultsArray.getJSONObject(i);
                         int id = recipeInfo.getInt("id");
-                        System.out.println(id);
+//                        System.out.println(id);
                         String name = recipeInfo.getString("title");
                         String[] image = new String[2];
                         image[0] = recipeInfo.getString("image");
@@ -104,7 +101,6 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
             System.out.println(foodName);*/
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
-
         }
     }
 

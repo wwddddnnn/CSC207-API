@@ -26,7 +26,7 @@ public class SearchResultView extends JPanel implements ActionListener, Property
     private final SearchResultsViewModel searchResultsViewModel;
     private final SaveController saveController;
 
-    private final SearchViewModel searchViewModel;
+//    private final SearchViewModel searchViewModel;
 
     private final ViewManagerModel viewManagerModel;
 
@@ -38,7 +38,7 @@ public class SearchResultView extends JPanel implements ActionListener, Property
   
     private JButton[] recipesTitle = new JButton[5];
 
-    final JButton confirm;
+//    final JButton confirm;
     final JButton refresh;
 
     public SearchResultView(SearchResultsViewModel searchResultsViewModel,
@@ -47,7 +47,7 @@ public class SearchResultView extends JPanel implements ActionListener, Property
                             SearchController searchController, SaveController saveController) {
         for (int i = 0; i < 5; i++) recipesTitle[i] = new JButton("");
         this.searchResultsViewModel = searchResultsViewModel;
-        this.searchViewModel = searchViewModel;
+//        this.searchViewModel = searchViewModel;
         this.viewManagerModel = viewManagerModel;
         this.searchResultsViewModel.addPropertyChangeListener(this);
         this.saveController = saveController;
@@ -57,15 +57,15 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 
         this.add(title);
         JPanel buttons = new JPanel();
-        this.confirm = new JButton(searchResultsViewModel.CONFIRM_BUTTON_LABEL);
-        // return to the searchView after clicking confirm button.
-        this.confirm.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                viewManagerModel.setActiveView(searchViewModel.getViewName());
-                viewManagerModel.firePropertyChanged();
-            }
-        });
+//        this.confirm = new JButton(searchResultsViewModel.CONFIRM_BUTTON_LABEL);
+//        // return to the searchView after clicking confirm button.
+//        this.confirm.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                viewManagerModel.setActiveView(searchViewModel.getViewName());
+//                viewManagerModel.firePropertyChanged();
+//            }
+//        });
         this.refresh = new JButton(searchResultsViewModel.REFRESH_BUTTON_LABEL);
         this.refresh.addActionListener(new ActionListener() {
             @Override
@@ -79,7 +79,7 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 
                 SearchState currentState = searchViewModel.getState();
                 currentState.setOffset(currentState.getOffset() + 5);
-                System.out.println("offset= " + currentState.getOffset());
+                System.out.println("offset = " + currentState.getOffset());
                     searchController.execute(currentState.getQuery(),
                             currentState.getCuisine(),
                             currentState.getMaxTime(),
@@ -87,7 +87,7 @@ public class SearchResultView extends JPanel implements ActionListener, Property
         });
 
         buttons.add(refresh);
-        buttons.add(confirm);
+//        buttons.add(confirm);
 
         for (JButton rt: recipesTitle) this.add(rt);
         this.add(buttons);
@@ -106,7 +106,6 @@ public class SearchResultView extends JPanel implements ActionListener, Property
             String[] rtList = foundRecipes.keySet().toArray(new String[0]);;
             for (int i = 0; i < rtList.length; i++) {
                 recipesTitle[i].setText(rtList[i]);
-//                System.out.println(rtList[i]);
                 int finalI = i;
                 recipesTitle[i].addActionListener(new ActionListener() {
                     @Override
@@ -120,11 +119,10 @@ public class SearchResultView extends JPanel implements ActionListener, Property
                     }
                 });
             }
-            int totalRecipeAmount = this.searchResultsViewModel.getState().getTotalRecipeAmount();
-            System.out.println(totalRecipeAmount + " in ResultView");
-            this.title.setText("These are the " + rtList.length + "/" + totalRecipeAmount + " recipes you want: ");
+//            int totalRecipeAmount = this.searchResultsViewModel.getState().getTotalRecipeAmount();
+//            System.out.println(totalRecipeAmount + " in ResultView");
+            this.title.setText("These are the recipes you want: ");
         } else {
-//            recipes[0].setText("No recipes found!");
             this.title.setText("No recipes found!");
         }
     }
