@@ -1,11 +1,14 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
+import data_access.GetMealPlanDataAccessObject;
 import data_access.SearchRecipeDataAccessObject;
 import entity.CommonRecipeFactory;
 import entity.CommonRecipeTagFactory;
 import entity.CommonUserFactory;
+import entity.RecipeFactory;
 import interface_adapter.clear_users.ClearViewModel;
+import interface_adapter.get_meal_plan.MealPlanViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
@@ -47,7 +50,8 @@ public class Main {
         ClearViewModel clearViewModel = new ClearViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchResultsViewModel searchResultsViewModel = new SearchResultsViewModel();
-
+        MealPlanViewModel mealPlanViewModel = new MealPlanViewModel();
+        GetMealPlanDataAccessObject getMealPlanDataAccessObject = new GetMealPlanDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
 
         FileUserDataAccessObject userDataAccessObject;
         FileUserDataAccessObject clearDataAccessObject;
@@ -72,8 +76,13 @@ public class Main {
         SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel,viewManagerModel);
         views.add(searchResultView, searchResultView.viewName);
 
-        SearchView searchView = SearchRecipeUseCaseFactory.create(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
+        SearchView searchView = SearchRecipeUseCaseFactory.create(viewManagerModel, searchViewModel,
+                searchResultsViewModel, searchRecipeDataAccessObject,
+                mealPlanViewModel, getMealPlanDataAccessObject);
         views.add(searchView, searchView.viewName);
+
+        MealPlanView mealPlanView = new MealPlanView(mealPlanViewModel, searchViewModel, viewManagerModel);
+        views.add(mealPlanView, mealPlanView.viewName);
 
         viewManagerModel.setActiveView(searchView.viewName);
         viewManagerModel.firePropertyChanged();

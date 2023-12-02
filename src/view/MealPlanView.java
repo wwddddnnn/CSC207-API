@@ -7,6 +7,8 @@ import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -19,6 +21,8 @@ public class MealPlanView extends JPanel implements ActionListener, PropertyChan
     private final MealPlanViewModel mealPlanViewModel;
     private final SearchViewModel searchViewModel;
     private final ViewManagerModel viewManagerModel;
+
+
     private JLabel title = new JLabel();
     private ArrayList<ArrayList<ArrayList>> mealPlanArray;
     final JButton returnToSearch;
@@ -32,9 +36,12 @@ public class MealPlanView extends JPanel implements ActionListener, PropertyChan
         this.mealPlanViewModel.addPropertyChangeListener(this);
 
         this.add(title);
-        JPanel buttons = new JPanel();
-        this.returnToSearch = new JButton(mealPlanViewModel.RETURNTOSEARCH_BUTTON_LABEL);
         //return to the searchView after clicking returnToSearch button.
+
+        this.setLayout(new BorderLayout());
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new FlowLayout(FlowLayout.CENTER));
+        this.returnToSearch = new JButton(mealPlanViewModel.RETURN_TO_SEARCH_BUTTON_LABEL);
 
         this.returnToSearch.addActionListener(new ActionListener() {
             @Override
@@ -45,7 +52,7 @@ public class MealPlanView extends JPanel implements ActionListener, PropertyChan
         });
 
         buttons.add(returnToSearch);
-        this.add(buttons);
+        this.add(buttons,BorderLayout.SOUTH);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -56,13 +63,31 @@ public class MealPlanView extends JPanel implements ActionListener, PropertyChan
         ArrayList<ArrayList<ArrayList>> result = currentState.getMealPlanResult();
         this.mealPlanArray = result;
 
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
+
         for (int numDay = 0; numDay < 7; numDay++) {
+
             JPanel dayPanel = new JPanel();
+            dayPanel.setLayout(new BoxLayout(dayPanel, BoxLayout.Y_AXIS));
+
             String dayString = (String) mealPlanArray.get(numDay).get(0).get(0);
-            JLabel dayLabel = new JLabel(dayString);
-            dayPanel.add(dayLabel);
+            String dayStringHalf1 = dayString.substring(0, 11);
+            String dayStringHalf2 = dayString.substring(11);
+            JLabel dayLabel1 = new JLabel(dayStringHalf1);
+            JLabel dayLabel2 = new JLabel(dayStringHalf2);
+
+            //Border blackline = BorderFactory.createLineBorder(Color.black);
+            //LayoutManager layout = new FlowLayout();
+            //dayPanel.setLayout(layout);
+
+            //dayLabel.setBorder(blackline);
+
+            dayPanel.add(dayLabel1);
+            dayPanel.add(dayLabel2);
 
             JButton[] mealTitle = new JButton[3];
+            for (int i = 0; i < 3; i++) mealTitle[i] = new JButton("");
 
             HashMap<String, String> meal1HashMap = (HashMap<String, String>) result.get(numDay).get(1).get(0);
             String mt1String = meal1HashMap.get("simpleString");
@@ -79,8 +104,17 @@ public class MealPlanView extends JPanel implements ActionListener, PropertyChan
             String[] mtList = new String[]{mt1String, mt2String, mt3String};
             String[] mInfoList = new String []{mInfo1String, mInfo2String, mInfo3String};
 
+            //TODO: delete this print line.
+            System.out.println(mtList);
+            System.out.println(mInfoList);
+
             for (int numMeal = 0; numMeal < 3; numMeal++) {
                 mealTitle[numMeal].setText(mtList[numMeal]);
+
+                //layout for the buttons within a day.
+                //mealTitle[numMeal].setLayout(new GridBagLayout());
+                //GridBagConstraints gbcButton = new GridBagConstraints();
+                //gbcButton.gridy = numMeal + 1;
 
                 if (!mtList[numMeal].isEmpty()) {
                     int finalI = numMeal;
@@ -94,10 +128,20 @@ public class MealPlanView extends JPanel implements ActionListener, PropertyChan
                         }
                     });
                 }
+
+                //dayPanel.setLayout(new BoxLayout(dayPanel, BoxLayout.X_AXIS));
+                //dayPanel.setSize(100, 500);
+                //dayPanel.setVisible(true);
+
+                dayPanel.add(mealTitle[numMeal]);
             }
-            for (JButton mt : mealTitle) dayPanel.add(mt);
-            this.add(dayPanel);
+
+            container.add(dayPanel);
+
+            }
+
+        this.add(container);
         }
-    }
+
 
 }

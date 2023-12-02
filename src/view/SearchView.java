@@ -30,10 +30,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final GetMealPlanController getMealPlanController;
     private final SearchViewModel searchViewModel;
 
-    public SearchView(SearchController controller, SearchViewModel searchViewModel, GetMealPlanController getMealPlanController) {
+    public SearchView(SearchController controller, SearchViewModel searchViewModel, GetMealPlanController getMealPlanController1) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
-        this.getMealPlanController = getMealPlanController;
+        this.getMealPlanController = getMealPlanController1;
         searchViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Recipe Search");

@@ -110,8 +110,8 @@ public class DisplayRecipeView extends JFrame implements ActionListener {
         //} catch (Exception exp) {
         //    exp.printStackTrace();
         //}
-        JLabel label = new JLabel(new ImageIcon(image));
-        this.middlePanel.add(label, BorderLayout.CENTER);
+        //JLabel label = new JLabel(new ImageIcon(image));
+        //this.middlePanel.add(label, BorderLayout.CENTER);
 
         //Add Textarea in to middle panel
         middlePanel.add(scroll);

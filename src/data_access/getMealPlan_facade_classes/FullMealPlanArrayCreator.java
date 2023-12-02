@@ -49,9 +49,17 @@ public class FullMealPlanArrayCreator {
                     recipeStringHashMap.put("detailedString", detailedRecipeString);   //recipeStringHashMap = {“simpleString”: “Shrimp Salad”, “detailedString”: “Name: ShrimpSalad, etc.”}
 
                     newMealPlanArray.get(numDay).get(numMeal).add(recipeStringHashMap);
+                } else {
+                    HashMap recipeStringHashMap = new HashMap<String, String>();
+                    recipeStringHashMap.put("simpleString", "");
+                    recipeStringHashMap.put("detailedString", "");
+
+                    newMealPlanArray.get(numDay).get(numMeal).add(recipeStringHashMap);
                 }
             }
         }
+        //TODO: delete this print line.
+        System.out.println(newMealPlanArray);
         return newMealPlanArray;
     }
 }

@@ -31,22 +31,25 @@ public class HalfMealPlanArrayCreator {
     private final String username;
     private final String userHash;
     private final LocalDate startDate;
-    private final Long startDateEpoch;
+    private final int startDateEpoch;
 
-    public HalfMealPlanArrayCreator(String username, String userHash, LocalDate startDate, Long startDateEpoch) {
+    public HalfMealPlanArrayCreator(String username, String userHash, LocalDate startDate, int startDateEpoch) {
         this.username = username;
         this.userHash = userHash;
         this.startDate = startDate;
         this.startDateEpoch = startDateEpoch;
     };
+
+    //TODO: ApiKey used here.
     public ArrayList<ArrayList<ArrayList>> create(ArrayList<ArrayList<ArrayList>> EmptyMealPlanArrayList) {
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("text/plain");
-        RequestBody body = RequestBody.create(mediaType, "");
+        RequestBody body = null;
+        //RequestBody.create(mediaType, "");
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/mealplanner/" + username + "/week/" + startDate.toString() + "?hash=" + userHash + "&apiKey=648396e99cb04e2b8e5a12cce1eb0949")
+                .url("https://api.spoonacular.com/mealplanner/" + username + "/week/" + startDate.toString() + "?hash=" + userHash + "&apiKey=63a546e1f4084beda46d6cf3ce87b550")
                 .method("GET", body)
                 .addHeader("Accept", "application/json")
                 .build();
@@ -61,8 +64,8 @@ public class HalfMealPlanArrayCreator {
 
                     JSONObject dayObject = unfilteredResponseArray.getJSONObject(i);
 
-                    Long dayEpochTime = (Long) dayObject.get("date");
-                    int numDaysAfterStartDate = (int) ((dayEpochTime - startDateEpoch)/86400);    //86,400 is the number of Epoch numbers of 1 day
+                    int dayEpochTime = (int) dayObject.get("date");
+                    int numDaysAfterStartDate = ((dayEpochTime - startDateEpoch)/86400);    //86,400 is the number of Epoch numbers of 1 day
 
                     JSONArray dayItemsArray = dayObject.getJSONArray("items");
 
@@ -71,7 +74,7 @@ public class HalfMealPlanArrayCreator {
                         Integer recipeID = mealObject.getInt("id");
                         Integer recipeSlot = mealObject.getInt("slot");    //slot: 1 = breakfast, 2 = lunch, 3 = dinner
 
-                        EmptyMealPlanArrayList.get(numDaysAfterStartDate).get(recipeSlot).add(recipeID);   //numDaysAfterStartDate = index of day; recipeSlot = index of meal
+                        EmptyMealPlanArrayList.get(numDaysAfterStartDate).get(recipeSlot+1).add(recipeID);   //numDaysAfterStartDate = index of day; recipeSlot = index of meal
 
                     }
                 }

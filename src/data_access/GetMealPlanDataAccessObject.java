@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class GetMealPlanDataAccessObject implements GetMealPlanDataAccessInterface {
 
     private LocalDate startDate;
-    private Long startDateEpoch;
+    private int startDateEpoch;
     private String username;
     private String userHash;
     private RecipeFactory recipeFactory;
@@ -28,13 +28,20 @@ public class GetMealPlanDataAccessObject implements GetMealPlanDataAccessInterfa
     //or a File as an attribute?
 
     public GetMealPlanDataAccessObject(RecipeFactory recipeFactory,
-                                       RecipeTagFactory recipeTagFactory,
-                                       ConnectUserFileDataAccessObject connectUserFileDataAccessObject) {
+                                       RecipeTagFactory recipeTagFactory) {
 
-        this.startDate = connectUserFileDataAccessObject.getStartDate();
-        this.startDateEpoch = connectUserFileDataAccessObject.getStartDateEpoch();
-        this.username = connectUserFileDataAccessObject.getUsername();
-        this.userHash = connectUserFileDataAccessObject.getUserHash();
+        //TODO: add a ConnectUserFileDataAccessObject connectUserFileDataAccessObject argument above, and get
+        // startDate, startDateEpoch, username and userHash from connectUserFileDataAccessObject.
+        //this.startDate = connectUserFileDataAccessObject.getStartDate();
+        //this.startDateEpoch = connectUserFileDataAccessObject.getStartDateEpoch();
+        //this.username = connectUserFileDataAccessObject.getUsername();
+        //this.userHash = connectUserFileDataAccessObject.getUserHash();
+
+        //TODO: delete this below; it's just example values for now.
+        this.startDate = LocalDate.of(2023, 11, 26);
+        this.startDateEpoch = 1700974800;
+        this.username = "yqlee4";
+        this.userHash = "64879293bd23af7db2e8b6328a8a9268dfc8ab15";
 
         this.recipeFactory = recipeFactory;
         this.recipeTagFactory = recipeTagFactory;

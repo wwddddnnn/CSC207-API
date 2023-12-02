@@ -10,7 +10,7 @@ public class MealPlanViewModel extends ViewModel {
     private MealPlanState state = new MealPlanState();
 
     //TODO: implement this.
-    public static final String RETURNTOSEARCH_BUTTON_LABEL = "Return to search";
+    public static final String RETURN_TO_SEARCH_BUTTON_LABEL = "Return to search";
 
     public MealPlanViewModel(){super("Meal Plan");}
 
