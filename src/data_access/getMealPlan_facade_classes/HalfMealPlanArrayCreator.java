@@ -49,7 +49,7 @@ public class HalfMealPlanArrayCreator {
         RequestBody body = null;
         //RequestBody.create(mediaType, "");
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/mealplanner/" + username + "/week/" + startDate.toString() + "?hash=" + userHash + "&apiKey=63a546e1f4084beda46d6cf3ce87b550")
+                .url("https://api.spoonacular.com/mealplanner/" + username + "/week/" + startDate.toString() + "?hash=" + userHash + "&apiKey=648396e99cb04e2b8e5a12cce1eb0949")
                 .method("GET", body)
                 .addHeader("Accept", "application/json")
                 .build();
