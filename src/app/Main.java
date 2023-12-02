@@ -1,5 +1,8 @@
 package app;
 
+import data_access.GetMealPlanDataAccessObject;
+import interface_adapter.get_meal_plan.MealPlanViewModel;
+
 import data_access.SaveDataAccessObject;
 import data_access.SearchRecipeDataAccessObject;
 import entity.CommonRecipeFactory;
@@ -9,6 +12,7 @@ import interface_adapter.save_recipe.SaveController;
 import interface_adapter.save_recipe.SaveViewModel;
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchedRecipe;
+
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.ViewManagerModel;
@@ -44,6 +48,10 @@ public class Main {
         // be observed by the Views.
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchResultsViewModel searchResultsViewModel = new SearchResultsViewModel();
+
+        MealPlanViewModel mealPlanViewModel = new MealPlanViewModel();
+        GetMealPlanDataAccessObject getMealPlanDataAccessObject = new GetMealPlanDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
+
         SaveViewModel saveViewModel = new SaveViewModel();
 
         SaveDataAccessObject saveDataAccessObject;
@@ -61,8 +69,14 @@ public class Main {
 
         //SaveView saveView = SaveUseCaseFactory.create(viewManagerModel, saveDataAccessObject, saveViewModel);
 
-        SearchView searchView = SearchRecipeUseCaseFactory.create(searchViewModel, searchController);
+
+        SearchView searchView = SearchRecipeUseCaseFactory.create(viewManagerModel, searchViewModel,
+                searchResultsViewModel, searchRecipeDataAccessObject,
+                mealPlanViewModel, getMealPlanDataAccessObject);
         views.add(searchView, searchView.viewName);
+      
+        MealPlanView mealPlanView = new MealPlanView(mealPlanViewModel, searchViewModel, viewManagerModel);
+        views.add(mealPlanView, mealPlanView.viewName);
 
         SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel, viewManagerModel, searchController, saveController);
         views.add(searchResultView, searchResultView.viewName);

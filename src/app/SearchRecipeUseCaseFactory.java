@@ -1,9 +1,23 @@
 package app;
 
+import interface_adapter.clear_users.ClearController;
+import interface_adapter.clear_users.ClearPresenter;
+import interface_adapter.clear_users.ClearViewModel;
+import interface_adapter.get_meal_plan.GetMealPlanController;
+import interface_adapter.get_meal_plan.GetMealPlanPresenter;
+import interface_adapter.get_meal_plan.MealPlanViewModel;
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchPresenter;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
+import use_case.clear_users.ClearInputBoundary;
+import use_case.clear_users.ClearInteractor;
+import use_case.clear_users.ClearOutputBoundary;
+import use_case.clear_users.ClearUserDataAccessInterface;
+import use_case.get_meal_plan.GetMealPlanDataAccessInterface;
+import use_case.get_meal_plan.GetMealPlanInputBoundary;
+import use_case.get_meal_plan.GetMealPlanInteractor;
+import use_case.get_meal_plan.GetMealPlanOutputBoundary;
 import use_case.search_recipe.SearchInputBoundary;
 import use_case.search_recipe.SearchInteractor;
 import use_case.search_recipe.SearchOutputBoundary;
@@ -16,9 +30,16 @@ import view.SearchView;
 public class SearchRecipeUseCaseFactory {
     private SearchRecipeUseCaseFactory() {}
 
-    public static SearchView create(SearchViewModel searchViewModel,
-                                    SearchController searchController) {
-        return new SearchView(searchController, searchViewModel);
+
+    public static SearchView create(ViewManagerModel viewManagerModel,
+                                    SearchViewModel searchViewModel,
+                                    SearchResultsViewModel searchResultsViewModel,
+                                    SearchRecipeDataAccessInterface searchRecipeDataAccessObject,
+                                    MealPlanViewModel mealPlanViewModel,
+                                    GetMealPlanDataAccessInterface getMealPlanDataAccessObject) {
+        SearchController searchController = createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
+        GetMealPlanController getMealPlanController = createGetMealPlanUseCase(viewManagerModel, searchViewModel, mealPlanViewModel, getMealPlanDataAccessObject);
+        return new SearchView(searchController, searchViewModel, getMealPlanController);
     }
 
 
@@ -40,5 +61,16 @@ public class SearchRecipeUseCaseFactory {
         //                searchRecipeDataAccessObject, searchOutputBoundary, recipeFactory);
 
         return new SearchController(searchInteractor);
+    }
+
+    private static GetMealPlanController createGetMealPlanUseCase(ViewManagerModel viewManagerModel,
+                                                                  SearchViewModel searchViewModel,
+                                                                  MealPlanViewModel mealPlanViewModel,
+                                                                  GetMealPlanDataAccessInterface getMealPlanDataAccessObject){
+        GetMealPlanOutputBoundary getMealPlanOutputBoundary = new GetMealPlanPresenter(searchViewModel, viewManagerModel,mealPlanViewModel);
+
+        GetMealPlanInputBoundary getMealPlanInteractor = new GetMealPlanInteractor(getMealPlanDataAccessObject, getMealPlanOutputBoundary);
+
+        return new GetMealPlanController(getMealPlanInteractor);
     }
 }

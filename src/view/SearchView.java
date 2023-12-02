@@ -12,6 +12,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
+import interface_adapter.get_meal_plan.GetMealPlanController;
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchState;
 import interface_adapter.search_recipe.SearchViewModel;
@@ -25,11 +26,14 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JTextField weightInputField = new JTextField(15);
     private final JButton searchButton;
     private final SearchController searchController;
+    private final JButton getMealPlanButton;
+    private final GetMealPlanController getMealPlanController;
     private final SearchViewModel searchViewModel;
 
-    public SearchView(SearchController controller, SearchViewModel searchViewModel) {
+    public SearchView(SearchController controller, SearchViewModel searchViewModel, GetMealPlanController getMealPlanController1) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
+        this.getMealPlanController = getMealPlanController1;
         searchViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Recipe Search");
@@ -52,6 +56,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchButton = new JButton("Search");
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(searchButton);
+
+        //added a getMealPlanButton
+        getMealPlanButton = new JButton("My Meal Plan");
+        JPanel getMealPlanButtonPanel = new JPanel();
+        getMealPlanButtonPanel.add(getMealPlanButton);
 
         // KeyListeners for fields
         queryInputField.addKeyListener(new KeyAdapter() {
@@ -91,12 +100,22 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             }
         });
 
+        getMealPlanButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(getMealPlanButton)) {
+                    getMealPlanController.execute();
+                }
+            }
+        });
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(queryPanel);
         this.add(cuisinePanel);
         this.add(weightPanel);
         this.add(buttonPanel);
+        this.add(getMealPlanButtonPanel);
     }
 
     @Override
