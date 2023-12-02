@@ -1,8 +1,5 @@
 package app;
 
-import interface_adapter.clear_users.ClearController;
-import interface_adapter.clear_users.ClearPresenter;
-import interface_adapter.clear_users.ClearViewModel;
 import interface_adapter.get_meal_plan.GetMealPlanController;
 import interface_adapter.get_meal_plan.GetMealPlanPresenter;
 import interface_adapter.get_meal_plan.MealPlanViewModel;
@@ -10,10 +7,7 @@ import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchPresenter;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
-import use_case.clear_users.ClearInputBoundary;
-import use_case.clear_users.ClearInteractor;
-import use_case.clear_users.ClearOutputBoundary;
-import use_case.clear_users.ClearUserDataAccessInterface;
+
 import use_case.get_meal_plan.GetMealPlanDataAccessInterface;
 import use_case.get_meal_plan.GetMealPlanInputBoundary;
 import use_case.get_meal_plan.GetMealPlanInteractor;

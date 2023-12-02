@@ -28,6 +28,8 @@ public class DisplayRecipeView extends JFrame implements ActionListener, Propert
     private final DisplayRecipeViewModel displayRecipeViewModel;
 
     private SearchResultsViewModel searchResultsViewModel = null;
+
+    private SaveViewModel saveViewModel;
     private MealPlanViewModel mealPlanViewModel = null;
 
     private final ViewManagerModel viewManagerModel;
