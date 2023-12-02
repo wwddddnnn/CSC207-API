@@ -1,12 +1,22 @@
 package app;
 
+
 import data_access.GetMealPlanDataAccessObject;
 import interface_adapter.get_meal_plan.MealPlanViewModel;
 
 import data_access.SaveDataAccessObject;
+
 import data_access.SearchRecipeDataAccessObject;
+import data_access.ConnectDataAccessObject;
 import entity.CommonRecipeFactory;
 import entity.CommonRecipeTagFactory;
+
+import interface_adapter.search_recipe.SearchController;
+import interface_adapter.connect.ConnectViewModel;
+import interface_adapter.search_recipe_results.SearchResultsViewModel;
+import interface_adapter.search_recipe.SearchViewModel;
+import interface_adapter.connect.ConnectViewModel;
+
 import entity.RecipeFactory;
 import interface_adapter.save_recipe.SaveController;
 import interface_adapter.save_recipe.SaveViewModel;
@@ -15,6 +25,7 @@ import interface_adapter.search_recipe.SearchedRecipe;
 
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
+
 import interface_adapter.ViewManagerModel;
 import use_case.save_recipe.SaveRecipeDataAccessInterface;
 import view.*;
@@ -48,6 +59,22 @@ public class Main {
         // be observed by the Views.
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchResultsViewModel searchResultsViewModel = new SearchResultsViewModel();
+        ConnectViewModel connectViewModel = new ConnectViewModel();
+
+
+        SearchRecipeDataAccessObject searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
+
+        ConnectDataAccessObject connectDataAccessObject = new ConnectDataAccessObject();
+
+
+        SearchController searchController = SearchRecipeUseCaseFactory.createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
+
+        SearchView searchView = SearchRecipeUseCaseFactory.create(searchViewModel, searchController);
+        views.add(searchView, searchView.viewName);
+
+        SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel, viewManagerModel, searchController);
+        views.add(searchResultView, searchResultView.viewName);
+
 
         MealPlanViewModel mealPlanViewModel = new MealPlanViewModel();
         GetMealPlanDataAccessObject getMealPlanDataAccessObject = new GetMealPlanDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
@@ -81,7 +108,12 @@ public class Main {
         SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel, viewManagerModel, searchController, saveController);
         views.add(searchResultView, searchResultView.viewName);
 
+
         viewManagerModel.setActiveView(searchView.viewName);
+        ConnectView connectView = ConnectUseCaseFactory.create(viewManagerModel, connectViewModel,connectDataAccessObject);
+        views.add(connectView, connectView.viewName);
+
+        viewManagerModel.setActiveView(connectView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

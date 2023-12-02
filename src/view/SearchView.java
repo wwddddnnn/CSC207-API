@@ -17,6 +17,8 @@ import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchState;
 import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.search_recipe.SearchPresenter;
+import interface_adapter.ViewManagerModel;
+import view.ConnectView;
 
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener{
@@ -25,12 +27,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JComboBox<String> cuisineComboBox;
     private final JTextField weightInputField = new JTextField(15);
     private final JButton searchButton;
+    private final JButton connectButton;
     private final SearchController searchController;
     private final JButton getMealPlanButton;
     private final GetMealPlanController getMealPlanController;
     private final SearchViewModel searchViewModel;
 
+
     public SearchView(SearchController controller, SearchViewModel searchViewModel, GetMealPlanController getMealPlanController1) {
+
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
         this.getMealPlanController = getMealPlanController1;
@@ -57,10 +62,12 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(searchButton);
 
+
         //added a getMealPlanButton
         getMealPlanButton = new JButton("My Meal Plan");
         JPanel getMealPlanButtonPanel = new JPanel();
         getMealPlanButtonPanel.add(getMealPlanButton);
+
 
         // KeyListeners for fields
         queryInputField.addKeyListener(new KeyAdapter() {
@@ -100,6 +107,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             }
         });
 
+
         getMealPlanButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -109,13 +117,16 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             }
         });
 
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(queryPanel);
         this.add(cuisinePanel);
         this.add(weightPanel);
         this.add(buttonPanel);
+
         this.add(getMealPlanButtonPanel);
+
     }
 
     @Override

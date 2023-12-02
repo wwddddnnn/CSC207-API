@@ -2,11 +2,19 @@ package view;
 
 import interface_adapter.ViewManagerModel;
 
+import interface_adapter.save_recipe.SaveController;
+import interface_adapter.save_recipe.SaveState;
+import interface_adapter.save_recipe.SaveSuccessViewModel;
+import interface_adapter.search_recipe.SearchState;
+import interface_adapter.search_recipe.SearchedRecipe;
+
+
 import interface_adapter.get_meal_plan.MealPlanViewModel;
 import interface_adapter.save_recipe.SaveController;
 import interface_adapter.save_recipe.SaveState;
 import interface_adapter.save_recipe.SaveViewModel;
 import interface_adapter.search_recipe.SearchedRecipe;
+
 
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
@@ -62,10 +70,12 @@ public class DisplayRecipeView extends JFrame implements ActionListener, Propert
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource().equals(save)) {
+
                     //popUpWindow("Saved recipe successful.");
                     SaveState currentState = saveViewModel.getState();
                     saveController.execute(currentState.getRecipes());
                 }
+
             }
             });
 
@@ -92,6 +102,7 @@ public class DisplayRecipeView extends JFrame implements ActionListener, Propert
 
         //Add Textarea in to middle panel
         middlePanel.add(scroll);
+
 
         JFrame frame = new JFrame();
         frame.add(middlePanel);
@@ -144,9 +155,11 @@ public class DisplayRecipeView extends JFrame implements ActionListener, Propert
         middlePanel.add(scroll);
 
         // My code
+
         JFrame frame = new JFrame();
         frame.add(middlePanel);
-//        frame.add(finish);
+        middlePanel.add(finish);
+        middlePanel.add(save);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -159,6 +172,7 @@ public class DisplayRecipeView extends JFrame implements ActionListener, Propert
     private void popUpWindow(String message){
         JOptionPane.showMessageDialog(this, message);
     }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -174,3 +188,4 @@ public class DisplayRecipeView extends JFrame implements ActionListener, Propert
     }
 
     }
+

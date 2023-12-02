@@ -10,8 +10,10 @@ import java.util.HashMap;
 
 import entity.Recipe;
 import interface_adapter.ViewManagerModel;
+
 import interface_adapter.save_recipe.SaveController;
 import interface_adapter.save_recipe.SaveViewModel;
+
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchedRecipe;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
@@ -44,7 +46,9 @@ public class SearchResultView extends JPanel implements ActionListener, Property
     public SearchResultView(SearchResultsViewModel searchResultsViewModel,
                             SearchViewModel searchViewModel,
                             ViewManagerModel viewManagerModel,
+
                             SearchController searchController, SaveController saveController) {
+
         for (int i = 0; i < 5; i++) recipesTitle[i] = new JButton("");
         this.searchResultsViewModel = searchResultsViewModel;
 //        this.searchViewModel = searchViewModel;

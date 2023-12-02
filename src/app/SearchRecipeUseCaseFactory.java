@@ -25,6 +25,7 @@ public class SearchRecipeUseCaseFactory {
     private SearchRecipeUseCaseFactory() {}
 
 
+
     public static SearchView create(ViewManagerModel viewManagerModel,
                                     SearchViewModel searchViewModel,
                                     SearchResultsViewModel searchResultsViewModel,
@@ -34,6 +35,7 @@ public class SearchRecipeUseCaseFactory {
         SearchController searchController = createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
         GetMealPlanController getMealPlanController = createGetMealPlanUseCase(viewManagerModel, searchViewModel, mealPlanViewModel, getMealPlanDataAccessObject);
         return new SearchView(searchController, searchViewModel, getMealPlanController);
+
     }
 
 
