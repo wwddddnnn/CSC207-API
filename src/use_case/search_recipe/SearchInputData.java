@@ -9,11 +9,13 @@ public class SearchInputData {
 
     private final String cuisine;
     private final String maxTime;
+    private final int offset;
 
-    public SearchInputData(String query, String cuisine, String maxTime) {
+    public SearchInputData(String query, String cuisine, String maxTime, int offset) {
         this.query = query;
         this.cuisine = cuisine;
         this.maxTime = maxTime;
+        this.offset = offset;
     }
 
     public String getQuery() {
@@ -25,4 +27,5 @@ public class SearchInputData {
     public String getMaxTime(){
         return maxTime;
     }
+    public String getOffsetString(){ return offset + ""; }
 }

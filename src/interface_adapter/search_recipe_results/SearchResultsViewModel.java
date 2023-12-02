@@ -10,8 +10,8 @@ public class SearchResultsViewModel extends ViewModel {
 
     private SearchState state = new SearchState();
 
-    public static final String CONFIRM_BUTTON_LABEL = "Confirm";
-    public static final String NEXT_PAGE_BUTTON_LABEL = "Next Page";
+//    public static final String CONFIRM_BUTTON_LABEL = "Confirm";
+    public static final String REFRESH_BUTTON_LABEL = "Refresh";
 
     public SearchResultsViewModel(){super("Search results");}
     public void setState(SearchState state){this.state = state;}

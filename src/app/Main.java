@@ -1,20 +1,22 @@
 package app;
 
-import data_access.FileUserDataAccessObject;
 import data_access.GetMealPlanDataAccessObject;
+import interface_adapter.get_meal_plan.MealPlanViewModel;
+
+import data_access.SaveDataAccessObject;
 import data_access.SearchRecipeDataAccessObject;
 import entity.CommonRecipeFactory;
 import entity.CommonRecipeTagFactory;
-import entity.CommonUserFactory;
 import entity.RecipeFactory;
-import interface_adapter.clear_users.ClearViewModel;
-import interface_adapter.get_meal_plan.MealPlanViewModel;
-import interface_adapter.login.LoginViewModel;
-import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.save_recipe.SaveController;
+import interface_adapter.save_recipe.SaveViewModel;
+import interface_adapter.search_recipe.SearchController;
+import interface_adapter.search_recipe.SearchedRecipe;
+
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
-import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import use_case.save_recipe.SaveRecipeDataAccessInterface;
 import view.*;
 
 import javax.swing.*;
@@ -44,45 +46,40 @@ public class Main {
         // This information will be changed by a presenter object that is reporting the
         // results from the use case. The ViewModels are observable, and will
         // be observed by the Views.
-        LoginViewModel loginViewModel = new LoginViewModel();
-        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
-        SignupViewModel signupViewModel = new SignupViewModel();
-        ClearViewModel clearViewModel = new ClearViewModel();
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchResultsViewModel searchResultsViewModel = new SearchResultsViewModel();
+
         MealPlanViewModel mealPlanViewModel = new MealPlanViewModel();
         GetMealPlanDataAccessObject getMealPlanDataAccessObject = new GetMealPlanDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
 
-        FileUserDataAccessObject userDataAccessObject;
-        FileUserDataAccessObject clearDataAccessObject;
-        SearchRecipeDataAccessObject searchRecipeDataAccessObject;
-        try {
-            userDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
-            clearDataAccessObject = new FileUserDataAccessObject("./users.csv", new CommonUserFactory());
-            searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
-        } catch (IOException e) {
+        SaveViewModel saveViewModel = new SaveViewModel();
+
+        SaveDataAccessObject saveDataAccessObject;
+        try{
+            saveDataAccessObject = new SaveDataAccessObject("./recipes.csv", new CommonRecipeFactory(),new CommonRecipeTagFactory());
+        } catch (IOException e){
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, clearViewModel, clearDataAccessObject);
-        views.add(signupView, signupView.viewName);
+        SearchRecipeDataAccessObject searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
-        views.add(loginView, loginView.viewName);
+        SearchController searchController = SearchRecipeUseCaseFactory.createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
-        views.add(loggedInView, loggedInView.viewName);
+        SaveController saveController = SaveUseCaseFactory.createSaveRecipeUseCase(viewManagerModel, saveDataAccessObject, saveViewModel);
 
-        SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel,viewManagerModel);
-        views.add(searchResultView, searchResultView.viewName);
+        //SaveView saveView = SaveUseCaseFactory.create(viewManagerModel, saveDataAccessObject, saveViewModel);
+
 
         SearchView searchView = SearchRecipeUseCaseFactory.create(viewManagerModel, searchViewModel,
                 searchResultsViewModel, searchRecipeDataAccessObject,
                 mealPlanViewModel, getMealPlanDataAccessObject);
         views.add(searchView, searchView.viewName);
-
+      
         MealPlanView mealPlanView = new MealPlanView(mealPlanViewModel, searchViewModel, viewManagerModel);
         views.add(mealPlanView, mealPlanView.viewName);
+
+        SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel, viewManagerModel, searchController, saveController);
+        views.add(searchResultView, searchResultView.viewName);
 
         viewManagerModel.setActiveView(searchView.viewName);
         viewManagerModel.firePropertyChanged();

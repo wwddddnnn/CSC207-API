@@ -30,6 +30,7 @@ import view.SearchView;
 public class SearchRecipeUseCaseFactory {
     private SearchRecipeUseCaseFactory() {}
 
+
     public static SearchView create(ViewManagerModel viewManagerModel,
                                     SearchViewModel searchViewModel,
                                     SearchResultsViewModel searchResultsViewModel,
@@ -41,7 +42,9 @@ public class SearchRecipeUseCaseFactory {
         return new SearchView(searchController, searchViewModel, getMealPlanController);
     }
 
-    private static SearchController createSearchRecipeUseCase(ViewManagerModel viewManagerModel,
+
+
+    public static SearchController createSearchRecipeUseCase(ViewManagerModel viewManagerModel,
                                                               SearchViewModel searchViewModel,
                                                               SearchResultsViewModel searchResultsViewModel,
                                                               SearchRecipeDataAccessInterface searchRecipeDataAccessObject) {

@@ -22,20 +22,23 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
 
     private final RecipeFactory recipeFactory;
     private final RecipeTagFactory recipeTagFactory;
-    private JSONArray fullResultsArray;
-
+    private int totalRecipeAmount;
     public SearchRecipeDataAccessObject(RecipeFactory recipeFactory, RecipeTagFactory recipeTagFactory){
         this.recipeFactory = recipeFactory;
         this.recipeTagFactory = recipeTagFactory;
-        this.fullResultsArray = new JSONArray();
     }
 
 
     public ArrayList<Recipe> getByFilters(HashMap filters) {
+//        for saving api calling times
+//        if (filters.get("query").equals("pizza") && filters.get("cuisine").equals("Italian") && filters.get("maxTime").equals("60")){
+//
+//        }
+
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
 
-            String requestURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=3c71ddee70c243aa9386a30036f9dd91";
+        String requestURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=3c71ddee70c243aa9386a30036f9dd91";
 
         //build the request URL depending on inputs for query, cuisine and maxTime
 
@@ -51,8 +54,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
             requestURL = requestURL + "&maxReadyTime=" + filters.get("maxTime");
         }
 
-        requestURL = requestURL + "&number=5";
-
+        requestURL = requestURL + "&offset=" + filters.get("offset") + "&number=5";
         Request request = new Request.Builder()
                 .url(String.format(requestURL))
                 .addHeader("Content-Type", "application/json")
@@ -60,7 +62,9 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
         try {
             Response response = client.newCall(request).execute();
             JSONObject responseBody = new JSONObject(response.body().string());
-            this.fullResultsArray = new JSONArray(responseBody.getJSONArray("results"));
+            JSONArray fullResultsArray = new JSONArray(responseBody.getJSONArray("results"));
+            this.totalRecipeAmount =  responseBody.getInt("totalResults");
+
 
             if (!fullResultsArray.isEmpty()) {
                 ArrayList<Recipe> finalRecipeList = new ArrayList<>(5);
@@ -70,6 +74,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
                     try {
                         JSONObject recipeInfo = fullResultsArray.getJSONObject(i);
                         int id = recipeInfo.getInt("id");
+//                        System.out.println(id);
                         String name = recipeInfo.getString("title");
                         String[] image = new String[2];
                         image[0] = recipeInfo.getString("image");
@@ -96,7 +101,6 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
             System.out.println(foodName);*/
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
-
         }
     }
 
@@ -172,7 +176,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
     }
 
     public int getAmountByFilter(){
-        System.out.println(this.fullResultsArray.length() + " in DAO");
-        return this.fullResultsArray.length();
+        System.out.println(this.totalRecipeAmount + " in DAO");
+        return this.totalRecipeAmount;
     }
 }
