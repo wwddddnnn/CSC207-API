@@ -24,7 +24,7 @@ public class SearchPresenter implements SearchOutputBoundary {
         SearchState searchState = this.searchViewModel.getState();
         searchState.setRecipe(result.getRecipes());
         searchState.setTotalRecipeAmount(result.getTotalRecipeAmount());
-        System.out.println(result.getTotalRecipeAmount() + " in Presenter");
+//        System.out.println(result.getTotalRecipeAmount() + " in Presenter");
         this.searchResultsViewModel.setState(searchState);
         this.searchResultsViewModel.firePropertyChanged();
 

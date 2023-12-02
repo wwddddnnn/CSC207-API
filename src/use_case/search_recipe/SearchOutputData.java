@@ -1,12 +1,11 @@
 package use_case.search_recipe;
-import entity.Recipe;
+import interface_adapter.search_recipe.SearchedRecipe;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class SearchOutputData {
-    private final List<Recipe> recipes;
+    private final List<SearchedRecipe> recipes;
 
     private final String cuisine;
 
@@ -16,7 +15,7 @@ public class SearchOutputData {
 
     private final int totalRecipeAmount;
 
-    public SearchOutputData(List<Recipe> recipes, String cuisine, String query, String maxTime, int totalRecipeAmount) {
+    public SearchOutputData(List<SearchedRecipe> recipes, String cuisine, String query, String maxTime, int totalRecipeAmount) {
 
         this.recipes = recipes;
         this.cuisine = cuisine;
@@ -25,10 +24,10 @@ public class SearchOutputData {
         this.totalRecipeAmount = totalRecipeAmount;
     }
 
-    public HashMap<String, Recipe> getRecipes() {
+    public HashMap<String, SearchedRecipe> getRecipes() {
         // HashMap<Recipe.getName(), Recipe.toString()>
-        HashMap<String, Recipe> recipeStringList = new HashMap<>(5);
-        for (Recipe recipe : recipes) {
+        HashMap<String, SearchedRecipe> recipeStringList = new HashMap<>(5);
+        for (SearchedRecipe recipe : recipes) {
             String recipeString = recipe.toString();
             recipeStringList.put(recipe.getName(), recipe);
         }
