@@ -24,7 +24,7 @@ public class ConnectUseCaseFactory {
                                                           ConnectViewModel connectViewModel,
                                                           ConnectDataAccessInterface connectDataAccessObject) {
 
-        ConnectOutputBoundary connectOutputBoundary = new ConnectPresenter(viewManagerModel);
+        ConnectOutputBoundary connectOutputBoundary = new ConnectPresenter(viewManagerModel, connectViewModel);
         ConnectInputBoundary connectInteractor = new ConnectInteractor(connectDataAccessObject, connectOutputBoundary);
 
         return new ConnectController(connectInteractor);

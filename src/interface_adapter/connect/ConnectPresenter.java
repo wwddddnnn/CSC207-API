@@ -1,6 +1,7 @@
 package interface_adapter.connect;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.search_recipe.SearchViewModel;
 import use_case.connect.ConnectOutputBoundary;
 import use_case.connect.ConnectOutputData;
 
@@ -9,13 +10,17 @@ import javax.swing.*;
 public class ConnectPresenter implements ConnectOutputBoundary {
 
     private ViewManagerModel viewManagerModel;
+    private final ConnectViewModel connectViewModel;
 
-    public ConnectPresenter(ViewManagerModel viewManagerModel) {
+    public ConnectPresenter(ViewManagerModel viewManagerModel,ConnectViewModel connectViewModel) {
         this.viewManagerModel = viewManagerModel;
+        this.connectViewModel = connectViewModel;
     }
 
     @Override
     public void prepareView(ConnectOutputData outputData) {
+        ConnectState connectState = this.connectViewModel.getState();
+        connectState.setTitle(outputData.getOutputData());
         // Create a JOptionPane to show the "Connected!" message
         final JOptionPane optionPane = new JOptionPane("Connected!", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
 
