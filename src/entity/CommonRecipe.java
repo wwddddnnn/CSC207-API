@@ -1,5 +1,7 @@
 package entity;
 
+import interface_adapter.search_recipe.SearchedRecipe;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 

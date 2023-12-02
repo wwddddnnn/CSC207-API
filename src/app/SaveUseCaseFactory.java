@@ -8,6 +8,7 @@ import interface_adapter.save_recipe.SaveController;
 import interface_adapter.save_recipe.SavePresenter;
 import interface_adapter.save_recipe.SaveViewModel;
 import interface_adapter.search_recipe.SearchedRecipe;
+import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import use_case.save_recipe.SaveInputBoundary;
 import use_case.save_recipe.SaveInteractor;
 import use_case.save_recipe.SaveOutputBoundary;

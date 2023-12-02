@@ -14,7 +14,6 @@ public class SaveController {
 
     public void execute(SearchedRecipe savedRecipe){
         SaveInputData saveInputData = new SaveInputData(savedRecipe);
-
         saveUseCaseInteractor.execute(saveInputData);
 
     }

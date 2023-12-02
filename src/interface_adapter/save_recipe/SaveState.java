@@ -10,7 +10,6 @@ public class SaveState {
         this.recipes = copy.recipes;
     }
     public SaveState(){
-
     }
     public SearchedRecipe getRecipes(){
         return this.recipes;

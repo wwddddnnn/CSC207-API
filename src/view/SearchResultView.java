@@ -8,13 +8,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
-import entity.Recipe;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.save_recipe.SaveController;
 import interface_adapter.save_recipe.SaveViewModel;
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchedRecipe;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
+import interface_adapter.search_recipe_results.DisplayState;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchState;
 import interface_adapter.search_recipe.SearchViewModel;
@@ -28,6 +28,8 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 
 //    private final SearchViewModel searchViewModel;
 
+    private final SaveViewModel saveViewModel;
+    private final DisplayRecipeViewModel displayRecipeViewModel;
     private final ViewManagerModel viewManagerModel;
 
     private JLabel title = new JLabel();
@@ -40,14 +42,19 @@ public class SearchResultView extends JPanel implements ActionListener, Property
 
 //    final JButton confirm;
     final JButton refresh;
+    private DisplayRecipeView displayRecipeView = null;
 
     public SearchResultView(SearchResultsViewModel searchResultsViewModel,
                             SearchViewModel searchViewModel,
+                            DisplayRecipeViewModel displayRecipeViewModel,
+                            SaveViewModel saveViewModel,
                             ViewManagerModel viewManagerModel,
                             SearchController searchController, SaveController saveController) {
+        this.saveViewModel = saveViewModel;
         for (int i = 0; i < 5; i++) recipesTitle[i] = new JButton("");
         this.searchResultsViewModel = searchResultsViewModel;
 //        this.searchViewModel = searchViewModel;
+        this.displayRecipeViewModel = displayRecipeViewModel;
         this.viewManagerModel = viewManagerModel;
         this.searchResultsViewModel.addPropertyChangeListener(this);
         this.saveController = saveController;
@@ -110,10 +117,9 @@ public class SearchResultView extends JPanel implements ActionListener, Property
                 recipesTitle[i].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        DisplayRecipeViewModel displayRecipeViewModel= new DisplayRecipeViewModel();
-                        SaveViewModel saveViewModel = new SaveViewModel();
-                        DisplayRecipeView displayRecipeView = new DisplayRecipeView(foundRecipes.get(rtList[finalI]),
-                                displayRecipeViewModel, searchResultsViewModel, viewManagerModel, saveViewModel, saveController);
+                        DisplayState currentState = new DisplayState();
+                        currentState.setSearchedRecipe(foundRecipes.get(rtList[finalI]));
+                        if (displayRecipeView == null) displayRecipeView = new DisplayRecipeView(displayRecipeViewModel, viewManagerModel, saveViewModel, saveController);
                         viewManagerModel.setActiveView(displayRecipeViewModel.getViewName());
                         viewManagerModel.firePropertyChanged();
                     }

@@ -9,6 +9,7 @@ import interface_adapter.save_recipe.SaveController;
 import interface_adapter.save_recipe.SaveViewModel;
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchedRecipe;
+import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.ViewManagerModel;
@@ -45,6 +46,7 @@ public class Main {
         SearchViewModel searchViewModel = new SearchViewModel();
         SearchResultsViewModel searchResultsViewModel = new SearchResultsViewModel();
         SaveViewModel saveViewModel = new SaveViewModel();
+        DisplayRecipeViewModel displayRecipeViewModel = new DisplayRecipeViewModel();
 
         SaveDataAccessObject saveDataAccessObject;
         try{
@@ -64,7 +66,9 @@ public class Main {
         SearchView searchView = SearchRecipeUseCaseFactory.create(searchViewModel, searchController);
         views.add(searchView, searchView.viewName);
 
-        SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel, viewManagerModel, searchController, saveController);
+//        DisplayRecipeView displayRecipeView = new DisplayRecipeView(displayRecipeViewModel, viewManagerModel, saveViewModel, saveController);
+
+        SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel ,displayRecipeViewModel, saveViewModel, viewManagerModel, searchController, saveController);
         views.add(searchResultView, searchResultView.viewName);
 
         viewManagerModel.setActiveView(searchView.viewName);
