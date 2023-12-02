@@ -10,6 +10,10 @@ import java.util.HashMap;
 
 import entity.Recipe;
 import interface_adapter.ViewManagerModel;
+
+import interface_adapter.save_recipe.SaveController;
+import interface_adapter.save_recipe.SaveViewModel;
+
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchedRecipe;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
@@ -22,6 +26,7 @@ public class SearchResultView extends JPanel implements ActionListener, Property
     public final String viewName = "Search results";
   
     private final SearchResultsViewModel searchResultsViewModel;
+    private final SaveController saveController;
 
 //    private final SearchViewModel searchViewModel;
 
@@ -41,12 +46,15 @@ public class SearchResultView extends JPanel implements ActionListener, Property
     public SearchResultView(SearchResultsViewModel searchResultsViewModel,
                             SearchViewModel searchViewModel,
                             ViewManagerModel viewManagerModel,
-                            SearchController searchController) {
+
+                            SearchController searchController, SaveController saveController) {
+
         for (int i = 0; i < 5; i++) recipesTitle[i] = new JButton("");
         this.searchResultsViewModel = searchResultsViewModel;
 //        this.searchViewModel = searchViewModel;
         this.viewManagerModel = viewManagerModel;
         this.searchResultsViewModel.addPropertyChangeListener(this);
+        this.saveController = saveController;
 
         this.setLayout(new GridLayout(6, 6)); // GridLayout to organize labels
 
@@ -107,8 +115,9 @@ public class SearchResultView extends JPanel implements ActionListener, Property
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         DisplayRecipeViewModel displayRecipeViewModel= new DisplayRecipeViewModel();
+                        SaveViewModel saveViewModel = new SaveViewModel();
                         DisplayRecipeView displayRecipeView = new DisplayRecipeView(foundRecipes.get(rtList[finalI]),
-                                displayRecipeViewModel, searchResultsViewModel, viewManagerModel);
+                                displayRecipeViewModel, searchResultsViewModel, viewManagerModel, saveViewModel, saveController);
                         viewManagerModel.setActiveView(displayRecipeViewModel.getViewName());
                         viewManagerModel.firePropertyChanged();
                     }

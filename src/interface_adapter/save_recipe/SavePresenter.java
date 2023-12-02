@@ -7,7 +7,8 @@ import use_case.save_recipe.SaveOutputData;
 public class SavePresenter implements SaveOutputBoundary {
     private final SaveViewModel saveViewModel;
     private ViewManagerModel viewManagerModel;
-    private SaveSuccessViewModel saveSuccessViewModel;
+
+
     public SavePresenter(ViewManagerModel viewManagerModel, SaveViewModel saveViewModel){
         this.saveViewModel = saveViewModel;
         this.viewManagerModel = viewManagerModel;
@@ -16,13 +17,19 @@ public class SavePresenter implements SaveOutputBoundary {
     @Override
     public void prepareSuccessView() {
         SaveState saveState = saveViewModel.getState();
-        this.saveSuccessViewModel.setState(saveState);
-        this.saveSuccessViewModel.firePropertyChanged();
+
+        this.saveViewModel.setState(saveState);
+        this.saveViewModel.firePropertyChanged();
+
 
     }
 
     @Override
     public void prepareFailView(String error) {
+
+        SaveState saveState = saveViewModel.getState();
+        saveState.setRecipeError(error);
+        this.saveViewModel.firePropertyChanged();
 
     }
 }

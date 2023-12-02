@@ -1,6 +1,9 @@
 package data_access;
 
 import entity.*;
+
+import interface_adapter.search_recipe.SearchedRecipe;
+
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +17,9 @@ import java.util.Map;
 
 public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
     private final File csvFile;
-    private final Map<Integer, Recipe> savedRecipes = new HashMap<>();
+
+    private final Map<Integer, SearchedRecipe> savedRecipes = new HashMap<>();
+
     private final RecipeTagFactory recipeTagFactory;
     public SaveDataAccessObject(String csvpath,
                                 RecipeFactory recipeFactory, RecipeTagFactory recipeTagFactory) throws IOException {
@@ -28,8 +33,12 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
 
                 String row;
+
+                row = reader.readLine();
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
+                    System.out.println(col[0]);
+
                     int id = Integer.parseInt(col[0]);
 
                     OkHttpClient client = new OkHttpClient().newBuilder()
@@ -37,7 +46,9 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
                     MediaType mediaType = MediaType.parse("text/plain");
                     RequestBody body = RequestBody.create(mediaType, "");
                     Request request = new Request.Builder()
-                            .url("https://api.spoonacular.com/recipes/"+id+"/information?apiKey=1c4b31882ec648ec99592dcfb66e7af9")
+
+                            .url("https://api.spoonacular.com/recipes/"+ id +"/information?apiKey=3c71ddee70c243aa9386a30036f9dd91")
+
                             .method("GET", body)
                             .addHeader("Accept", "application/json")
                             .build();
@@ -53,7 +64,10 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
                     Recipe recipe = recipeFactory.create(id1, name, image,
                             (RecipeTag) fullInfo[0], (String) fullInfo[1],
                             (HashMap<String, ArrayList<Object>>) fullInfo[2]);
-                    savedRecipes.put(id, recipe);
+
+                    SearchedRecipe recipes = new SearchedRecipe(recipe);
+                    savedRecipes.put(id, recipes);
+
                 }
             }
         }
@@ -63,7 +77,9 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=1c4b31882ec648ec99592dcfb66e7af9&includeNutrition=false"))
+
+                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=3c71ddee70c243aa9386a30036f9dd91&includeNutrition=false"))
+
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
@@ -125,7 +141,9 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
         }
     }
     @Override
-    public void save(Recipe recipe) {
+
+    public void save(SearchedRecipe recipe) {
+
         savedRecipes.put(recipe.getId(), recipe);
         this.save();
 
@@ -143,7 +161,9 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
             writer.write("id");
             writer.newLine();
 
-            for (Recipe recipe : savedRecipes.values()) {
+
+            for (SearchedRecipe recipe : savedRecipes.values()) {
+
                 String line = String.format("%s", recipe.getId());
                 writer.write(line);
                 writer.newLine();
@@ -156,6 +176,11 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
             throw new RuntimeException(e);
         }
     }
+
+    public Map<Integer, SearchedRecipe> get(){
+        return savedRecipes;
+    }
+
 
 }
 
