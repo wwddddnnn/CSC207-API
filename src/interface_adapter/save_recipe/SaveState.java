@@ -4,19 +4,19 @@ import entity.Recipe;
 import interface_adapter.search_recipe.SearchedRecipe;
 
 public class SaveState {
-    private SearchedRecipe recipes;
+    private SearchedRecipe recipe;
     private String recipeError = null;
     public SaveState(SaveState copy){
-        this.recipes = copy.recipes;
+        this.recipe = copy.recipe;
     }
     public SaveState(){
     }
-    public SearchedRecipe getRecipes(){
-        return this.recipes;
+    public SearchedRecipe getRecipe(){
+        return this.recipe;
     }
 
-    public void setRecipes(SearchedRecipe recipe){
-        this.recipes = recipe;
+    public void setRecipe(SearchedRecipe recipe){
+        this.recipe = recipe;
     }
 
     public String getRecipeError() {

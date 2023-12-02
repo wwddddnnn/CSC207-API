@@ -39,7 +39,7 @@ public class DisplayRecipeView extends JFrame implements ActionListener, Propert
 
 
 
-    public DisplayRecipeView(DisplayRecipeViewModel displayRecipeViewModel,
+    public DisplayRecipeView(SearchedRecipe recipe, DisplayRecipeViewModel displayRecipeViewModel,
                              ViewManagerModel viewManagerModel, SaveViewModel saveViewModel,
                              SaveController saveController) {
         this.displayRecipeViewModel = displayRecipeViewModel;
@@ -47,6 +47,8 @@ public class DisplayRecipeView extends JFrame implements ActionListener, Propert
         this.viewManagerModel = viewManagerModel;
         this.saveViewModel = saveViewModel;
         this.saveController = saveController;
+        this.recipe = recipe;
+        System.out.println("this is " + recipe.getName() + " window.");
         displayRecipeViewModel.addPropertyChangeListener(this);
         saveViewModel.addPropertyChangeListener(this);
 
@@ -66,11 +68,11 @@ public class DisplayRecipeView extends JFrame implements ActionListener, Propert
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource().equals(save)) {
                     //popUpWindow("Saved recipe successful.");
-                    SaveState currentState = new SaveState();
-                    currentState.setRecipes(recipe);
+                    SaveState currentState = saveViewModel.getState();
+                    currentState.setRecipe(recipe);
 
-                    System.out.println("saveController working");
-                    saveController.execute(currentState.getRecipes());
+                    System.out.println("saveController is working with " + currentState.getRecipe().getName());
+                    saveController.execute(currentState.getRecipe());
                 }
             }
             });
@@ -78,12 +80,19 @@ public class DisplayRecipeView extends JFrame implements ActionListener, Propert
         middlePanel.setBorder(new TitledBorder(new EtchedBorder(), "Display Area"));
 
         // create the middle panel components
-
+        display.setText(recipe.toString());
         display.setEditable(false); // set textArea non-editable
         display.setLineWrap(true);
         JScrollPane scroll = new JScrollPane(display);
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
+        Image image = null;
+        try {
+            image = ImageIO.read(new URL(recipe.getImageURL()));
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+        label = new JLabel(new ImageIcon(image));
         this.middlePanel.add(label, BorderLayout.CENTER);
 
         //Add Textarea in to middle panel
@@ -110,22 +119,25 @@ public class DisplayRecipeView extends JFrame implements ActionListener, Propert
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getNewValue() instanceof SaveState) {
             SaveState state = (SaveState) evt.getNewValue();
-            if (state.getRecipeError() != null) {
-                JOptionPane.showMessageDialog(this, state.getRecipeError());
-            } else JOptionPane.showMessageDialog(this, "Save success!");
-        } else {
-            DisplayState state = (DisplayState) evt.getNewValue();
-            if (state.getSearchedRecipe()  != null) {
-                this.recipe = state.getSearchedRecipe();
-                Image image = null;
-                try {
-                    image = ImageIO.read(new URL(recipe.getImageURL()));
-                } catch (Exception exp) {
-                    exp.printStackTrace();
-                }
-                label = new JLabel(new ImageIcon(image));
-                display.setText(recipe.toString());
+            if (state.getRecipe().getId() == recipe.getId()){
+                if (state.getRecipeError() != null) {
+                    JOptionPane.showMessageDialog(this, state.getRecipeError());
+                } else JOptionPane.showMessageDialog(this, "Save success!");
             }
         }
+//        else {
+//            DisplayState state = (DisplayState) evt.getNewValue();
+//            if (state.getSearchedRecipe()  != null) {
+//                this.recipe = state.getSearchedRecipe();
+//                Image image = null;
+//                try {
+//                    image = ImageIO.read(new URL(recipe.getImageURL()));
+//                } catch (Exception exp) {
+//                    exp.printStackTrace();
+//                }
+//                label = new JLabel(new ImageIcon(image));
+//                display.setText(recipe.toString());
+//            }
+//        }
     }
 }

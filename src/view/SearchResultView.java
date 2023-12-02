@@ -36,13 +36,12 @@ public class SearchResultView extends JPanel implements ActionListener, Property
   
 //    private JLabel[] recipes = new JLabel[5];
   
-    private HashMap<String, SearchedRecipe> foundRecipes;
+//    private HashMap<String, SearchedRecipe> foundRecipes;
   
     private JButton[] recipesTitle = new JButton[5];
 
 //    final JButton confirm;
     final JButton refresh;
-    private DisplayRecipeView displayRecipeView = null;
 
     public SearchResultView(SearchResultsViewModel searchResultsViewModel,
                             SearchViewModel searchViewModel,
@@ -107,8 +106,8 @@ public class SearchResultView extends JPanel implements ActionListener, Property
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SearchState currentState = (SearchState) evt.getNewValue();
-        HashMap<String, SearchedRecipe> recipes = currentState.getRecipe();
-        this.foundRecipes = recipes;
+        HashMap<String, SearchedRecipe> foundRecipes = currentState.getRecipe();
+        this.foundRecipes = foundRecipes;
         if (!foundRecipes.isEmpty()) {
             String[] rtList = foundRecipes.keySet().toArray(new String[0]);;
             for (int i = 0; i < rtList.length; i++) {
@@ -117,9 +116,7 @@ public class SearchResultView extends JPanel implements ActionListener, Property
                 recipesTitle[i].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        DisplayState currentState = new DisplayState();
-                        currentState.setSearchedRecipe(foundRecipes.get(rtList[finalI]));
-                        if (displayRecipeView == null) displayRecipeView = new DisplayRecipeView(displayRecipeViewModel, viewManagerModel, saveViewModel, saveController);
+                        DisplayRecipeView displayRecipeView = new DisplayRecipeView(foundRecipes.get(rtList[finalI]), displayRecipeViewModel, viewManagerModel, saveViewModel, saveController);
                         viewManagerModel.setActiveView(displayRecipeViewModel.getViewName());
                         viewManagerModel.firePropertyChanged();
                     }
