@@ -53,6 +53,10 @@ public class ConnectView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // Obtain the title from the current state and pass it to the controller
                 String title = connectViewModel.getState().getTitle();
+                if (!title.matches("[a-zA-Z]+")) { // Check if the title contains only letters
+                    JOptionPane.showMessageDialog(ConnectView.this, "Invalid name!!!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Do not proceed further if the name is invalid
+                }
                 LocalDateTime currentDateTime = LocalDateTime.now();
                 connectController.execute(title, currentDateTime);
             }
