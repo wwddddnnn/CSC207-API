@@ -1,10 +1,7 @@
 package interface_adapter.save_recipe;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 import use_case.save_recipe.SaveOutputBoundary;
-import use_case.save_recipe.SaveOutputData;
-import view.DisplayRecipeView;
 
 public class SavePresenter implements SaveOutputBoundary {
     private final SaveViewModel saveViewModel;

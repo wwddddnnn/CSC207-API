@@ -4,16 +4,13 @@ import data_access.SaveDataAccessObject;
 import data_access.SearchRecipeDataAccessObject;
 import entity.CommonRecipeFactory;
 import entity.CommonRecipeTagFactory;
-import entity.RecipeFactory;
 import interface_adapter.save_recipe.SaveController;
 import interface_adapter.save_recipe.SaveViewModel;
 import interface_adapter.search_recipe.SearchController;
-import interface_adapter.search_recipe.SearchedRecipe;
-import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
-import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.ViewManagerModel;
-import use_case.save_recipe.SaveRecipeDataAccessInterface;
+import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
+import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import view.*;
 
 import javax.swing.*;

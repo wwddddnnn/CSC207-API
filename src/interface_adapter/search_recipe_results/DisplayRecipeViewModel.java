@@ -1,12 +1,17 @@
 package interface_adapter.search_recipe_results;
 
 import interface_adapter.ViewModel;
+import interface_adapter.search_recipe.SearchState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class DisplayRecipeViewModel extends ViewModel {
-    private DisplayState state = new DisplayState();
+
+
+    private SearchState state = new SearchState();
+//    public static final String FINISH_BUTTON_LABEL = "Finish";
+
     public static final String SAVE_BUTTON_LABEL = "Save this recipe";
 
     public DisplayRecipeViewModel(){super("Display recipe");}
@@ -24,8 +29,7 @@ public class DisplayRecipeViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-
-    public DisplayState getState() {
-        return state;
-    }
+//    public SearchState getState() {
+//        return state;
+//    }
 }

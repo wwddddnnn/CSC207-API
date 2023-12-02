@@ -2,8 +2,8 @@ package app;
 
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchPresenter;
-import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
+import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import use_case.search_recipe.SearchInputBoundary;
 import use_case.search_recipe.SearchInteractor;
 import use_case.search_recipe.SearchOutputBoundary;
