@@ -33,6 +33,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final GetMealPlanController getMealPlanController;
     private final SearchViewModel searchViewModel;
 
+    private ViewManagerModel viewManagerModel;
+
 
     public SearchView(SearchController controller, SearchViewModel searchViewModel, GetMealPlanController getMealPlanController1) {
 
@@ -61,6 +63,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchButton = new JButton("Search");
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(searchButton);
+
+        connectButton = new JButton("Connect");
+        buttonPanel.add(connectButton);
 
 
         //added a getMealPlanButton

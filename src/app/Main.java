@@ -61,25 +61,12 @@ public class Main {
         SearchResultsViewModel searchResultsViewModel = new SearchResultsViewModel();
         ConnectViewModel connectViewModel = new ConnectViewModel();
 
-
-        SearchRecipeDataAccessObject searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
-
-        ConnectDataAccessObject connectDataAccessObject = new ConnectDataAccessObject();
-
-
-        SearchController searchController = SearchRecipeUseCaseFactory.createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
-
-        SearchView searchView = SearchRecipeUseCaseFactory.create(searchViewModel, searchController);
-        views.add(searchView, searchView.viewName);
-
-        SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel, viewManagerModel, searchController);
-        views.add(searchResultView, searchResultView.viewName);
-
-
         MealPlanViewModel mealPlanViewModel = new MealPlanViewModel();
         GetMealPlanDataAccessObject getMealPlanDataAccessObject = new GetMealPlanDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
 
         SaveViewModel saveViewModel = new SaveViewModel();
+
+        SearchRecipeDataAccessObject searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
 
         SaveDataAccessObject saveDataAccessObject;
         try{
@@ -87,8 +74,6 @@ public class Main {
         } catch (IOException e){
             throw new RuntimeException(e);
         }
-
-        SearchRecipeDataAccessObject searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
 
         SearchController searchController = SearchRecipeUseCaseFactory.createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
 
@@ -101,12 +86,15 @@ public class Main {
                 searchResultsViewModel, searchRecipeDataAccessObject,
                 mealPlanViewModel, getMealPlanDataAccessObject);
         views.add(searchView, searchView.viewName);
-      
+
         MealPlanView mealPlanView = new MealPlanView(mealPlanViewModel, searchViewModel, viewManagerModel);
         views.add(mealPlanView, mealPlanView.viewName);
 
         SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel, viewManagerModel, searchController, saveController);
         views.add(searchResultView, searchResultView.viewName);
+
+
+        ConnectDataAccessObject connectDataAccessObject = new ConnectDataAccessObject();
 
 
         viewManagerModel.setActiveView(searchView.viewName);

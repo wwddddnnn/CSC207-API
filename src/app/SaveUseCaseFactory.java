@@ -15,7 +15,7 @@ import use_case.save_recipe.SaveInteractor;
 import use_case.save_recipe.SaveOutputBoundary;
 import use_case.save_recipe.SaveRecipeDataAccessInterface;
 
-import view.SaveView;
+//import view.SaveView;
 
 
 public class SaveUseCaseFactory {
@@ -23,12 +23,12 @@ public class SaveUseCaseFactory {
 
     }
 
-
-    public static SaveView create(ViewManagerModel viewManagerModel, SaveRecipeDataAccessInterface saveRecipeDataAccessInterface,
-                                  SaveViewModel saveViewModel){
-        SaveController saveController = createSaveRecipeUseCase(viewManagerModel, saveRecipeDataAccessInterface, saveViewModel);
-        return new SaveView(saveController, saveViewModel, viewManagerModel);
-    }
+//
+//    public static SaveView create(ViewManagerModel viewManagerModel, SaveRecipeDataAccessInterface saveRecipeDataAccessInterface,
+//                                  SaveViewModel saveViewModel){
+//        SaveController saveController = createSaveRecipeUseCase(viewManagerModel, saveRecipeDataAccessInterface, saveViewModel);
+//        return new SaveView(saveController, saveViewModel, viewManagerModel);
+//    }
 
     public static SaveController createSaveRecipeUseCase(ViewManagerModel viewManagerModel, SaveRecipeDataAccessInterface saveRecipeDataAccessInterface,
 
