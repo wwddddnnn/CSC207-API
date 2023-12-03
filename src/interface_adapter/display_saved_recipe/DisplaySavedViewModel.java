@@ -11,6 +11,7 @@ public class DisplaySavedViewModel extends ViewModel {
     public static final String PREVIOUS_PAGE_BUTTON_LABEL = "Previous Page";
     public static final String NEXT_PAGE_BUTTON_LABEL = "Next Page";
     public static final String ADD_BUTTON_LABEL = "Add to meal plan";
+    public static final String CONFIRM_BUTTON_LABEL = "Confirm";
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public DisplaySavedViewModel(){

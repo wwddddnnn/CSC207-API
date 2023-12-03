@@ -1,8 +1,10 @@
 package view;
 
+import app.UserInfoRetriever;
 import interface_adapter.add_to_meal_plan.AddMealPlanController;
 import interface_adapter.add_to_meal_plan.AddMealPlanViewModel;
 import interface_adapter.search_recipe.SearchState;
+import interface_adapter.search_recipe.SearchViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,14 +23,17 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
     private final JComboBox<String> slotComboBox;
 //    private final JTextField positionInputField = new JTextField(15);
     private final JButton addButton;
+    private final JButton confirmButton;
     private final AddMealPlanController addMealPlanController;
     private final AddMealPlanViewModel addMealPlanViewModel;
+    private final SearchViewModel searchViewModel;
 
     public AddMealPlanView(AddMealPlanController addMealPlanController,
                            AddMealPlanViewModel addMealPlanViewModel,
-                           String recipeId) {
+                           SearchViewModel searchViewModel) {
         this.addMealPlanController = addMealPlanController;
         this.addMealPlanViewModel = addMealPlanViewModel;
+        this.searchViewModel = searchViewModel;
         addMealPlanViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Add to meal plan");
@@ -57,21 +62,33 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
         slotPanel.add(slotComboBox);
 
         addButton = new JButton("Add");
+        confirmButton = new JButton("Confirm");
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addButton);
+        buttonPanel.add(confirmButton);
 
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource().equals(addButton)) {
                     try {
-                        addMealPlanController.execute((String) dateComboBox.getSelectedItem(),
+                        String username = UserInfoRetriever.getUsername();
+                        String hash = UserInfoRetriever.getUserHash();
+                        String recipeId = addMealPlanViewModel.getRecipeId();
+                        addMealPlanController.execute(username, hash, (String) dateComboBox.getSelectedItem(),
                                 (String) slotComboBox.getSelectedItem(), recipeId);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
-                }
+            }
+        });
+
+        confirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
         });
 
     }

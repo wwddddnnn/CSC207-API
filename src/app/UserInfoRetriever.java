@@ -11,13 +11,15 @@ public class UserInfoRetriever {
 
     static int startDateEpoch;
 
-    public UserInfoRetriever(HashMap<String, Object> connectResult) {
-        this.username = (String) connectResult.get("username");
-        this.userHash = (String) connectResult.get("userHash");
-        this.startDate = (LocalDate) connectResult.get("date");
+    private UserInfoRetriever(){}
+
+    public static void store(HashMap<String, Object> connectResult) {
+        username = (String) connectResult.get("username");
+        userHash = (String) connectResult.get("userHash");
+        startDate = (LocalDate) connectResult.get("date");
         long epochUnupdated = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
         int epochDate = (int) epochUnupdated/1000;
-        this.startDateEpoch = epochDate;
+        startDateEpoch = epochDate;
     }
 
     public static String getUsername(){

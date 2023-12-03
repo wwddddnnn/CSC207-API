@@ -24,8 +24,6 @@ import java.net.URL;
 public class DisplayRecipeView extends JFrame implements PropertyChangeListener {
 
     private final String viewName = "Display recipe";
-
-    //TODO: Make this recipe attribute 'final' once you incorporate it into the second DisplayRecipeView constructor.
     private SearchedRecipe recipe;
     private MealPlanViewModel mealPlanViewModel = null;
     private final DisplayRecipeViewModel displayRecipeViewModel;
@@ -55,6 +53,7 @@ public class DisplayRecipeView extends JFrame implements PropertyChangeListener 
 //        this.finish = new JButton(this.displayRecipeViewModel.FINISH_BUTTON_LABEL);
         this.save = new JButton(this.displayRecipeViewModel.SAVE_BUTTON_LABEL);
         // return to the searchResultView after clicking finish button.
+
 //        this.finish.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {

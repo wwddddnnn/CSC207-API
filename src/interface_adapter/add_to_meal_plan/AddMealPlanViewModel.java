@@ -8,6 +8,7 @@ import java.beans.PropertyChangeSupport;
 public class AddMealPlanViewModel extends ViewModel {
 
     private String message = "";
+    private String recipeId;
 
     public AddMealPlanViewModel() { super("Add to Meal Plan"); }
 
@@ -29,5 +30,13 @@ public class AddMealPlanViewModel extends ViewModel {
 
     public String getMessage() {
         return message;
+    }
+
+    public String getRecipeId(){
+        return this.recipeId;
+    }
+
+    public void setRecipeId(String recipeId) {
+        this.recipeId = recipeId;
     }
 }
