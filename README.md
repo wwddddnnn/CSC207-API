@@ -4,64 +4,44 @@
 
 Description:
 
-Our application will be a platform where users can search and save recipes, and make
-customized meal plans as well as shopping lists. Features include:
+Our application will be a platform where users can search for recipes, save recipes, and make
+customized meal plans. Features include:
 
-- being able to write the ingredients users have at home with a fridge template 
+- being able to search for recipes from the database, with filters such as cuisine, query, and max time required to make the recipe
 
-- being able to search for recipes from the database, with filters such as 
-  - Type of cuisine
-  - Type of meal (breakfast, lunch, dinner)
-  - Time taken to make the recipe
-  - Calorie count
-  - Dietary restrictions (ingredient exclusions)
-  - Number of missing ingredients
+- being able to view each filtered recipe from search results in a clear manner
 
-- being able to save a filtered recipe
+- being able to save a recipe locally from the search results
 
-- being able to generate a shopping list based on the list of missing ingredients
+- being able to view each saved recipe in a clear manner
 
-- being able to save a recipe and put it into an organized "meal plan" list 
-which includes what 'day' and 'meal time' they plan on making this meal
+- being able to put any saved recipe into an organized "meal plan" list which includes what 'day' and 'meal time' they plan on making this meal
 
-Note: A recipe file would include: a short description, ingredients, prep/cook time, calories, taste, etc.
+Note: A recipe file would include: the recipe name, instructions, an image, tags, etc.
 
 ## API Documentation
   
-Api documentation link we will be using during our project:
+API documentation link we will be using during our project:
 https://spoonacular.com/food-api/docs
 
 ## Proposed Entities
 
-- User
-  - String username
-  - String password
-
 - Recipe
-  - int serialNumber
-  - String title
-  - RecipeTag tags
-  - String instructions
+  - int id;
+  - String name;
+  - String[] image;
+  - RecipeTag recipeTag;
+  - String instructions;
+  - HashMap<String, ArrayList<Object>> ingredients;
 
 - RecipeTag
-  - String taste
-  - String cuisine
-  - String diet
-  - String intolerances
-  - Int calories
-  - HashMap<Ingredient, int> IngredientList
-  - String[] nutrition List
-
-- Ingredients
-  - String name
-  - Int price
-
-- Fridge
-  - String[] fridgeList
+  - int recipeMinutes;
+  - int servings;
+  - ArrayList<String> cuisines;
+  - boolean vegetarianBool;
+  - boolean veganBool;
+  - ArrayList<String> intolerances;
 
 - MealPlan
   - HashMap<String, int> MealPlanDay
   - MealPlanDay[] MealPlanWeek
-
-- ShoppingList
-  - HashMap<String, int> MissingIngredients
