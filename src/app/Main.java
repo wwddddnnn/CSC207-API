@@ -1,15 +1,22 @@
 package app;
 
-
+import data_access.AddMealPlanDataAccessObject;
 import data_access.GetMealPlanDataAccessObject;
 import interface_adapter.get_meal_plan.MealPlanViewModel;
-
 import data_access.SaveDataAccessObject;
 
 import data_access.SearchRecipeDataAccessObject;
 import data_access.ConnectDataAccessObject;
 import entity.CommonRecipeFactory;
 import entity.CommonRecipeTagFactory;
+
+import interface_adapter.add_to_meal_plan.AddMealPlanController;
+import interface_adapter.add_to_meal_plan.AddMealPlanViewModel;
+import interface_adapter.display_saved_recipe.DisplaySavedController;
+import interface_adapter.display_saved_recipe.DisplaySavedViewModel;
+import interface_adapter.save_recipe.SaveController;
+import interface_adapter.save_recipe.SaveViewModel;
+import interface_adapter.search_recipe.SearchController;
 
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.connect.ConnectViewModel;
@@ -24,10 +31,12 @@ import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchedRecipe;
 
 import interface_adapter.search_recipe_results.SearchResultsViewModel;
+
 import interface_adapter.search_recipe.SearchViewModel;
 
 import interface_adapter.ViewManagerModel;
-import use_case.save_recipe.SaveRecipeDataAccessInterface;
+import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
+import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import view.*;
 
 import javax.swing.*;
@@ -65,6 +74,9 @@ public class Main {
         GetMealPlanDataAccessObject getMealPlanDataAccessObject = new GetMealPlanDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
 
         SaveViewModel saveViewModel = new SaveViewModel();
+        DisplayRecipeViewModel displayRecipeViewModel = new DisplayRecipeViewModel();
+        DisplaySavedViewModel displaySavedViewModel = new DisplaySavedViewModel();
+        AddMealPlanViewModel addMealPlanViewModel = new AddMealPlanViewModel();
 
         SearchRecipeDataAccessObject searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
 
@@ -75,17 +87,35 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+
+        AddMealPlanDataAccessObject addMealPlanDAO = new AddMealPlanDataAccessObject();
+
+        SearchRecipeDataAccessObject searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
+
         SearchController searchController = SearchRecipeUseCaseFactory.createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
 
         SaveController saveController = SaveUseCaseFactory.createSaveRecipeUseCase(viewManagerModel, saveDataAccessObject, saveViewModel);
 
-        //SaveView saveView = SaveUseCaseFactory.create(viewManagerModel, saveDataAccessObject, saveViewModel);
+        DisplaySavedController displaySavedController = DisplaySavedUseCaseFactory.createDisplaySavedUseCase(displaySavedViewModel, viewManagerModel, saveDataAccessObject);
+
+        AddMealPlanController addMealPlanController = AddToMealPlanUseCaseFactory.createAddToMealPlanSavedUseCase(addMealPlanViewModel, addMealPlanDAO, viewManagerModel);
 
 
         SearchView searchView = SearchRecipeUseCaseFactory.create(viewManagerModel, searchViewModel,
                 searchResultsViewModel, searchRecipeDataAccessObject,
                 mealPlanViewModel, getMealPlanDataAccessObject);
         views.add(searchView, searchView.viewName);
+
+//        DisplayRecipeView displayRecipeView = new DisplayRecipeView(displayRecipeViewModel, viewManagerModel, saveViewModel, saveController);
+
+        SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel ,displayRecipeViewModel, saveViewModel, viewManagerModel, searchController, saveController);
+        views.add(searchResultView, searchResultView.viewName);
+
+        DisplaySavedView displaySavedView = new DisplaySavedView(displaySavedViewModel,addMealPlanViewModel,addMealPlanController,viewManagerModel);
+        views.add(displaySavedView, displaySavedView.viewName);
+
+        displaySavedController.execute();
+        viewManagerModel.setActiveView(displaySavedView.viewName);
 
         MealPlanView mealPlanView = new MealPlanView(mealPlanViewModel, searchViewModel, viewManagerModel);
         views.add(mealPlanView, mealPlanView.viewName);

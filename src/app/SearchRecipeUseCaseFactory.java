@@ -5,13 +5,14 @@ import interface_adapter.get_meal_plan.GetMealPlanPresenter;
 import interface_adapter.get_meal_plan.MealPlanViewModel;
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchPresenter;
-import interface_adapter.search_recipe_results.SearchResultsViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
+import interface_adapter.search_recipe_results.SearchResultsViewModel;
 
 import use_case.get_meal_plan.GetMealPlanDataAccessInterface;
 import use_case.get_meal_plan.GetMealPlanInputBoundary;
 import use_case.get_meal_plan.GetMealPlanInteractor;
 import use_case.get_meal_plan.GetMealPlanOutputBoundary;
+
 import use_case.search_recipe.SearchInputBoundary;
 import use_case.search_recipe.SearchInteractor;
 import use_case.search_recipe.SearchOutputBoundary;

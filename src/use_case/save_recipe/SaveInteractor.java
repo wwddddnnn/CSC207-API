@@ -8,13 +8,13 @@ import interface_adapter.save_recipe.SavePresenter;
 public class SaveInteractor implements SaveInputBoundary {
     final SaveRecipeDataAccessInterface saveRecipeDAO;
     final SaveOutputBoundary saveDataPresenter;
-    final RecipeFactory recipeFactory;
+//    final RecipeFactory recipeFactory;
 
     public SaveInteractor(SaveRecipeDataAccessInterface saveRecipeDAO, SaveOutputBoundary saveDataPresenter,
                           RecipeFactory recipeFactory){
         this.saveRecipeDAO = saveRecipeDAO;
         this.saveDataPresenter = saveDataPresenter;
-        this.recipeFactory = recipeFactory;
+//        this.recipeFactory = recipeFactory;
     }
     @Override
     public void execute(SaveInputData saveInputData) {

@@ -8,8 +8,8 @@ import use_case.search_recipe.SearchOutputData;
 public class SearchPresenter implements SearchOutputBoundary {
 
     private final SearchViewModel searchViewModel;
-    private ViewManagerModel viewManagerModel;
-    private SearchResultsViewModel searchResultsViewModel;
+    private final ViewManagerModel viewManagerModel;
+    private final SearchResultsViewModel searchResultsViewModel;
 
     public SearchPresenter(ViewManagerModel viewManagerModel,
                            SearchViewModel searchViewModel,

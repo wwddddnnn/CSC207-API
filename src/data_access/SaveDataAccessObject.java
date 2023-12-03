@@ -1,13 +1,12 @@
 package data_access;
 
 import entity.*;
-
 import interface_adapter.search_recipe.SearchedRecipe;
-
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.display_saved_recipe.DisplaySavedDataAccessInterface;
 import use_case.save_recipe.SaveRecipeDataAccessInterface;
 
 import java.io.*;
@@ -15,71 +14,36 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
+public class SaveDataAccessObject implements SaveRecipeDataAccessInterface, DisplaySavedDataAccessInterface {
     private final File csvFile;
-
     private final Map<Integer, SearchedRecipe> savedRecipes = new HashMap<>();
-
+    private final RecipeFactory recipeFactory;
     private final RecipeTagFactory recipeTagFactory;
-    public SaveDataAccessObject(String csvpath,
-                                RecipeFactory recipeFactory, RecipeTagFactory recipeTagFactory) throws IOException {
+    public SaveDataAccessObject(String csvpath, RecipeFactory recipeFactory, RecipeTagFactory recipeTagFactory) throws IOException {
+        this.recipeFactory = recipeFactory;
         this.recipeTagFactory = recipeTagFactory;
-
         csvFile = new File(csvpath);
 
         if (csvFile.length() == 0) {
             save();
         } else {
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-
                 String row;
-
-                row = reader.readLine();
                 while ((row = reader.readLine()) != null) {
-                    String[] col = row.split(",");
-                    System.out.println(col[0]);
-
-                    int id = Integer.parseInt(col[0]);
-
-                    OkHttpClient client = new OkHttpClient().newBuilder()
-                            .build();
-                    MediaType mediaType = MediaType.parse("text/plain");
-                    RequestBody body = RequestBody.create(mediaType, "");
-                    Request request = new Request.Builder()
-
-                            .url("https://api.spoonacular.com/recipes/"+ id +"/information?apiKey=3c71ddee70c243aa9386a30036f9dd91")
-
-                            .method("GET", body)
-                            .addHeader("Accept", "application/json")
-                            .build();
-
-                    Response response = client.newCall(request).execute();
-                    JSONObject responseBody = new JSONObject(response.body().string());
-                    int id1 = responseBody.getInt("id");
-                    String name = responseBody.getString("title");
-                    String[] image = new String[2];
-                    image[0] = responseBody.getString("image");
-                    image[1] = responseBody.getString("imageType");
-                    Object[] fullInfo = this.absorbRecipeInfo(id);
-                    Recipe recipe = recipeFactory.create(id1, name, image,
-                            (RecipeTag) fullInfo[0], (String) fullInfo[1],
-                            (HashMap<String, ArrayList<Object>>) fullInfo[2]);
-
-                    SearchedRecipe recipes = new SearchedRecipe(recipe);
-                    savedRecipes.put(id, recipes);
-
+                    System.out.println(row);
+                    int id = Integer.parseInt(row);
+                    SearchedRecipe recipe = absorbRecipeInfo(id);
+                    savedRecipes.put(id, recipe);
                 }
             }
         }
     }
 
-    private Object[] absorbRecipeInfo(int recipeID) {
+    private SearchedRecipe absorbRecipeInfo(int recipeID) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-
-                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=3c71ddee70c243aa9386a30036f9dd91&includeNutrition=false"))
-
+                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=30a69d9d0e0d48d896b69c717acf18b2&includeNutrition=false"))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
@@ -92,6 +56,11 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
                 //tags: recipeMinutes, servings, cuisinesList, vegetarian, vegan, intolerances
                 int recipeMinutes = responseBody.getInt("readyInMinutes");
                 int servings = responseBody.getInt("servings");
+                String title = responseBody.getString("title");
+
+                String[] image = new String[2];
+                image[0] = responseBody.getString("image");
+                image[1] = responseBody.getString("imageType");
 
                 JSONArray cuisinesArray = responseBody.getJSONArray("cuisines");
                 ArrayList<String> cuisinesList = new ArrayList<>();
@@ -127,21 +96,17 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
                     ingredientInfo.add(ingredientUnit);
                     //add ArrayList into IngredientMap
                     ingredientMap.put(ingredientName, ingredientInfo);
-
                 }
-
-                return new Object[]{recipeTag, instructions, ingredientMap};
-
+                SearchedRecipe searchedRecipe = new SearchedRecipe(this.recipeFactory.create(recipeID, title,image,recipeTag, instructions, ingredientMap));
+                return searchedRecipe;
             } else {
                 throw new RuntimeException("fail");
             }
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
-
         }
     }
     @Override
-
     public void save(SearchedRecipe recipe) {
 
         savedRecipes.put(recipe.getId(), recipe);
@@ -156,31 +121,20 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
     public void save(){
         BufferedWriter writer;
         try {
-
             writer = new BufferedWriter(new FileWriter(csvFile));
-            writer.write("id");
-            writer.newLine();
-
-
             for (SearchedRecipe recipe : savedRecipes.values()) {
-
                 String line = String.format("%s", recipe.getId());
                 writer.write(line);
                 writer.newLine();
             }
-
             writer.close();
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public Map<Integer, SearchedRecipe> get(){
-        return savedRecipes;
+    @Override
+    public SearchedRecipe[] getSavedRecipes() {
+        return this.savedRecipes.values().toArray(new SearchedRecipe[0]);
     }
-
-
 }
-

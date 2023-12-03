@@ -1,26 +1,22 @@
 package interface_adapter.save_recipe;
 
 import entity.Recipe;
-
 import interface_adapter.search_recipe.SearchedRecipe;
 
 public class SaveState {
-    private SearchedRecipe recipes;
+    private SearchedRecipe recipe;
     private String recipeError = null;
-
     public SaveState(SaveState copy){
-        this.recipes = copy.recipes;
+        this.recipe = copy.recipe;
     }
     public SaveState(){
-
+    }
+    public SearchedRecipe getRecipe(){
+        return this.recipe;
     }
 
-    public SearchedRecipe getRecipes(){
-        return this.recipes;
-    }
-
-    public void setRecipes(SearchedRecipe recipe){
-        this.recipes = recipe;
+    public void setRecipe(SearchedRecipe recipe){
+        this.recipe = recipe;
     }
 
     public String getRecipeError() {
@@ -29,5 +25,4 @@ public class SaveState {
     public void setRecipeError(String recipeError) {
         this.recipeError = recipeError;
     }
-
 }

@@ -1,13 +1,11 @@
 package app;
 
 import entity.CommonRecipeFactory;
-import entity.Recipe;
 import entity.RecipeFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.save_recipe.SaveController;
 import interface_adapter.save_recipe.SavePresenter;
 import interface_adapter.save_recipe.SaveViewModel;
-
 import interface_adapter.search_recipe.SearchedRecipe;
 
 import use_case.save_recipe.SaveInputBoundary;
