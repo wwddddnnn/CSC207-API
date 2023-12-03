@@ -112,7 +112,7 @@ public class Main {
         DisplaySavedView displaySavedView = new DisplaySavedView(displaySavedViewModel,addMealPlanViewModel, searchViewModel, addMealPlanController,viewManagerModel);
         views.add(displaySavedView, displaySavedView.viewName);
 
-        AddMealPlanView addMealPlanView = new AddMealPlanView(addMealPlanController, addMealPlanViewModel, searchViewModel, viewManagerModel);
+        AddMealPlanView addMealPlanView = new AddMealPlanView(addMealPlanController, addMealPlanViewModel, displaySavedViewModel, viewManagerModel);
         views.add(addMealPlanView, addMealPlanView.viewName);
 
 //        displaySavedController.execute();

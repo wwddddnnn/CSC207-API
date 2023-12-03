@@ -12,33 +12,12 @@ public class AddMealPlanDataAccessObject implements AddMealPlanDataAccessInterfa
     public String addMealPlan(String[] userInfo, String[] addInfo, String recipeId) throws IOException {
         // userInfo = {username, hash}, addInfo = {date, slot}
 
-//        OkHttpClient client = new OkHttpClient().newBuilder()
-//                .build();
-//        MediaType mediaType = MediaType.parse("application/json");
-//        RequestBody body = RequestBody.create(mediaType, "{\n" +
-//                "    \"date\": " + addInfo[0] + ",\n" +
-//                "    \"slot\": " + addInfo[1] + ",\n" +
-//                "    \"position\": 0,\n" +
-//                "    \"type\": \"RECIPE\",\n" +
-//                "    \"value\": {\n" +
-//                "        \"id\": " + recipeId + "\n" +
-//                "    }\n" +
-//                "}");
-//        String requestURL = "https://api.spoonacular.com/mealplanner/" + userInfo[0] + "/items?hash=" + userInfo[1] + "apiKey=b1885373924b41d9961c057265b15ed9";
-//
-//        Request request = new Request.Builder()
-//                .url(requestURL)
-//                .method("POST", body)
-//                .addHeader("Content-Type", "application/json")
-//                .addHeader("Accept", "application/json")
-//                .build();
-
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(mediaType, "{\n    \"date\": " + addInfo[0] + ",\n    \"slot\": " + addInfo[1] + ",\n    \"position\": 0,\n    \"type\": \"RECIPE\",\n    \"value\": {\n        \"id\": " + recipeId + "\n    }\n}");
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/mealplanner/doris/items?hash=ddd9ea9347af9af32873600eb9e3850581e5e9a0&apiKey=e7877dbada2b46aeb588e7418550c78f")
+                .url("https://api.spoonacular.com/mealplanner/" + userInfo[0] + "/items?hash=" + userInfo[1] + "&apiKey=17731a56ca524010936e5648e84130e4")
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
