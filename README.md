@@ -4,8 +4,8 @@
 
 Description:
 
-Our application will be a platform where users can search and save recipes, and make
-customized meal plans as well as shopping lists. Features include:
+Our application will be a platform where users can search for recipes, save recipes, and make
+customized meal plans. Features include:
 
 - being able to search for recipes from the database, with filters such as cuisine, query, and max time required to make the recipe
 
