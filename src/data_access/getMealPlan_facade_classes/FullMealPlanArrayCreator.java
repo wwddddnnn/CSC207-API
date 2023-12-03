@@ -1,5 +1,12 @@
 package data_access.getMealPlan_facade_classes;
 
+import app.UserInfoRetriever;
+import data_access.SearchRecipeDataAccessObject;
+import entity.CommonRecipe;
+import entity.Recipe;
+import interface_adapter.search_recipe.SearchedRecipe;
+
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,15 +32,17 @@ An example of what the returned Meal Plan Array List should look like is shown b
 
 public class FullMealPlanArrayCreator {
 
-    private final LocalDate startDate;
     private final SavedRecipeToStringConverter savedRecipeToStringConverter;
+    private final SearchRecipeDataAccessObject searchRecipeDAO;
 
-    public FullMealPlanArrayCreator(LocalDate startDate, SavedRecipeToStringConverter savedRecipeToStringConverter) {
-        this.startDate = startDate;
+    public FullMealPlanArrayCreator(SavedRecipeToStringConverter savedRecipeToStringConverter, SearchRecipeDataAccessObject searchRecipeDAO) {
         this.savedRecipeToStringConverter = savedRecipeToStringConverter;
+        this.searchRecipeDAO = searchRecipeDAO;
     }
-    public ArrayList<ArrayList<ArrayList>> create(ArrayList<ArrayList<ArrayList>> halfMealPlanArray) {
+    public ArrayList<ArrayList<ArrayList>> create(ArrayList<ArrayList<ArrayList>> halfMealPlanArray) throws IOException {
         EmptyMealPlanArrayCreator emptyMPCreator= new EmptyMealPlanArrayCreator();
+
+        LocalDate startDate = UserInfoRetriever.getStartDate();
         ArrayList<ArrayList<ArrayList>> newMealPlanArray = emptyMPCreator.create(startDate);
 
         for (int numDay = 0; numDay < 7; numDay++) {
@@ -42,17 +51,18 @@ public class FullMealPlanArrayCreator {
                     Integer recipeID = (Integer) halfMealPlanArray.get(numDay).get(numMeal).get(0);   //IntelliJ recognizes it as "Object" cuz I never specified it would be an Integer.
 
                     String simpleRecipeString = savedRecipeToStringConverter.convertToSimpleString(recipeID);
-                    String detailedRecipeString = savedRecipeToStringConverter.convertToDetailedString(recipeID);
+                    Recipe recipeObject = searchRecipeDAO.getByID(recipeID);
+                    SearchedRecipe searchedRecipeObject = new SearchedRecipe(recipeObject);
 
-                    HashMap recipeStringHashMap = new HashMap<String, String>();
+                    HashMap recipeStringHashMap = new HashMap<String, Object>();
                     recipeStringHashMap.put("simpleString", simpleRecipeString);
-                    recipeStringHashMap.put("detailedString", detailedRecipeString);   //recipeStringHashMap = {“simpleString”: “Shrimp Salad”, “detailedString”: “Name: ShrimpSalad, etc.”}
+                    recipeStringHashMap.put("recipeObject", searchedRecipeObject);   //recipeStringHashMap = {“simpleString”: “Shrimp Salad”, “recipeObject”: SearchedRecipe}
 
                     newMealPlanArray.get(numDay).get(numMeal).add(recipeStringHashMap);
                 } else {
                     HashMap recipeStringHashMap = new HashMap<String, String>();
                     recipeStringHashMap.put("simpleString", "");
-                    recipeStringHashMap.put("detailedString", "");
+                    recipeStringHashMap.put("recipeObject", null);
 
                     newMealPlanArray.get(numDay).get(numMeal).add(recipeStringHashMap);
                 }

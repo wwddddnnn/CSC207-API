@@ -1,5 +1,6 @@
 package interface_adapter.connect;
 
+import app.UserInfoRetriever;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.search_recipe.SearchViewModel;
 import use_case.connect.ConnectOutputBoundary;
@@ -19,8 +20,11 @@ public class ConnectPresenter implements ConnectOutputBoundary {
 
     @Override
     public void prepareView(ConnectOutputData outputData) {
+
+        UserInfoRetriever userInfoRetriever = new UserInfoRetriever(outputData.getOutputData());
+
         ConnectState connectState = this.connectViewModel.getState();
-        connectState.setTitle(outputData.getOutputData());
+        connectState.setTitle((String) outputData.getOutputData().get("username"));
         // Create a JOptionPane to show the "Connected!" message
         final JOptionPane optionPane = new JOptionPane("Connected!", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
 

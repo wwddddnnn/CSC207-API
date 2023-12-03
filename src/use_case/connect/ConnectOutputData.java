@@ -1,9 +1,10 @@
 package use_case.connect;
+import java.util.HashMap;
 
 public class ConnectOutputData {
-    final private String outputData;
+    final private HashMap outputData;
 
-    public ConnectOutputData(String outputData){this.outputData = outputData;}
+    public ConnectOutputData(HashMap<String, Object> outputData){this.outputData = outputData;}
 
-    public String getOutputData(){return this.outputData;}
+    public HashMap getOutputData(){return this.outputData;}
 }

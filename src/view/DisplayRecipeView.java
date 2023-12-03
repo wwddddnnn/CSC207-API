@@ -105,7 +105,7 @@ public class DisplayRecipeView extends JFrame implements PropertyChangeListener 
         frame.setVisible(true);
     }
 
-    public DisplayRecipeView(String recipeString, DisplayRecipeViewModel displayRecipeViewModel,
+    public DisplayRecipeView(SearchedRecipe recipe, DisplayRecipeViewModel displayRecipeViewModel,
                              MealPlanViewModel mealPlanViewModel,
                              ViewManagerModel viewManagerModel) {
         this.displayRecipeViewModel = displayRecipeViewModel;
@@ -126,22 +126,21 @@ public class DisplayRecipeView extends JFrame implements PropertyChangeListener 
         // create the middle panel components
 
         JTextArea display = new JTextArea(16, 58);
-        display.setText(recipeString);
+        display.setText(recipe.toString());
         display.setEditable(false); // set textArea non-editable
         display.setLineWrap(true);
         JScrollPane scroll = new JScrollPane(display);
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         Image image = null;
-        //TODO: Add image if possible; need to include image information in Output date
-        //try {
-        //    image = ImageIO.read(new URL(recipe.getImage()[0]));
+        try {
+            image = ImageIO.read(new URL(recipe.getImageURL()));
 
-        //} catch (Exception exp) {
-        //    exp.printStackTrace();
-        //}
-        //JLabel label = new JLabel(new ImageIcon(image));
-        //this.middlePanel.add(label, BorderLayout.CENTER);
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+        JLabel label = new JLabel(new ImageIcon(image));
+        this.middlePanel.add(label, BorderLayout.CENTER);
 
         //Add Textarea in to middle panel
         middlePanel.add(scroll);

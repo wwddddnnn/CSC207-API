@@ -1,6 +1,8 @@
 package interface_adapter.connect;
 import use_case.connect.ConnectInputBoundary;
 import use_case.connect.ConnectInputData;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 public class ConnectController {
 
@@ -10,7 +12,7 @@ public class ConnectController {
         this.connectUseCaseInteractor = connectUseCaseInteractor;
     }
 
-    public void execute(String title, LocalDateTime time) {
+    public void execute(String title, LocalDate time) {
         ConnectInputData connectInputData = new ConnectInputData(title, time);
 
         connectUseCaseInteractor.execute(connectInputData);

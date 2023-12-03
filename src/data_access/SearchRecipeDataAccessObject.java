@@ -4,15 +4,12 @@ import entity.Recipe;
 import entity.RecipeTag;
 import entity.RecipeFactory;
 import entity.RecipeTagFactory;
+import okhttp3.*;
 import use_case.search_recipe.SearchRecipeDataAccessInterface;
 
-import okhttp3.OkHttpClient;
 import org.json.JSONException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import okhttp3.Request;
-import okhttp3.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -103,6 +100,35 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
         }
     }
 
+    public Recipe getByID(int id) throws IOException {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("text/plain");
+        RequestBody body = RequestBody.create(mediaType, "");
+        Request request = new Request.Builder()
+                .url("https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=false&apiKey=b1885373924b41d9961c057265b15ed9")
+                .method("GET", body)
+                .addHeader("Accept", "application/json")
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            JSONObject responseBody = new JSONObject(response.body().string());
+
+            String name = responseBody.getString("title");
+            String[] image = new String[2];
+            image[0] = responseBody.getString("image");
+            image[1] = responseBody.getString("imageType");
+            Object[] fullInfo = absorbRecipeInfo(id);   //[recipeTag, instructions, ingredients]
+            Recipe recipe = this.recipeFactory.create(id, name, image,
+                    (RecipeTag) fullInfo[0], (String) fullInfo[1],
+                    (HashMap<String, ArrayList<Object>>) fullInfo[2]);
+
+            return recipe;
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // absorbRecipeInfo creates and adds the RecipeTag, instructions (String) and ingredients (HashMap)
     // to the Recipe object that is passed in.
     //
@@ -112,7 +138,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=30a69d9d0e0d48d896b69c717acf18b2&includeNutrition=false"))
+                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=b1885373924b41d9961c057265b15ed9&includeNutrition=false"))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {

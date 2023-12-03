@@ -17,6 +17,7 @@ ArrayList that looks like this:
 
  */
 
+import app.UserInfoRetriever;
 import okhttp3.*;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -28,20 +29,16 @@ import java.util.ArrayList;
 
 public class HalfMealPlanArrayCreator {
 
-    private final String username;
-    private final String userHash;
-    private final LocalDate startDate;
-    private final int startDateEpoch;
-
-    public HalfMealPlanArrayCreator(String username, String userHash, LocalDate startDate, int startDateEpoch) {
-        this.username = username;
-        this.userHash = userHash;
-        this.startDate = startDate;
-        this.startDateEpoch = startDateEpoch;
+    public HalfMealPlanArrayCreator() {
     };
 
     //TODO: ApiKey used here.
     public ArrayList<ArrayList<ArrayList>> create(ArrayList<ArrayList<ArrayList>> EmptyMealPlanArrayList) {
+
+        String username = UserInfoRetriever.getUsername();
+        String userHash = UserInfoRetriever.getUserHash();
+        LocalDate startDate = UserInfoRetriever.getStartDate();
+        int startDateEpoch = UserInfoRetriever.getStartDateEpoch();
 
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -49,7 +46,7 @@ public class HalfMealPlanArrayCreator {
         RequestBody body = null;
         //RequestBody.create(mediaType, "");
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/mealplanner/" + username + "/week/" + startDate.toString() + "?hash=" + userHash + "&apiKey=63a546e1f4084beda46d6cf3ce87b550")
+                .url("https://api.spoonacular.com/mealplanner/" + username + "/week/" + startDate.toString() + "?hash=" + userHash + "&apiKey=b1885373924b41d9961c057265b15ed9")
                 .method("GET", body)
                 .addHeader("Accept", "application/json")
                 .build();
