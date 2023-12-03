@@ -9,6 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
+import interface_adapter.display_saved_recipe.DisplaySavedController;
 import interface_adapter.display_saved_recipe.DisplaySavedViewModel;
 import interface_adapter.get_meal_plan.GetMealPlanController;
 import interface_adapter.search_recipe.SearchController;
@@ -28,19 +29,19 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final SearchController searchController;
     private final GetMealPlanController getMealPlanController;
     private final SearchViewModel searchViewModel;
-    private final DisplaySavedViewModel displaySavedViewModel;
+    private final DisplaySavedController displaySavedController;
     private ViewManagerModel viewManagerModel;
 
 
     public SearchView(SearchController controller, SearchViewModel searchViewModel,
                       GetMealPlanController getMealPlanController,
-                      DisplaySavedViewModel displaySavedViewModel,
+                      DisplaySavedController displaySavedController,
                       ViewManagerModel viewManagerModel) {
 
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
         this.getMealPlanController = getMealPlanController;
-        this.displaySavedViewModel = displaySavedViewModel;
+        this.displaySavedController = displaySavedController;
         this.viewManagerModel = viewManagerModel;
         searchViewModel.addPropertyChangeListener(this);
 
@@ -127,8 +128,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(savedRecipe)) {
-                    SearchView.this.viewManagerModel.setActiveView(displaySavedViewModel.getViewName());
-                    SearchView.this.viewManagerModel.firePropertyChanged();
+                    displaySavedController.execute();
+//                    viewManagerModel.setActiveView(displaySavedViewModel.getViewName());
+//                    viewManagerModel.firePropertyChanged();
+
                 }
             }
         });

@@ -15,6 +15,7 @@ public class AddMealPlanPresenter implements AddMealPlanOutputBoundary {
 
     @Override
     public void prepareSuccessView(String message) {
+        System.out.println("prepareSuccessView");
         addMealPlanViewModel.setMessage(message);
         addMealPlanViewModel.firePropertyChanged();
     }

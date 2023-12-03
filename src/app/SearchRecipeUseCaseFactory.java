@@ -1,6 +1,6 @@
 package app;
 
-import interface_adapter.display_saved_recipe.DisplaySavedViewModel;
+import interface_adapter.display_saved_recipe.DisplaySavedController;
 import interface_adapter.get_meal_plan.GetMealPlanController;
 import interface_adapter.get_meal_plan.GetMealPlanPresenter;
 import interface_adapter.get_meal_plan.MealPlanViewModel;
@@ -33,11 +33,11 @@ public class SearchRecipeUseCaseFactory {
                                     SearchResultsViewModel searchResultsViewModel,
                                     SearchRecipeDataAccessInterface searchRecipeDataAccessObject,
                                     MealPlanViewModel mealPlanViewModel,
-                                    DisplaySavedViewModel displaySavedViewModel,
+                                    DisplaySavedController displaySavedController,
                                     GetMealPlanDataAccessInterface getMealPlanDataAccessObject) {
         SearchController searchController = createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
         GetMealPlanController getMealPlanController = createGetMealPlanUseCase(viewManagerModel, searchViewModel, mealPlanViewModel, getMealPlanDataAccessObject);
-        return new SearchView(searchController, searchViewModel, getMealPlanController, displaySavedViewModel, viewManagerModel);
+        return new SearchView(searchController, searchViewModel, getMealPlanController, displaySavedController, viewManagerModel);
 
     }
 

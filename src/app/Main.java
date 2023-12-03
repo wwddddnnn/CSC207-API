@@ -101,7 +101,7 @@ public class Main {
 
         SearchView searchView = SearchRecipeUseCaseFactory.create(viewManagerModel, searchViewModel,
                 searchResultsViewModel, searchRecipeDataAccessObject,
-                mealPlanViewModel, displaySavedViewModel,getMealPlanDataAccessObject);
+                mealPlanViewModel, displaySavedController,getMealPlanDataAccessObject);
         views.add(searchView, searchView.viewName);
 
 //        DisplayRecipeView displayRecipeView = new DisplayRecipeView(displayRecipeViewModel, viewManagerModel, saveViewModel, saveController);
@@ -112,8 +112,11 @@ public class Main {
         DisplaySavedView displaySavedView = new DisplaySavedView(displaySavedViewModel,addMealPlanViewModel, searchViewModel, addMealPlanController,viewManagerModel);
         views.add(displaySavedView, displaySavedView.viewName);
 
-        displaySavedController.execute();
-        viewManagerModel.setActiveView(displaySavedView.viewName);
+        AddMealPlanView addMealPlanView = new AddMealPlanView(addMealPlanController, addMealPlanViewModel, searchViewModel, viewManagerModel);
+        views.add(addMealPlanView, addMealPlanView.viewName);
+
+//        displaySavedController.execute();
+//        viewManagerModel.setActiveView(displaySavedView.viewName);
 
         MealPlanView mealPlanView = new MealPlanView(mealPlanViewModel, searchViewModel, viewManagerModel);
         views.add(mealPlanView, mealPlanView.viewName);

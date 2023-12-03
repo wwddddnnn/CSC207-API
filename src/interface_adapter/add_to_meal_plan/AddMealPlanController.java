@@ -14,7 +14,8 @@ public class AddMealPlanController {
         this.addMealPlanInteractor = addMealPlanInteractor;
     }
     public void execute(String username, String hash, String dateString, String slotString, String recipeId) throws IOException {
-        Date date = new Date();
+        System.out.println("addController working");
+        Date date;
         try {
             date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
         } catch (ParseException e) {

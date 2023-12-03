@@ -24,7 +24,7 @@ public class AddMealPlanDataAccessObject implements AddMealPlanDataAccessInterfa
                 "        \"id\": " + recipeId + "\n" +
                 "    }\n" +
                 "}");
-        String requestURL = "https://api.spoonacular.com/mealplanner/" + userInfo[0] + "/items?hash=" +userInfo[1] + "apiKey=b1885373924b41d9961c057265b15ed9";
+        String requestURL = "https://api.spoonacular.com/mealplanner/" + userInfo[0] + "/items?hash=" + userInfo[1] + "apiKey=b1885373924b41d9961c057265b15ed9";
 
         Request request = new Request.Builder()
                 .url(requestURL)

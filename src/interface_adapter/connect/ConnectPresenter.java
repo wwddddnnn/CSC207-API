@@ -42,7 +42,7 @@ public class ConnectPresenter implements ConnectOutputBoundary {
         new Thread(() -> {
             try {
                 dialog.setVisible(true);
-                Thread.sleep(5000); // Display for 5 seconds
+                Thread.sleep(1000); // Display for 5 seconds
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // Handle interruption
             } finally {

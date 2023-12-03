@@ -16,16 +16,8 @@ public class AddMealPlanInteractor implements AddMealPlanInputBoundary {
 
     @Override
     public void execute(AddMealPlanInputData addMealPlanInputData) {
+        System.out.println("AddMealPlanInteractor working");
         Date addDate = addMealPlanInputData.getDate();
-        Date now = new Date();
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(now);
-        calendar.add(Calendar.DATE, 7);
-        Date upToWeek = calendar.getTime();
-        if (addDate.before(now) && addDate.after(upToWeek)) {
-            addMealPlanPresenter.prepareFailView("You could pick any days starting from today up to a week! ");
-            return;
-        }
 
         // userInfo = {username, hash}, addInfo = {date, slot, position}
         String[] userInfo = {addMealPlanInputData.getUsername(), addMealPlanInputData.getHash()};
