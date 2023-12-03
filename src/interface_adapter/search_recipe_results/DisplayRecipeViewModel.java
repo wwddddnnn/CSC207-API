@@ -13,6 +13,7 @@ public class DisplayRecipeViewModel extends ViewModel {
 //    public static final String FINISH_BUTTON_LABEL = "Finish";
 
     public static final String SAVE_BUTTON_LABEL = "Save this recipe";
+    public static final String FINISH_BUTTON_LABEL = "Finish";
 
     public DisplayRecipeViewModel(){super("Display recipe");}
 
