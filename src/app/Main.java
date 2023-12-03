@@ -90,8 +90,6 @@ public class Main {
 
         AddMealPlanDataAccessObject addMealPlanDAO = new AddMealPlanDataAccessObject();
 
-        SearchRecipeDataAccessObject searchRecipeDataAccessObject = new SearchRecipeDataAccessObject(new CommonRecipeFactory(), new CommonRecipeTagFactory());
-
         SearchController searchController = SearchRecipeUseCaseFactory.createSearchRecipeUseCase(viewManagerModel, searchViewModel, searchResultsViewModel, searchRecipeDataAccessObject);
 
         SaveController saveController = SaveUseCaseFactory.createSaveRecipeUseCase(viewManagerModel, saveDataAccessObject, saveViewModel);
@@ -120,12 +118,7 @@ public class Main {
         MealPlanView mealPlanView = new MealPlanView(mealPlanViewModel, searchViewModel, viewManagerModel);
         views.add(mealPlanView, mealPlanView.viewName);
 
-        SearchResultView searchResultView = new SearchResultView(searchResultsViewModel, searchViewModel, viewManagerModel, searchController, saveController);
-        views.add(searchResultView, searchResultView.viewName);
-
-
         ConnectDataAccessObject connectDataAccessObject = new ConnectDataAccessObject();
-
 
         viewManagerModel.setActiveView(searchView.viewName);
         ConnectView connectView = ConnectUseCaseFactory.create(viewManagerModel, connectViewModel,connectDataAccessObject);
