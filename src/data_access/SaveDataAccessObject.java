@@ -6,6 +6,7 @@ import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.display_saved_recipe.DisplaySavedDataAccessInterface;
 import use_case.save_recipe.SaveRecipeDataAccessInterface;
 
 import java.io.*;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
+public class SaveDataAccessObject implements SaveRecipeDataAccessInterface, DisplaySavedDataAccessInterface {
     private final File csvFile;
     private final Map<Integer, SearchedRecipe> savedRecipes = new HashMap<>();
     private final RecipeFactory recipeFactory;
@@ -131,9 +132,10 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface {
             throw new RuntimeException(e);
         }
     }
-    public Map<Integer, SearchedRecipe> get(){
-        return savedRecipes;
-    }
 
+    @Override
+    public SearchedRecipe[] getSavedRecipes() {
+        return this.savedRecipes.values().toArray(new SearchedRecipe[0]);
+    }
 }
 
