@@ -1,5 +1,6 @@
 package data_access.getMealPlan_facade_classes;
 
+import app.UserInfoRetriever;
 import data_access.SearchRecipeDataAccessObject;
 import entity.CommonRecipe;
 import entity.Recipe;
@@ -31,17 +32,17 @@ An example of what the returned Meal Plan Array List should look like is shown b
 
 public class FullMealPlanArrayCreator {
 
-    private final LocalDate startDate;
     private final SavedRecipeToStringConverter savedRecipeToStringConverter;
     private final SearchRecipeDataAccessObject searchRecipeDAO;
 
-    public FullMealPlanArrayCreator(LocalDate startDate, SavedRecipeToStringConverter savedRecipeToStringConverter, SearchRecipeDataAccessObject searchRecipeDAO) {
-        this.startDate = startDate;
+    public FullMealPlanArrayCreator(SavedRecipeToStringConverter savedRecipeToStringConverter, SearchRecipeDataAccessObject searchRecipeDAO) {
         this.savedRecipeToStringConverter = savedRecipeToStringConverter;
         this.searchRecipeDAO = searchRecipeDAO;
     }
     public ArrayList<ArrayList<ArrayList>> create(ArrayList<ArrayList<ArrayList>> halfMealPlanArray) throws IOException {
         EmptyMealPlanArrayCreator emptyMPCreator= new EmptyMealPlanArrayCreator();
+
+        LocalDate startDate = UserInfoRetriever.getStartDate();
         ArrayList<ArrayList<ArrayList>> newMealPlanArray = emptyMPCreator.create(startDate);
 
         for (int numDay = 0; numDay < 7; numDay++) {
