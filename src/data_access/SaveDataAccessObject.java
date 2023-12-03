@@ -138,4 +138,3 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface, Disp
         return this.savedRecipes.values().toArray(new SearchedRecipe[0]);
     }
 }
-

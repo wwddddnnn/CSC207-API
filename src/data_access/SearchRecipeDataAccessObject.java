@@ -39,7 +39,6 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
                 .build();
 
         String requestURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=30a69d9d0e0d48d896b69c717acf18b2";
-
         //build the request URL depending on inputs for query, cuisine and maxTime
 
         if (filters.keySet().contains("query")) {

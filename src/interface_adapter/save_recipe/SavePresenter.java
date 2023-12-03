@@ -13,13 +13,13 @@ public class SavePresenter implements SaveOutputBoundary {
 
     @Override
     public void prepareSuccessView() {
-        System.out.println("prepareSuccessView");
+//        System.out.println("prepareSuccessView");
         this.saveViewModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
-        System.out.println("prepareFailView");
+//        System.out.println("prepareFailView");
         SaveState saveState = saveViewModel.getState();
         saveState.setRecipeError(error);
         this.saveViewModel.firePropertyChanged();
