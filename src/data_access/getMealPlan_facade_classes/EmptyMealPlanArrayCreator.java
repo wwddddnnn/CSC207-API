@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class EmptyMealPlanArrayCreator {
     public EmptyMealPlanArrayCreator() {}
-    public ArrayList<ArrayList<ArrayList>> create(LocalDate startDate) {
+    public ArrayList<ArrayList<ArrayList>> create(Date startDate) {
 
         ArrayList<ArrayList<ArrayList>> finalArrayList = new ArrayList<>();
 

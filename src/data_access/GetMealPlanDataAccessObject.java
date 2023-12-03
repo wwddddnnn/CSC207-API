@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class GetMealPlanDataAccessObject implements GetMealPlanDataAccessInterface {
 
@@ -52,7 +53,7 @@ public class GetMealPlanDataAccessObject implements GetMealPlanDataAccessInterfa
     }
 
     public ArrayList<ArrayList<ArrayList>> getMealPlan() {
-        LocalDate startDate = UserInfoRetriever.getStartDate();
+        Date startDate = new Date();
         ArrayList<ArrayList<ArrayList>> emptyMealPlanArray = emptyMealPlanArrayCreator.create(startDate);
         ArrayList<ArrayList<ArrayList>> halfMealPlanArray = halfMealPlanArrayCreator.create(emptyMealPlanArray);
         ArrayList<ArrayList<ArrayList>> fullMealPlanArray = null;

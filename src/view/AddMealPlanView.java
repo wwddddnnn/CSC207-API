@@ -85,6 +85,8 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
                     try {
                         String username = UserInfoRetriever.getUsername();
                         String hash = UserInfoRetriever.getUserHash();
+                        System.out.println(username + "," + hash);
+
 //                        String recipeId = addMealPlanViewModel.getRecipeId();
                         String recipeId = "665769";
                         addMealPlanController.execute(username, hash, (String) dateComboBox.getSelectedItem(),
@@ -116,8 +118,7 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getNewValue() instanceof String){
             String message = (String)evt.getNewValue();
-            if (message.equals("")) popUpWindow("Add successfully!");
-            else popUpWindow("Fail to add\n" + message);
+            popUpWindow(message);
         }
     }
     private void popUpWindow(String message){

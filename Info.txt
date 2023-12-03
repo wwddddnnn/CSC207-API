@@ -14,3 +14,7 @@ Local Time: 2023-12-03
 spoonacularPassword: zaatarwithout77lavenderhoney
 hash: 42bfba580e96c8d56214d9f032d5ea990aeeb485
 username: abcc
+Local Time: 2023-12-03
+spoonacularPassword: champagneon25xanthangum
+hash: ddd9ea9347af9af32873600eb9e3850581e5e9a0
+username: doris
