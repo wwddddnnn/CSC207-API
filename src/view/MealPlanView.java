@@ -4,6 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.get_meal_plan.MealPlanState;
 import interface_adapter.get_meal_plan.MealPlanViewModel;
 import interface_adapter.search_recipe.SearchViewModel;
+import interface_adapter.search_recipe.SearchedRecipe;
 import interface_adapter.search_recipe_results.DisplayRecipeViewModel;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class MealPlanView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Meal Plan";
@@ -89,20 +91,20 @@ public class MealPlanView extends JPanel implements ActionListener, PropertyChan
             JButton[] mealTitle = new JButton[3];
             for (int i = 0; i < 3; i++) mealTitle[i] = new JButton("");
 
-            HashMap<String, String> meal1HashMap = (HashMap<String, String>) result.get(numDay).get(1).get(0);
-            String mt1String = meal1HashMap.get("simpleString");
-            String mInfo1String = meal1HashMap.get("detailedString");
+            HashMap<String, Object> meal1HashMap = (HashMap<String, Object>) result.get(numDay).get(1).get(0);
+            Object mt1String = meal1HashMap.get("simpleString"); //this is a string
+            Object mInfo1Recipe = meal1HashMap.get("recipeObject"); //this is a SearchedRecipe object
 
-            HashMap<String, String> meal2HashMap = (HashMap<String, String>) result.get(numDay).get(2).get(0);
-            String mt2String = meal2HashMap.get("simpleString");
-            String mInfo2String = meal2HashMap.get("detailedString");
+            HashMap<String, Object> meal2HashMap = (HashMap<String, Object>) result.get(numDay).get(2).get(0);
+            Object mt2String = meal2HashMap.get("simpleString");
+            Object mInfo2Recipe = meal2HashMap.get("recipeObject");
 
-            HashMap<String, String> meal3HashMap = (HashMap<String, String>) result.get(numDay).get(3).get(0);
-            String mt3String = meal3HashMap.get("simpleString");
-            String mInfo3String = meal3HashMap.get("detailedString");
+            HashMap<String, Object> meal3HashMap = (HashMap<String, Object>) result.get(numDay).get(3).get(0);
+            Object mt3String = meal3HashMap.get("simpleString");
+            Object mInfo3Recipe = meal3HashMap.get("recipeObject");
 
-            String[] mtList = new String[]{mt1String, mt2String, mt3String};
-            String[] mInfoList = new String []{mInfo1String, mInfo2String, mInfo3String};
+            String[] mtList = new String[]{(String) mt1String, (String) mt2String, (String) mt3String};
+            Object[] mInfoList = new Object[]{mInfo1Recipe, mInfo2Recipe, mInfo3Recipe};
 
             //TODO: delete this print line.
             System.out.println(mtList);
@@ -116,13 +118,13 @@ public class MealPlanView extends JPanel implements ActionListener, PropertyChan
                 //GridBagConstraints gbcButton = new GridBagConstraints();
                 //gbcButton.gridy = numMeal + 1;
 
-                if (!mtList[numMeal].isEmpty()) {
+                if (!Objects.equals(mtList[numMeal], null)) {
                     int finalI = numMeal;
                     mealTitle[numMeal].addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             DisplayRecipeViewModel displayRecipeViewModel = new DisplayRecipeViewModel();
-                            DisplayRecipeView displayRecipeView = new DisplayRecipeView(mInfoList[finalI], displayRecipeViewModel, mealPlanViewModel, viewManagerModel);
+                            DisplayRecipeView displayRecipeView = new DisplayRecipeView((SearchedRecipe) mInfoList[finalI], displayRecipeViewModel, mealPlanViewModel, viewManagerModel);
                             viewManagerModel.setActiveView(displayRecipeViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
                         }

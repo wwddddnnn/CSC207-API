@@ -4,15 +4,12 @@ import entity.Recipe;
 import entity.RecipeTag;
 import entity.RecipeFactory;
 import entity.RecipeTagFactory;
+import okhttp3.*;
 import use_case.search_recipe.SearchRecipeDataAccessInterface;
 
-import okhttp3.OkHttpClient;
 import org.json.JSONException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import okhttp3.Request;
-import okhttp3.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -98,6 +95,35 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
 
             /*String foodName = responseBody.getString("title");
             System.out.println(foodName);*/
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Recipe getByID(int id) throws IOException {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("text/plain");
+        RequestBody body = RequestBody.create(mediaType, "");
+        Request request = new Request.Builder()
+                .url("https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=false&apiKey=fab3d64c30b649aeb1b79f1239049bb6")
+                .method("GET", body)
+                .addHeader("Accept", "application/json")
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            JSONObject responseBody = new JSONObject(response.body().string());
+
+            String name = responseBody.getString("title");
+            String[] image = new String[2];
+            image[0] = responseBody.getString("image");
+            image[1] = responseBody.getString("imageType");
+            Object[] fullInfo = absorbRecipeInfo(id);   //[recipeTag, instructions, ingredients]
+            Recipe recipe = this.recipeFactory.create(id, name, image,
+                    (RecipeTag) fullInfo[0], (String) fullInfo[1],
+                    (HashMap<String, ArrayList<Object>>) fullInfo[2]);
+
+            return recipe;
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
