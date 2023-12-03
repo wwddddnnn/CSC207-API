@@ -106,9 +106,6 @@ public class MealPlanView extends JPanel implements ActionListener, PropertyChan
             String[] mtList = new String[]{(String) mt1String, (String) mt2String, (String) mt3String};
             Object[] mInfoList = new Object[]{mInfo1Recipe, mInfo2Recipe, mInfo3Recipe};
 
-            //TODO: delete this print line.
-            System.out.println(mtList);
-            System.out.println(mInfoList);
 
             for (int numMeal = 0; numMeal < 3; numMeal++) {
                 mealTitle[numMeal].setText(mtList[numMeal]);

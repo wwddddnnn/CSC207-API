@@ -36,11 +36,6 @@ public class GetMealPlanDataAccessObject implements GetMealPlanDataAccessInterfa
         //this.username = UserInfoRetriever.getUsername();
         //this.userHash = UserInfoRetriever.getUserHash();
 
-        //TODO: delete this below; it's just example values for now.
-        //this.startDate = LocalDate.of(2023, 11, 26);
-        //this.startDateEpoch = 1700974800;
-        //this.username = "yqlee4";
-        //this.userHash = "64879293bd23af7db2e8b6328a8a9268dfc8ab15";
 
         this.recipeFactory = recipeFactory;
         this.recipeTagFactory = recipeTagFactory;
