@@ -51,7 +51,7 @@ public class DisplaySavedView extends JPanel implements PropertyChangeListener {
         this.scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         this.label = new JLabel();
 
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridLayout());
 
         final int[] showingIndex = {0};
 
@@ -69,7 +69,7 @@ public class DisplaySavedView extends JPanel implements PropertyChangeListener {
                 @Override
                 public void actionPerformed (ActionEvent e){
                     System.out.println(showingIndex[0] + "," + searchedRecipes.length);
-                    if (showingIndex[0] >= searchedRecipes.length) popUpWindow("No next recipe!");
+                    if (showingIndex[0] >= searchedRecipes.length - 1) popUpWindow("No next recipe!");
                     else{
                         showingIndex[0] += 1;
                         show(searchedRecipes[showingIndex[0]]);
@@ -92,7 +92,7 @@ public class DisplaySavedView extends JPanel implements PropertyChangeListener {
         middlePanel.add(previousPage);
         middlePanel.add(nextPage);
         middlePanel.add(addToMealPlan);
-        this.add(buttons, BorderLayout.PAGE_END);
+        this.add(buttons);
     }
 
     private void show(SearchedRecipe searchedRecipe){
