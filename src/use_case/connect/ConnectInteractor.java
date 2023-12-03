@@ -4,6 +4,7 @@ import entity.Recipe;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.IOException;
@@ -27,6 +28,8 @@ public class ConnectInteractor implements ConnectInputBoundary {
     @Override
     public void execute(ConnectInputData connectData) {
         String title = connectData.getTitle();
+        String userHash = null;
+        LocalDate date = null;
 
         boolean isUserExist = false;
         try (BufferedReader reader = new BufferedReader(new FileReader("Info.txt"))) {
@@ -40,6 +43,18 @@ public class ConnectInteractor implements ConnectInputBoundary {
                     String baseUsername = username.replaceAll("\\d*$", "");
                     if (baseUsername.equals(title)) {
                         isUserExist = true; // Matching username found
+
+                        BufferedReader reader2 = new BufferedReader(new FileReader("Info.txt"));
+                        String line2;
+                        for (int lineCount2 = 0; lineCount2 < lineCount; lineCount2++) {
+                            line2 = reader2.readLine();
+                            if (lineCount2 == lineCount - 4) {
+                                date = LocalDate.parse(line2.substring(line.indexOf("Local Time: ") + 12).trim());
+                            }
+                            if (lineCount2 == lineCount - 2) {
+                                userHash = line2.substring(line.indexOf("hash: ") + 6).trim();
+                            }
+                        }
                         break;
                     }
                 }
@@ -50,11 +65,15 @@ public class ConnectInteractor implements ConnectInputBoundary {
 
         if (isUserExist) {
             // Username exists. Create output data with this username.
-            ConnectOutputData outputData = new ConnectOutputData(title);
+            HashMap<String, Object> outputHash = new HashMap<String, Object>(3);
+            outputHash.put("username", title);
+            outputHash.put("userHash", userHash);
+            outputHash.put("date", date);
+            ConnectOutputData outputData = new ConnectOutputData(outputHash);
             connectDataPresenter.prepareView(outputData);
             return;}
         // Get local time from connectData
-        String localTime = connectData.getTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String localTime = connectData.getTime().toString();
 
         // Handling the action based on the title
         HashMap<String, String> result = connectRecipeDAO.getResult(title);
@@ -73,7 +92,15 @@ public class ConnectInteractor implements ConnectInputBoundary {
             e.printStackTrace();
         }
 
-        ConnectOutputData outputData = new ConnectOutputData(result.get("username"));
+        userHash = result.get("hash");
+        date = connectData.getTime();
+
+        HashMap<String, Object> outputHash = new HashMap<String, Object>(3);
+        outputHash.put("username", title);
+        outputHash.put("userHash", userHash);
+        outputHash.put("date", date);
+
+        ConnectOutputData outputData = new ConnectOutputData(outputHash);
         connectDataPresenter.prepareView(outputData);
     }
 }

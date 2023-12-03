@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import interface_adapter.connect.ConnectController;
@@ -57,8 +58,8 @@ public class ConnectView extends JPanel {
                     JOptionPane.showMessageDialog(ConnectView.this, "Invalid name!!!", "Error", JOptionPane.ERROR_MESSAGE);
                     return; // Do not proceed further if the name is invalid
                 }
-                LocalDateTime currentDateTime = LocalDateTime.now();
-                connectController.execute(title, currentDateTime);
+                LocalDate currentDate = LocalDate.now();
+                connectController.execute(title, currentDate);
             }
         });
     }
