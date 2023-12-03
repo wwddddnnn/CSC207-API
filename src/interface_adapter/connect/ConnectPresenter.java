@@ -8,6 +8,8 @@ import use_case.connect.ConnectOutputData;
 
 import javax.swing.*;
 
+import static app.UserInfoRetriever.*;
+
 public class ConnectPresenter implements ConnectOutputBoundary {
 
     private ViewManagerModel viewManagerModel;
@@ -21,7 +23,7 @@ public class ConnectPresenter implements ConnectOutputBoundary {
     @Override
     public void prepareView(ConnectOutputData outputData) {
 
-        UserInfoRetriever userInfoRetriever = new UserInfoRetriever(outputData.getOutputData());
+        store(outputData.getOutputData());
 
         ConnectState connectState = this.connectViewModel.getState();
         connectState.setTitle((String) outputData.getOutputData().get("username"));
@@ -40,7 +42,7 @@ public class ConnectPresenter implements ConnectOutputBoundary {
         new Thread(() -> {
             try {
                 dialog.setVisible(true);
-                Thread.sleep(5000); // Display for 5 seconds
+                Thread.sleep(1000); // Display for 5 seconds
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // Handle interruption
             } finally {

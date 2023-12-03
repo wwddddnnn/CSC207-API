@@ -1,10 +1,13 @@
 package view;
 
+import app.UserInfoRetriever;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_meal_plan.AddMealPlanController;
 import interface_adapter.add_to_meal_plan.AddMealPlanViewModel;
 import interface_adapter.display_saved_recipe.DisplaySavedViewModel;
 import interface_adapter.save_recipe.SaveState;
+import interface_adapter.search_recipe.SearchState;
+import interface_adapter.search_recipe.SearchViewModel;
 import interface_adapter.search_recipe.SearchedRecipe;
 
 import javax.imageio.ImageIO;
@@ -23,19 +26,26 @@ public class DisplaySavedView extends JPanel implements PropertyChangeListener {
     private final DisplaySavedViewModel displaySavedViewModel;
     private final AddMealPlanViewModel addMealPlanViewModel;
     private final AddMealPlanController addMealPlanController;
+    private final SearchViewModel searchViewModel;
     private final ViewManagerModel viewManagerModel;
     private SearchedRecipe[] searchedRecipes;
 
     private JButton previousPage;
     private JButton nextPage;
     private JButton addToMealPlan;
+    private JButton confirm;
     private JPanel middlePanel = new JPanel();
     private JTextArea display;
     private JScrollPane scroll;
     private JLabel label;
-    public DisplaySavedView(DisplaySavedViewModel displaySavedViewModel, AddMealPlanViewModel addMealPlanViewModel, AddMealPlanController addMealPlanController, ViewManagerModel viewManagerModel){
+    public DisplaySavedView(DisplaySavedViewModel displaySavedViewModel,
+                            AddMealPlanViewModel addMealPlanViewModel,
+                            SearchViewModel searchViewModel,
+                            AddMealPlanController addMealPlanController,
+                            ViewManagerModel viewManagerModel){
         this.displaySavedViewModel = displaySavedViewModel;
         this.addMealPlanViewModel = addMealPlanViewModel;
+        this.searchViewModel = searchViewModel;
         this.addMealPlanController = addMealPlanController;
         this.viewManagerModel = viewManagerModel;
 
@@ -43,6 +53,7 @@ public class DisplaySavedView extends JPanel implements PropertyChangeListener {
         this.previousPage = new JButton(this.displaySavedViewModel.PREVIOUS_PAGE_BUTTON_LABEL);
         this.nextPage = new JButton(this.displaySavedViewModel.NEXT_PAGE_BUTTON_LABEL);
         this.addToMealPlan = new JButton(this.displaySavedViewModel.ADD_BUTTON_LABEL);
+        this.confirm = new JButton(this.displaySavedViewModel.CONFIRM_BUTTON_LABEL);
 
         this.display = new JTextArea(16, 58);
         this.display.setEditable(false);
@@ -79,20 +90,28 @@ public class DisplaySavedView extends JPanel implements PropertyChangeListener {
         this.addToMealPlan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if(e.getSource().equals(addToMealPlan)) {
+                    viewManagerModel.setActiveView(addMealPlanViewModel.getViewName());
+                    viewManagerModel.firePropertyChanged();
+                }
+            }
+        });
+        this.confirm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                viewManagerModel.setActiveView(searchViewModel.getViewName());
+                viewManagerModel.firePropertyChanged();
             }
         });
 
         middlePanel.setBorder(new TitledBorder(new EtchedBorder(), "Display Area"));
         middlePanel.add(label);
         middlePanel.add(scroll);
-//        middlePanel.add(previousPage);
-//        middlePanel.add(nextPage);
-//        middlePanel.add(addToMealPlan);
         JPanel buttons = new JPanel();
         buttons.add(previousPage);
         buttons.add(nextPage);
         buttons.add(addToMealPlan);
+        buttons.add(confirm);
         this.add(middlePanel, BorderLayout.NORTH);
         this.add(buttons, BorderLayout.SOUTH);
     }
@@ -114,7 +133,7 @@ public class DisplaySavedView extends JPanel implements PropertyChangeListener {
         if (evt.getNewValue() instanceof SearchedRecipe[]){
             this.searchedRecipes = (SearchedRecipe[]) evt.getNewValue();
             System.out.println(searchedRecipes.length);
-            show(this.searchedRecipes[0]);
+            if (searchedRecipes.length > 0) show(this.searchedRecipes[0]);
         }
     }
 

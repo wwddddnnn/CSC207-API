@@ -2,23 +2,20 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
+import interface_adapter.display_saved_recipe.DisplaySavedController;
+import interface_adapter.display_saved_recipe.DisplaySavedViewModel;
 import interface_adapter.get_meal_plan.GetMealPlanController;
 import interface_adapter.search_recipe.SearchController;
 import interface_adapter.search_recipe.SearchState;
 import interface_adapter.search_recipe.SearchViewModel;
-import interface_adapter.search_recipe.SearchPresenter;
 import interface_adapter.ViewManagerModel;
-import view.ConnectView;
 
 
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener{
@@ -27,20 +24,25 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JComboBox<String> cuisineComboBox;
     private final JTextField weightInputField = new JTextField(15);
     private final JButton searchButton;
-    private final JButton connectButton;
-    private final SearchController searchController;
     private final JButton getMealPlanButton;
+    private final JButton savedRecipe;
+    private final SearchController searchController;
     private final GetMealPlanController getMealPlanController;
     private final SearchViewModel searchViewModel;
-
+    private final DisplaySavedController displaySavedController;
     private ViewManagerModel viewManagerModel;
 
 
-    public SearchView(SearchController controller, SearchViewModel searchViewModel, GetMealPlanController getMealPlanController1) {
+    public SearchView(SearchController controller, SearchViewModel searchViewModel,
+                      GetMealPlanController getMealPlanController,
+                      DisplaySavedController displaySavedController,
+                      ViewManagerModel viewManagerModel) {
 
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
-        this.getMealPlanController = getMealPlanController1;
+        this.getMealPlanController = getMealPlanController;
+        this.displaySavedController = displaySavedController;
+        this.viewManagerModel = viewManagerModel;
         searchViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Recipe Search");
@@ -64,15 +66,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(searchButton);
 
-        connectButton = new JButton("Connect");
-        buttonPanel.add(connectButton);
-
 
         //added a getMealPlanButton
         getMealPlanButton = new JButton("My Meal Plan");
         JPanel getMealPlanButtonPanel = new JPanel();
         getMealPlanButtonPanel.add(getMealPlanButton);
 
+        //Added a savedRecipe Button
+        savedRecipe = new JButton("Saved Recipes");
+        getMealPlanButtonPanel.add(savedRecipe);
 
         // KeyListeners for fields
         queryInputField.addKeyListener(new KeyAdapter() {
@@ -118,6 +120,18 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(getMealPlanButton)) {
                     getMealPlanController.execute();
+                }
+            }
+        });
+
+        savedRecipe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource().equals(savedRecipe)) {
+                    displaySavedController.execute();
+//                    viewManagerModel.setActiveView(displaySavedViewModel.getViewName());
+//                    viewManagerModel.firePropertyChanged();
+
                 }
             }
         });

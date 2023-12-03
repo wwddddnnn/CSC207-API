@@ -13,8 +13,9 @@ public class AddMealPlanController {
     public AddMealPlanController(AddMealPlanInputBoundary addMealPlanInteractor) {
         this.addMealPlanInteractor = addMealPlanInteractor;
     }
-    public void execute(String dateString, String slotString, String recipeId) throws IOException {
-        Date date = new Date();
+    public void execute(String username, String hash, String dateString, String slotString, String recipeId) throws IOException {
+        System.out.println("addController working");
+        Date date;
         try {
             date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
         } catch (ParseException e) {
@@ -23,8 +24,6 @@ public class AddMealPlanController {
         if (slotString.equals("Breakfast")) slotString = "1";
         if (slotString.equals("Lunch")) slotString = "2";
         if (slotString.equals("Dinner")) slotString = "3";
-        String username = "";
-        String hash = "";
         AddMealPlanInputData addMealPlanInputData = new AddMealPlanInputData(username, hash, date, slotString, recipeId);
         this.addMealPlanInteractor.execute(addMealPlanInputData);
     }
