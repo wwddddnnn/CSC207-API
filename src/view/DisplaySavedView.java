@@ -91,6 +91,8 @@ public class DisplaySavedView extends JPanel implements PropertyChangeListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource().equals(addToMealPlan)) {
+                    String recipeId = searchedRecipes[showingIndex[0]].getId() + "";
+                    addMealPlanViewModel.setRecipeId(recipeId);
                     viewManagerModel.setActiveView(addMealPlanViewModel.getViewName());
                     viewManagerModel.firePropertyChanged();
                 }

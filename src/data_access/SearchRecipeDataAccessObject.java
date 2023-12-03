@@ -35,7 +35,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
 
-        String requestURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=e7877dbada2b46aeb588e7418550c78f";
+        String requestURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=b8f6333f2a07457b925cce0d5ddda576";
         //build the request URL depending on inputs for query, cuisine and maxTime
 
         if (filters.keySet().contains("query")) {
@@ -106,7 +106,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
         MediaType mediaType = MediaType.parse("text/plain");
         RequestBody body = RequestBody.create(mediaType, "");
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=false&apiKey=e7877dbada2b46aeb588e7418550c78f")
+                .url("https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=false&apiKey=b8f6333f2a07457b925cce0d5ddda576")
                 .method("GET", body)
                 .addHeader("Accept", "application/json")
                 .build();

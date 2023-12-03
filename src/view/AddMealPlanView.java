@@ -26,7 +26,7 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
     private final JComboBox<String> slotComboBox;
 //    private final JTextField positionInputField = new JTextField(15);
     private final JButton addButton;
-    private final JButton confirmButton;
+    private final JButton returnButton;
     private final AddMealPlanController addMealPlanController;
     private final AddMealPlanViewModel addMealPlanViewModel;
     private final SearchViewModel searchViewModel;
@@ -68,10 +68,10 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
         slotPanel.add(slotComboBox);
 
         addButton = new JButton("Add");
-        confirmButton = new JButton("Confirm");
+        returnButton = new JButton("Return to search page");
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addButton);
-        buttonPanel.add(confirmButton);
+        buttonPanel.add(returnButton);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(datePanel);
@@ -85,10 +85,7 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
                     try {
                         String username = UserInfoRetriever.getUsername();
                         String hash = UserInfoRetriever.getUserHash();
-                        System.out.println(username + "," + hash);
-
-//                        String recipeId = addMealPlanViewModel.getRecipeId();
-                        String recipeId = "665769";
+                        String recipeId = addMealPlanViewModel.getRecipeId();
                         addMealPlanController.execute(username, hash, (String) dateComboBox.getSelectedItem(),
                                 (String) slotComboBox.getSelectedItem(), recipeId);
                     } catch (IOException ex) {
@@ -98,7 +95,7 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
             }
         });
 
-        confirmButton.addActionListener(new ActionListener() {
+        returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 viewManagerModel.setActiveView(searchViewModel.getViewName());
