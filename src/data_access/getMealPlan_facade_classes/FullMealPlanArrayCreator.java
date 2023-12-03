@@ -9,6 +9,7 @@ import interface_adapter.search_recipe.SearchedRecipe;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /* This class takes in a half-filled Meal Plan Array, which holds the ID of recipes that have been assigned to
@@ -19,8 +20,8 @@ and all the recipe's information that is shown when the User clicks on the recip
 An example of what the returned Meal Plan Array List should look like is shown below:
 
     [
-    [["2023-11-28, Tuesday"], [{“simpleString”: “Shrimp Salad”, “detailedString”: “Name: Shrimp Salad, etc.”}], [], []],
-    [["2023-11-29, Wednesday"], [], [{“simpleString”: “Easy Pasta”, “detailedString”: “Name: Easy Pasta, etc.”}], []],
+    [["2023-11-28, Tuesday"], [{“simpleString”: “Shrimp Salad”, “recipeObject”: SearchedRecipe}], [], []],
+    [["2023-11-29, Wednesday"], [], [{“simpleString”: “Easy Pasta”, “recipeObject”: SearchedRecipe}], []],
     [["2023-11-30, Thursday"], [], [], []],
     [["2023-12-01, Friday"], [], [], []],
     [["2023-12-02, Saturday"], [], [], []],
@@ -42,7 +43,7 @@ public class FullMealPlanArrayCreator {
     public ArrayList<ArrayList<ArrayList>> create(ArrayList<ArrayList<ArrayList>> halfMealPlanArray) throws IOException {
         EmptyMealPlanArrayCreator emptyMPCreator= new EmptyMealPlanArrayCreator();
 
-        LocalDate startDate = UserInfoRetriever.getStartDate();
+        Date startDate = new Date();
         ArrayList<ArrayList<ArrayList>> newMealPlanArray = emptyMPCreator.create(startDate);
 
         for (int numDay = 0; numDay < 7; numDay++) {

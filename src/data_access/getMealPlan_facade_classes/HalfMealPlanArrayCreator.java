@@ -47,7 +47,7 @@ public class HalfMealPlanArrayCreator {
         RequestBody body = null;
         //RequestBody.create(mediaType, "");
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/mealplanner/" + username + "/week/" + date.toString() + "?hash=" + userHash + "&apiKey=b1885373924b41d9961c057265b15ed9")
+                .url("https://api.spoonacular.com/mealplanner/" + username + "/week/" + date.toString() + "?hash=" + userHash + "&apiKey=e7877dbada2b46aeb588e7418550c78f")
                 .method("GET", body)
                 .addHeader("Accept", "application/json")
                 .build();
@@ -55,6 +55,7 @@ public class HalfMealPlanArrayCreator {
             Response response = client.newCall(request).execute();
             JSONObject responseBody = new JSONObject(response.body().string());
             JSONArray unfilteredResponseArray = responseBody.getJSONArray("days");
+            System.out.println(unfilteredResponseArray);
 
             if (!unfilteredResponseArray.isEmpty()) {
 

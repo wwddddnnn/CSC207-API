@@ -21,6 +21,8 @@ are empty ArrayLists that will each represent either the breakfast, lunch or din
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class EmptyMealPlanArrayCreator {
     public EmptyMealPlanArrayCreator() {}
@@ -32,9 +34,13 @@ public class EmptyMealPlanArrayCreator {
 
             //create dateArray, which is an ArrayList for the date e.g. ["2023-11-28, Tuesday"]
             ArrayList<String> dateArray = new ArrayList<>(1);
-            String date = startDate.plusDays(numDays).toString();
-            String day = startDate.plusDays(numDays).getDayOfWeek().toString();
-            String dateString = date + ", " + day;    //e.g. "2023-11-28, Tuesday"
+            Calendar cal = Calendar.getInstance();
+
+            cal.setTime(startDate);
+            cal.add(Calendar.DATE, numDays); //minus number would decrement the days
+            String date = cal.getTime().toString();
+
+            String dateString = date;
             dateArray.add(dateString);
 
             //create dayArrayList, which is 1 day's ArrayList e.g. [["2023-11-28, Tuesday"], [], [], []]
