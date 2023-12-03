@@ -27,15 +27,10 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
 
 
     public ArrayList<Recipe> getByFilters(HashMap filters) {
-//        for saving api calling times
-//        if (filters.get("query").equals("pizza") && filters.get("cuisine").equals("Italian") && filters.get("maxTime").equals("60")){
-//
-//        }
-
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
 
-        String requestURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=b8f6333f2a07457b925cce0d5ddda576";
+        String requestURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=17731a56ca524010936e5648e84130e4";
         //build the request URL depending on inputs for query, cuisine and maxTime
 
         if (filters.keySet().contains("query")) {
@@ -57,6 +52,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
                 .build();
         try {
             Response response = client.newCall(request).execute();
+//            System.out.println(response.body().string());
             JSONObject responseBody = new JSONObject(response.body().string());
             JSONArray fullResultsArray = new JSONArray(responseBody.getJSONArray("results"));
             this.totalRecipeAmount =  responseBody.getInt("totalResults");
@@ -106,7 +102,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
         MediaType mediaType = MediaType.parse("text/plain");
         RequestBody body = RequestBody.create(mediaType, "");
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=false&apiKey=b8f6333f2a07457b925cce0d5ddda576")
+                .url("https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=false&apiKey=17731a56ca524010936e5648e84130e4")
                 .method("GET", body)
                 .addHeader("Accept", "application/json")
                 .build();
@@ -138,7 +134,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=b1885373924b41d9961c057265b15ed9&includeNutrition=false"))
+                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=17731a56ca524010936e5648e84130e4&includeNutrition=false"))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
