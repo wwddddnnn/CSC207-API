@@ -52,7 +52,6 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
                 .build();
         try {
             Response response = client.newCall(request).execute();
-//            System.out.println(response.body().string());
             JSONObject responseBody = new JSONObject(response.body().string());
             JSONArray fullResultsArray = new JSONArray(responseBody.getJSONArray("results"));
             this.totalRecipeAmount =  responseBody.getInt("totalResults");

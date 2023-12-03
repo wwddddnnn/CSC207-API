@@ -51,9 +51,10 @@ public class FullMealPlanArrayCreator {
                 if(!halfMealPlanArray.get(numDay).get(numMeal).isEmpty()) {
                     Integer recipeID = (Integer) halfMealPlanArray.get(numDay).get(numMeal).get(0);   //IntelliJ recognizes it as "Object" cuz I never specified it would be an Integer.
 
-                    String simpleRecipeString = savedRecipeToStringConverter.convertToSimpleString(recipeID);
                     Recipe recipeObject = searchRecipeDAO.getByID(recipeID);
                     SearchedRecipe searchedRecipeObject = new SearchedRecipe(recipeObject);
+
+                    String simpleRecipeString = searchedRecipeObject.getName();
 
                     HashMap recipeStringHashMap = new HashMap<String, Object>();
                     recipeStringHashMap.put("simpleString", simpleRecipeString);
@@ -69,8 +70,6 @@ public class FullMealPlanArrayCreator {
                 }
             }
         }
-        //TODO: delete this print line.
-        System.out.println(newMealPlanArray);
         return newMealPlanArray;
     }
 }
