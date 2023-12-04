@@ -27,15 +27,10 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
 
 
     public ArrayList<Recipe> getByFilters(HashMap filters) {
-//        for saving api calling times
-//        if (filters.get("query").equals("pizza") && filters.get("cuisine").equals("Italian") && filters.get("maxTime").equals("60")){
-//
-//        }
-
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
 
-        String requestURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=e7877dbada2b46aeb588e7418550c78f";
+        String requestURL = "https://api.spoonacular.com/recipes/complexSearch?apiKey=17731a56ca524010936e5648e84130e4";
         //build the request URL depending on inputs for query, cuisine and maxTime
 
         if (filters.keySet().contains("query")) {
@@ -106,7 +101,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
         MediaType mediaType = MediaType.parse("text/plain");
         RequestBody body = null;
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=false&apiKey=76ca5ebc0a734cc6a03fda7bb5af3b3d")
+                .url("https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=false&apiKey=17a15ca35fc447fda641575e822b94f5")
                 .method("GET", body)
                 .addHeader("Accept", "application/json")
                 .build();
@@ -138,7 +133,7 @@ public class SearchRecipeDataAccessObject implements SearchRecipeDataAccessInter
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=76ca5ebc0a734cc6a03fda7bb5af3b3d&includeNutrition=false"))
+                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=17a15ca35fc447fda641575e822b94f5&includeNutrition=false"))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {

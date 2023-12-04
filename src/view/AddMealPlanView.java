@@ -4,6 +4,7 @@ import app.UserInfoRetriever;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_meal_plan.AddMealPlanController;
 import interface_adapter.add_to_meal_plan.AddMealPlanViewModel;
+import interface_adapter.display_saved_recipe.DisplaySavedViewModel;
 import interface_adapter.search_recipe.SearchState;
 import interface_adapter.search_recipe.SearchViewModel;
 
@@ -29,16 +30,16 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
     private final JButton returnButton;
     private final AddMealPlanController addMealPlanController;
     private final AddMealPlanViewModel addMealPlanViewModel;
-    private final SearchViewModel searchViewModel;
+    private final DisplaySavedViewModel displaySavedViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public AddMealPlanView(AddMealPlanController addMealPlanController,
                            AddMealPlanViewModel addMealPlanViewModel,
-                           SearchViewModel searchViewModel,
+                           DisplaySavedViewModel displaySavedViewModel,
                            ViewManagerModel viewManagerModel) {
         this.addMealPlanController = addMealPlanController;
         this.addMealPlanViewModel = addMealPlanViewModel;
-        this.searchViewModel = searchViewModel;
+        this.displaySavedViewModel = displaySavedViewModel;
         this.viewManagerModel = viewManagerModel;
         addMealPlanViewModel.addPropertyChangeListener(this);
 
@@ -68,7 +69,7 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
         slotPanel.add(slotComboBox);
 
         addButton = new JButton("Add");
-        returnButton = new JButton("Return to search page");
+        returnButton = new JButton("Return to saved recipe page");
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addButton);
         buttonPanel.add(returnButton);
@@ -98,7 +99,7 @@ public class AddMealPlanView extends JPanel implements ActionListener, PropertyC
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                viewManagerModel.setActiveView(searchViewModel.getViewName());
+                viewManagerModel.setActiveView(displaySavedViewModel.getViewName());
                 viewManagerModel.firePropertyChanged();
             }
         });
