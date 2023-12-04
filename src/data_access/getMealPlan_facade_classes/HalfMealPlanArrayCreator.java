@@ -23,12 +23,15 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 
 public class HalfMealPlanArrayCreator {
 
@@ -41,7 +44,8 @@ public class HalfMealPlanArrayCreator {
         String username = UserInfoRetriever.getUsername();
         String userHash = UserInfoRetriever.getUserHash();
         Date date = new Date();
-        long startDateEpoch = date.getTime() / 1000;
+        int startDay = date.getDay();
+        //(0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, 4 = Thursday, 5 = Friday, 6 = Saturday)
         String dateAsAString = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().toString();
 
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -50,7 +54,7 @@ public class HalfMealPlanArrayCreator {
         RequestBody body = null;
         //RequestBody.create(mediaType, "");
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/mealplanner/" + username + "/week/" + dateAsAString + "?hash=" + userHash + "&apiKey=76ca5ebc0a734cc6a03fda7bb5af3b3d")
+                .url("https://api.spoonacular.com/mealplanner/" + username + "/week/" + dateAsAString + "?hash=" + userHash + "&apiKey=759b1b1c8a9e47ff88aed913c15f50ac")
                 .method("GET", body)
                 .addHeader("Accept", "application/json")
                 .build();
@@ -66,54 +70,44 @@ public class HalfMealPlanArrayCreator {
             if (!unfilteredResponseArray.isEmpty()) {
 
                 for (int i = 0; i < unfilteredResponseArray.length(); i++) {
+                JSONObject dayObject = unfilteredResponseArray.getJSONObject(i);
 
-                    JSONObject dayObject = unfilteredResponseArray.getJSONObject(i);
+                //TODO: delete this print line
+                System.out.println("THIS IS DAY" + i + ": " + dayObject);
+
+                String dayString = (String) dayObject.get("day");
+                int day = 0;
+                if (dayString.equals("Monday")) day = 1;
+                else if (dayString.equals("Tuesday")) day = 2;
+                else if (dayString.equals("Wednesday")) day = 3;
+                else if (dayString.equals("Thursday")) day = 4;
+                else if (dayString.equals("Friday")) day = 5;
+                else if (dayString.equals("Saturday")) day = 6;
+
+                int numDaysAfterStartDate = 0;
+                if (day > startDay) numDaysAfterStartDate = day - startDay;
+                else if (day < startDay) numDaysAfterStartDate = 7 - (startDay - day);
+
+                JSONArray dayItemsArray = dayObject.getJSONArray("items");
+
+                for (int numMeals = 0; numMeals < dayItemsArray.length() && numMeals < 3; numMeals++) {
+                    JSONObject mealObject = dayItemsArray.getJSONObject(numMeals);
+
+                    JSONObject recipeJSONInfo = mealObject.getJSONObject("value");
+                    Integer recipeID = recipeJSONInfo.getInt("id");
+
+                    Integer recipeSlot = mealObject.getInt("slot");    //slot: 1 = breakfast, 2 = lunch, 3 = dinner
 
                     //TODO: delete this print line
-                    System.out.println("THIS IS DAY" + i + ": " + dayObject);
-
-                    int dayEpochTimeOld = (int) dayObject.get("date");
-                    long dayEpochTime = (long) dayEpochTimeOld;
-
+                    System.out.println("numDaysAfterStartDate: " + numDaysAfterStartDate);
                     //TODO: delete this print line
-                    System.out.println("DAY EPOCH TIME FOR" + i + ": " + dayEpochTime);
-                    System.out.println("START DATE EPOCH TIME FOR" + i + ": " + startDateEpoch);
-//
-//                    String date1 = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date (dayEpochTime));
-//                    LocalDate date1Local = LocalDate.parse(date1);
-//                    //TODO: delete this print line
-//                    System.out.println(date1Local);
-//
-//                    String date2 = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date (startDateEpoch));
-//                    LocalDate date2Local = LocalDate.parse(date2);
-//                    //TODO: delete this print line
-//                    System.out.println(date2Local);
+                    System.out.println(recipeSlot);
+                    EmptyMealPlanArrayList.get(numDaysAfterStartDate).get(recipeSlot).add(recipeID);   //numDaysAfterStartDate = index of day; recipeSlot = index of meal
 
-                    //int numDaysAfterStartDate = (int) ChronoUnit.DAYS.between(date2Local, date1Local);
+                }
 
-
-                    long numDaysAfterStartDate = ((dayEpochTime - startDateEpoch)/864000000);    //86,400 is the number of Epoch numbers of 1 day
-
-                    JSONArray dayItemsArray = dayObject.getJSONArray("items");
-
-                    for (int numMeals = 0; numMeals < dayItemsArray.length() && numMeals < 3; numMeals++) {
-                        JSONObject mealObject = dayItemsArray.getJSONObject(numMeals);
-
-                        JSONObject recipeJSONInfo = mealObject.getJSONObject("value");
-                        Integer recipeID = recipeJSONInfo.getInt("id");
-
-                        Integer recipeSlot = mealObject.getInt("slot");    //slot: 1 = breakfast, 2 = lunch, 3 = dinner
-
-                        //TODO: delete this print line
-                        System.out.println(numDaysAfterStartDate);
-                        //TODO: delete this print line
-                        System.out.println(recipeSlot);
-                        EmptyMealPlanArrayList.get((int) numDaysAfterStartDate).get(recipeSlot).add(recipeID);   //numDaysAfterStartDate = index of day; recipeSlot = index of meal
-
-                    }
-
-                    //TODO: delete this print line.
-                    System.out.println(EmptyMealPlanArrayList);
+                //TODO: delete this print line.
+                System.out.println(EmptyMealPlanArrayList);
                 }
             }
             return EmptyMealPlanArrayList;

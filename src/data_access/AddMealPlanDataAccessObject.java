@@ -12,12 +12,13 @@ public class AddMealPlanDataAccessObject implements AddMealPlanDataAccessInterfa
     public String addMealPlan(String[] userInfo, String[] addInfo, String recipeId) throws IOException {
         // userInfo = {username, hash}, addInfo = {date, slot}
 
+        System.out.println(userInfo[0] + "," + userInfo[1]);
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(mediaType, "{\n    \"date\": " + addInfo[0] + ",\n    \"slot\": " + addInfo[1] + ",\n    \"position\": 0,\n    \"type\": \"RECIPE\",\n    \"value\": {\n        \"id\": " + recipeId + "\n    }\n}");
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/mealplanner/" + userInfo[0] + "/items?hash=" + userInfo[1] + "&apiKey=17731a56ca524010936e5648e84130e4")
+                .url("https://api.spoonacular.com/mealplanner/" + userInfo[0] + "/items?hash=" + userInfo[1] + "&apiKey=759b1b1c8a9e47ff88aed913c15f50ac")
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
