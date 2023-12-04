@@ -52,6 +52,10 @@ public class EmptyMealPlanArrayCreator {
 
             finalArrayList.add(dayArrayList);
         }
+
+        //TODO: delete this print line.
+        System.out.println(finalArrayList);
+
         return finalArrayList;
     }
 }

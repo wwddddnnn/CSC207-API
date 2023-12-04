@@ -28,7 +28,7 @@ public class ConnectDataAccessObject implements ConnectDataAccessInterface {
         RequestBody body = RequestBody.create(mediaType, jsonBody);
 
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/users/connect?apiKey=17a15ca35fc447fda641575e822b94f5")
+                .url("https://api.spoonacular.com/users/connect?apiKey=76ca5ebc0a734cc6a03fda7bb5af3b3d")
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
                 .build();
