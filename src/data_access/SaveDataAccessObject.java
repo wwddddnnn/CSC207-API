@@ -43,7 +43,7 @@ public class SaveDataAccessObject implements SaveRecipeDataAccessInterface, Disp
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=7168aaa85b244a6288c97e72684629a0&includeNutrition=false"))
+                .url(String.format("https://api.spoonacular.com/recipes/" + recipeID + "/information?apiKey=416a4d1c29a446b1b80bae4df5ca3083&includeNutrition=false"))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
