@@ -18,7 +18,7 @@ public class AddMealPlanDataAccessObject implements AddMealPlanDataAccessInterfa
         MediaType mediaType = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(mediaType, "{\n    \"date\": " + addInfo[0] + ",\n    \"slot\": " + addInfo[1] + ",\n    \"position\": 0,\n    \"type\": \"RECIPE\",\n    \"value\": {\n        \"id\": " + recipeId + "\n    }\n}");
         Request request = new Request.Builder()
-                .url("https://api.spoonacular.com/mealplanner/" + userInfo[0] + "/items?hash=" + userInfo[1] + "&apiKey=759b1b1c8a9e47ff88aed913c15f50ac")
+                .url("https://api.spoonacular.com/mealplanner/" + userInfo[0] + "/items?hash=" + userInfo[1] + "&apiKey=416a4d1c29a446b1b80bae4df5ca3083")
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
