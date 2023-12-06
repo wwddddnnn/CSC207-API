@@ -115,9 +115,6 @@ public class Main {
         AddMealPlanView addMealPlanView = new AddMealPlanView(addMealPlanController, addMealPlanViewModel, displaySavedViewModel, viewManagerModel);
         views.add(addMealPlanView, addMealPlanView.viewName);
 
-//        displaySavedController.execute();
-//        viewManagerModel.setActiveView(displaySavedView.viewName);
-
         MealPlanView mealPlanView = new MealPlanView(mealPlanViewModel, searchViewModel, viewManagerModel);
         views.add(mealPlanView, mealPlanView.viewName);
 

@@ -54,14 +54,6 @@ public class DisplayRecipeView extends JFrame implements PropertyChangeListener 
         this.save = new JButton(this.displayRecipeViewModel.SAVE_BUTTON_LABEL);
         // return to the searchResultView after clicking finish button.
 
-//        this.finish.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                DisplayRecipeView.this.viewManagerModel.setActiveView(DisplayRecipeView.this.searchResultsViewModel.getViewName());
-//                DisplayRecipeView.this.viewManagerModel.firePropertyChanged();
-//            }
-//        });
-
         this.save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

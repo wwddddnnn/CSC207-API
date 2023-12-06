@@ -13,6 +13,7 @@ public class AddMealPlanController {
     public AddMealPlanController(AddMealPlanInputBoundary addMealPlanInteractor) {
         this.addMealPlanInteractor = addMealPlanInteractor;
     }
+
     public void execute(String username, String hash, String dateString, String slotString, String recipeId) throws IOException {
         System.out.println("addController working");
         Date date;
