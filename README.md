@@ -45,3 +45,6 @@ https://spoonacular.com/food-api/docs
 - MealPlan
   - HashMap<String, int> MealPlanDay
   - MealPlanDay[] MealPlanWeek
+ 
+## Links
+Demo video: https://drive.google.com/file/d/1osvUE1HZ1pUqnLwTonvwhvrI9vCU192t/view?usp=sharing
