@@ -24,6 +24,9 @@ Note: A recipe file would include: the recipe name, instructions, an image, tags
 API documentation link we will be using during our project:
 https://spoonacular.com/food-api/docs
 
+## Demo video
+Links: https://drive.google.com/file/d/1osvUE1HZ1pUqnLwTonvwhvrI9vCU192t/view?usp=sharing
+
 ## Proposed Entities
 
 - Recipe
@@ -46,5 +49,3 @@ https://spoonacular.com/food-api/docs
   - HashMap<String, int> MealPlanDay
   - MealPlanDay[] MealPlanWeek
  
-## Links
-Demo video: https://drive.google.com/file/d/1osvUE1HZ1pUqnLwTonvwhvrI9vCU192t/view?usp=sharing
